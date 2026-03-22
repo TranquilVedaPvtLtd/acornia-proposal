@@ -150,21 +150,15 @@
     .bi-points li::before{content:'';position:absolute;left:4px;top:9px;width:7px;height:7px;border-radius:50%;background:var(--accent)}
     .bi-points li strong{color:var(--text)}
 
-    /* INTERACTIVE CALCULATOR */
-    .calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
-    .calc-controls{display:flex;flex-direction:column;gap:28px}
-    .sl-group label{display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:rgba(255,255,255,.6);margin-bottom:10px}
-    .sl-group label .sv{font-size:16px;font-weight:800;color:var(--accent)}
-    .sl-group input[type=range]{width:100%;-webkit-appearance:none;height:4px;border-radius:2px;background:rgba(255,255,255,.12);outline:none;cursor:pointer}
-    .sl-group input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px rgba(0,230,118,.4)}
-    .calc-results{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--rl);padding:30px;display:flex;flex-direction:column;gap:16px}
-    .cr-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.35);margin-bottom:6px}
-    .cr-item{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:18px 16px}
-    .cr-val{font-size:28px;font-weight:900;color:#fff;line-height:1}
-    .cr-val em{font-size:15px;font-weight:600;color:var(--accent);font-style:normal}
-    .cr-label{font-size:12px;color:rgba(255,255,255,.4);margin-top:5px;line-height:1.5}
-    .cr-item.highlight .cr-val{color:var(--accent)}
-    .calc-note{font-size:11.5px;color:rgba(255,255,255,.25);line-height:1.6;text-align:center;margin-top:8px}
+    /* PROPRIETARY ADVANTAGE */
+    .prop-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+    .prop-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:26px 22px;transition:border-color .2s}
+    .prop-card:hover{border-color:rgba(0,230,118,.2)}
+    .prop-icon{width:44px;height:44px;border-radius:12px;background:rgba(0,230,118,.08);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+    .prop-head{margin-bottom:10px}
+    .prop-head h4{font-size:14.5px;font-weight:700;color:#fff;line-height:1.4;margin-bottom:6px}
+    .prop-vs{font-size:11.5px;color:rgba(255,255,255,.3);font-style:italic;line-height:1.5;padding-left:10px;border-left:2px solid rgba(255,255,255,.08)}
+    .prop-card p{font-size:13px;color:rgba(255,255,255,.55);line-height:1.75}
 
     /* BEFORE AFTER */
     .ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
@@ -277,7 +271,7 @@
 
     /* RESPONSIVE */
     @media(max-width:900px){
-      .hero-grid,.role-grid,.bi-wrap,.calc-grid,.ba-grid,.pricing-grid{grid-template-columns:1fr}
+      .hero-grid,.role-grid,.bi-wrap,.prop-grid,.ba-grid,.pricing-grid{grid-template-columns:1fr}
       .h-panel{display:none}
       .pain-cards,.wf-grid,.phases-grid{grid-template-columns:1fr 1fr}
       section{padding:60px 24px}
@@ -289,7 +283,7 @@
       .sow-doc{padding:32px 20px}
     }
     @media print{
-      .tnav,.wa-float,.calc-controls,.bi-dash,.role-diagram{display:none!important}
+      .tnav,.wa-float,.bi-dash,.role-diagram{display:none!important}
       .rv{opacity:1!important;transform:none!important}
     }
   </style>
@@ -312,8 +306,8 @@
     <div class="h-badge">Purpose-Built MFD Platform — March 2026</div>
     <div class="hero-grid">
       <div>
-        <h1>Your Team Wears<br><span class="acc">Multiple Hats.</span><br>Your Software Should Too.</h1>
-        <p class="h-sub">A proprietary operating platform built for how mutual fund distributors actually work — one login per person regardless of how many roles they hold, guided workflows that train themselves, and business intelligence your team doesn't have to manually create.</p>
+        <h1>Complete Control Over Your<br><span class="acc">Mutual Fund Business.</span></h1>
+        <p class="h-sub">One system. Every role, every transaction type, every compliance check — in one login. The software drives decisions for your RMs. No hand-holding. No manual report reading. No context switching between 5 portals. The platform runs your operations so you can run your business.</p>
         <div class="h-btns">
           <a href="#pricing" class="btn-p">View Investment</a>
           <button class="btn-o" onclick="swTab('sow')">Scope of Work</button>
@@ -327,7 +321,7 @@
           <div class="hs"><div class="v">0 <em>triggers</em></div><div class="l">from Investwell reports. Data without intelligence.</div></div>
           <div class="hs"><div class="v">30-40<em>%</em></div><div class="l">of RM time spent on admin, not clients.</div></div>
         </div>
-        <div class="h-insight"><strong>The root cause:</strong> Your current system makes you the integration layer between your tools, your team, and your clients. This platform removes you from that role.</div>
+        <div class="h-insight"><strong>The core problem:</strong> AMFI, BSE, Investwell, KYC — the tools exist. What doesn't exist is a single system that connects them, enforces your compliance, and tells your RMs what to do next. This platform gives you complete autonomy — <strong>software that drives decisions</strong>, not one that waits for instructions.</div>
       </div>
     </div>
   </div>
@@ -518,12 +512,12 @@
       <div>
         <div class="st rv">Business Intelligence Layer</div>
         <h2 class="sh rv">From reports you download to triggers you act on.</h2>
-        <p style="font-size:15px;color:var(--muted);line-height:1.85;margin-bottom:28px;" class="rv">Investwell already has all the data your business needs. The platform ingests it, structures it, and surfaces the questions your team should be asking today — without the owner having to ask first.</p>
+        <p style="font-size:15px;color:var(--muted);line-height:1.85;margin-bottom:28px;" class="rv">Investwell gives you reports. AMFI gives you NAV data. BSE gives you transaction status. The data already exists — scattered across portals and PDFs that your owner reads manually every Sunday. This platform ingests all of it and turns it into one question: <strong style="color:var(--text)">what should your team do today?</strong></p>
         <ul class="bi-points rv">
           <li><strong>Client health scores.</strong> Every investor is scored daily on SIP continuity, portfolio drift, last contact date, and KYC validity. RMs see their most-at-risk clients first, not their most recent ones.</li>
           <li><strong>SIP book visibility.</strong> Total SIP inflows by scheme, by RM, by month — live. Redemption patterns flagged before they become a trend. Trail income forecast for the next 6 months.</li>
           <li><strong>RM performance dashboard.</strong> AUM movement, client acquisition vs. attrition, task completion rates, review cycle adherence — visible to the owner without asking anyone to pull a report.</li>
-          <li><strong>Live market data — automatic.</strong> AMFI NAV syncs every evening. CVL KRA KYC status on-demand. BSE/NSE transaction status updated in real time. RMs never work with stale data again.</li>
+          <li><strong>All data feeds into one system — automatically.</strong> AMFI NAV, CVL KRA KYC, BSE/NSE transaction status — your team already has access to all of this. The platform's job is to ingest it silently, structure it, and surface what matters. No manual pull. No tab-switching. No stale data. The RM sees current, verified numbers inside the form they're already filling.</li>
         </ul>
       </div>
       <div class="rv">
@@ -558,50 +552,61 @@
   </div>
 </section>
 
-<!-- 6. INTERACTIVE: RM TIME CALCULATOR -->
+<!-- 6. PROPRIETARY ADVANTAGE -->
 <section class="ds">
   <div class="inner">
-    <div class="st rv">Admin Tax Calculator</div>
-    <h2 class="sec-title rv" style="font-size:clamp(24px,3vw,34px);font-weight:800;color:#fff;line-height:1.2;margin-bottom:12px">How many RM hours are you losing to admin every month?</h2>
-    <p style="font-size:15px;color:rgba(255,255,255,.5);max-width:560px;line-height:1.8;margin-bottom:44px;" class="rv">Generic CRMs consume 30-40% of RM time in admin work. Adjust the sliders to see the impact on your team — and what the platform recovers.</p>
-    <div class="calc-grid">
-      <div class="calc-controls rv">
-        <div class="sl-group">
-          <label>Number of RMs on your team <span class="sv" id="sl-rm-val">4</span></label>
-          <input type="range" id="sl-rm" min="1" max="20" step="1" value="4" oninput="calcUpdate()"/>
+    <div class="st rv">Why Build a Proprietary Platform</div>
+    <h2 class="sec-title rv" style="font-size:clamp(24px,3vw,34px);font-weight:800;color:#fff;line-height:1.2;margin-bottom:12px">AMFI, BSE, NAV sync — you already have access to all of it.</h2>
+    <p style="font-size:15px;color:rgba(255,255,255,.5);max-width:640px;line-height:1.8;margin-bottom:44px;" class="rv">The individual capabilities exist. What doesn't exist is one system that connects them, enforces your workflow, and makes decisions for your team — without anyone having to ask.</p>
+
+    <div class="prop-grid rv">
+      <div class="prop-card">
+        <div class="prop-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00E676" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div class="prop-head">
+          <h4>Complete Ownership of Your Business Logic</h4>
+          <div class="prop-vs">Zoho: your process lives inside someone else's product roadmap</div>
         </div>
-        <div class="sl-group">
-          <label>Admin hours per RM per day (current) <span class="sv" id="sl-hr-val">3 hrs</span></label>
-          <input type="range" id="sl-hr" min="1" max="6" step="0.5" value="3" oninput="calcUpdate()"/>
-        </div>
-        <div class="sl-group">
-          <label>Average daily working hours <span class="sv" id="sl-day-val">8 hrs</span></label>
-          <input type="range" id="sl-day" min="6" max="10" step="1" value="8" oninput="calcUpdate()"/>
-        </div>
-        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--r);padding:18px;font-size:13px;color:rgba(255,255,255,.4);line-height:1.7;margin-top:8px">
-          Industry benchmark (Kitces Research, Cerulli Associates): RMs at generic CRM firms spend 30-40% of working hours on administrative tasks vs. 12-15% on purpose-built MFD platforms.
-        </div>
+        <p>Every workflow rule, every compliance check, every role permission — it's YOUR business logic, encoded in YOUR system. When you need a change, it gets built. Not filed as a feature request alongside 100,000 other Zoho customers.</p>
       </div>
-      <div class="calc-results rv">
-        <div class="cr-title">Your Current Admin Tax</div>
-        <div class="cr-item">
-          <div class="cr-val" id="cr-monthly">-</div>
-          <div class="cr-label">RM hours lost to admin per month</div>
+      <div class="prop-card">
+        <div class="prop-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00E676" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="prop-head">
+          <h4>Roles That Match How Your Firm Actually Works</h4>
+          <div class="prop-vs">Zoho: one user = one role. Your 5-person team needs 15 logins.</div>
         </div>
-        <div class="cr-item">
-          <div class="cr-val" id="cr-pct">-</div>
-          <div class="cr-label">of your team's total monthly capacity going to admin</div>
+        <p>A proprietary system doesn't inherit someone else's permission model. It's built around YOUR team structure — one person, all their responsibilities, one login. This is architecturally impossible inside Zoho Creator without building a custom app on top of it.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00E676" stroke-width="2" stroke-linecap="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></div>
+        <div class="prop-head">
+          <h4>Intelligence Layer, Not Just Data Access</h4>
+          <div class="prop-vs">Investwell: gives you reports. Your owner reads them manually.</div>
         </div>
-        <div class="cr-title" style="margin-top:8px">With This Platform</div>
-        <div class="cr-item highlight">
-          <div class="cr-val" id="cr-recovered">-</div>
-          <div class="cr-label">hours recovered per month — redirected to client work</div>
+        <p>AMFI NAV, BSE data, Investwell reports — these are raw materials. The platform turns them into actionable intelligence: which client needs attention today, which SIP is at risk, which RM is falling behind. The owner doesn't ask — the system tells.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00E676" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="prop-head">
+          <h4>Software That Drives Decisions</h4>
+          <div class="prop-vs">Generic CRM: waits for input. Your team does the thinking.</div>
         </div>
-        <div class="cr-item highlight">
-          <div class="cr-val" id="cr-equiv">-</div>
-          <div class="cr-label">equivalent RM productivity gain without hiring</div>
+        <p>The system pops up what matters — mid-form context, compliance flags, overdue tasks, lapsed SIPs. RMs don't decide what to do next. The software tells them. No hand-holding. No training manuals. The system IS the training.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00E676" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="prop-head">
+          <h4>Seamless, Zero-Friction Operations</h4>
+          <div class="prop-vs">Today: 7 transaction types, 1 generic form, 0 validation.</div>
         </div>
-        <div class="calc-note">Target: platform reduces admin burden to under 15% of RM time. Current estimate based on your inputs above.</div>
+        <p>Each transaction type has its own enforced workflow — the right fields, the right checks, the right sequence. Auto-populated data from existing sources. Entry that took 45 minutes drops to 12. The friction disappears because the system knows the process better than any individual RM.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00E676" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+        <div class="prop-head">
+          <h4>Your Data. Your Server. Full Portability.</h4>
+          <div class="prop-vs">Zoho: your data lives in their cloud, their format, their terms.</div>
+        </div>
+        <p>Everything runs on a Virtual Private Server under your control. PostgreSQL database — industry standard, fully exportable. If you ever want to move, self-host, or bring in another developer — the data is yours. No lock-in, no sticky exit.</p>
       </div>
     </div>
   </div>
@@ -715,7 +720,7 @@
   <div class="inner">
     <div class="st rv">Investment</div>
     <h2 class="sh rv">Milestone-based. No surprises.</h2>
-    <p class="ss rv">Pay only when working software is delivered and verified. Support after go-live is a flat monthly fee — not a percentage of anything, not tied to your team size.</p>
+    <p class="ss rv">Pay only when working software is delivered and verified. Flat fees — no percentage of AUM, not tied to your team size, no annual maintenance contract. What you see below is the complete cost.</p>
     <div class="pricing-grid">
       <div class="price-card featured rv">
         <div class="rec-badge">PLATFORM BUILD</div>
@@ -726,14 +731,14 @@
         <div class="mr"><div><div class="mn">M3 — Full Go-Live</div><div class="mw">Month 3 — Production deployed, team trained</div></div><div class="ma">₹1,25,000</div></div>
         <hr class="pdiv"/>
         <div class="amc-box">
-          <div class="amc-label">Post-Launch Support (6 months)</div>
+          <div class="amc-label">Post-Launch Support (Months 4–9 only)</div>
           <div class="amc-val">₹35,000 / month</div>
-          <div class="amc-sub">Months 4–9. Includes: bug fixes, feature updates, API monitoring, AMFI/BSE continuity, 4 hrs/month change requests.</div>
+          <div class="amc-sub">6 months only. Includes: bug fixes, feature updates, API monitoring, AMFI/BSE continuity, 4 hrs/month change requests. <strong style="color:var(--accent-dark)">No AMC. No annual contract.</strong> After Month 9, support is optional — renew month-to-month or operate independently.</div>
         </div>
         <div class="vps-box">
-          <div class="vps-label">Infrastructure (VPS) — billed separately</div>
+          <div class="vps-label">Infrastructure (Virtual Private Server) — your only ongoing cost</div>
           <div class="vps-val">₹2,000 – ₹3,500/month</div>
-          <div class="vps-sub">Your server, your data. You can see the invoice. This covers the VPS that runs the entire platform — typically Hostinger or Digital Ocean. Procured in your name or billed at cost.</div>
+          <div class="vps-sub">Your server, your data. This covers the VPS that runs the entire platform (frontend, backend, database, automated jobs) — typically Hostinger or DigitalOcean. Procured in your name. You see the invoice directly from the hosting provider. This is the only cost that continues after the support period ends.</div>
         </div>
       </div>
       <div class="price-card rv">
@@ -741,20 +746,19 @@
         <div class="ph">Everything your team needs</div>
         <ul class="incl-list">
           <li>All 3 delivery phases — full platform, no modules left out</li>
-          <li>Flexible role-permission system (the #1 pain point, solved)</li>
+          <li>Flexible role-permission system (one login, every hat)</li>
           <li>7 transaction type workflows with compliance enforcement</li>
-          <li>Smart RM action queue and proactive alert engine</li>
-          <li>Live BI dashboard for the owner</li>
-          <li>AMFI NAV auto-sync + CVL KRA KYC integration</li>
-          <li>BSE Star MF + NSE NMF II order placement APIs</li>
+          <li>Smart RM action queue — software tells your team what to do</li>
+          <li>Live BI dashboard — intelligence, not just reports</li>
+          <li>All data integrations (AMFI, CVL KRA, BSE, NSE, Investwell)</li>
           <li>Full Zoho data migration (investors, tasks, history)</li>
-          <li>Custom domain configuration</li>
+          <li>Custom domain + VPS deployment on your server</li>
           <li>Mobile-responsive — works on any device</li>
           <li>2-hour team training + recorded walkthrough</li>
           <li>30-day hypercare post go-live</li>
         </ul>
         <div style="margin-top:20px;padding:16px;background:rgba(0,0,0,.03);border-radius:var(--r);font-size:12.5px;color:var(--muted);line-height:1.7">
-          <strong style="color:var(--text)">Note on AI features:</strong> Meeting transcription and AI-assisted portfolio summaries are scoped for Phase 2 (Month 4+) based on stability of core platform. These will be proposed separately with a clear feature spec — not included in the current build.
+          <strong style="color:var(--text)">AI-Assisted Features:</strong> Portfolio review summaries, meeting transcription, and intelligent client recommendations can be explored as an enhancement in Phase 1 or Phase 2, depending on core platform stability. Scope and cost to be discussed separately.
         </div>
       </div>
     </div>
@@ -826,7 +830,7 @@
           <div class="smi"><div class="sk">Client</div><div class="sv">Acorn Wealth (Tarun / Sangam)</div></div>
           <div class="smi"><div class="sk">Provider</div><div class="sv">Tranquil Veda Private Limited</div></div>
           <div class="smi"><div class="sk">Date</div><div class="sv">March 2026</div></div>
-          <div class="smi"><div class="sk">Version</div><div class="sv">2.0</div></div>
+          <div class="smi"><div class="sk">Version</div><div class="sv">3.0</div></div>
           <div class="smi"><div class="sk">Stack</div><div class="sv">Next.js 14 + FastAPI + Supabase + Docker</div></div>
         </div>
       </div>
@@ -991,28 +995,6 @@
     if(!was)item.classList.add('open');
   }
 
-  // ADMIN TAX CALCULATOR
-  function calcUpdate(){
-    const rm=+document.getElementById('sl-rm').value;
-    const hr=+document.getElementById('sl-hr').value;
-    const day=+document.getElementById('sl-day').value;
-    document.getElementById('sl-rm-val').textContent=rm;
-    document.getElementById('sl-hr-val').textContent=hr+' hrs';
-    document.getElementById('sl-day-val').textContent=day+' hrs';
-    const workDays=22;
-    const totalMonthlyHours=rm*day*workDays;
-    const adminHours=rm*hr*workDays;
-    const adminPct=Math.round(adminHours/totalMonthlyHours*100);
-    // platform target: 15% admin time
-    const targetAdmin=rm*(day*0.15)*workDays;
-    const recovered=Math.round(adminHours-targetAdmin);
-    const equivFTE=(recovered/(day*workDays)).toFixed(1);
-    document.getElementById('cr-monthly').innerHTML=adminHours+' <em>hrs</em>';
-    document.getElementById('cr-pct').innerHTML=adminPct+'<em>%</em>';
-    document.getElementById('cr-recovered').innerHTML=recovered+' <em>hrs</em>';
-    document.getElementById('cr-equiv').innerHTML=equivFTE+'x <em>RM equivalent gained</em>';
-  }
-  window.addEventListener('load',()=>calcUpdate());
 </script>
 
 </body>
