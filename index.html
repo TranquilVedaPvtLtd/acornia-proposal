@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Acorn Wealth — Purpose-Built MFD Platform</title>
+<title>Acorn Wealth — Proprietary MFD Platform | Scope of Work</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
 <style>
@@ -19,200 +19,51 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:'Inter',system-ui,sans-serif;background:#fff;color:var(--text);font-size:15px;line-height:1.7}
-
-/* TAB NAV */
-.tnav{position:sticky;top:0;z-index:100;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.08);display:flex;align-items:center;padding:0 36px;height:56px}
-.tbrand{font-size:12px;font-weight:800;color:var(--primary);letter-spacing:.14em;text-transform:uppercase;margin-right:auto;display:flex;align-items:center;gap:8px}
-.tbrand span{color:var(--accent)}
-.tbtn{padding:0 20px;height:56px;border:none;background:none;font-size:13px;font-weight:600;color:#94a3b8;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;font-family:'Inter',sans-serif}
-.tbtn:hover{color:var(--primary)}
-.tbtn.active{color:var(--accent-dark);border-bottom-color:var(--accent)}
-.tc{display:none}.tc.active{display:block}
-
-/* REVEAL */
-.rv{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
-.rv.vis{opacity:1;transform:none}
+section{padding:80px 40px}
+.inner{max-width:1100px;margin:0 auto}
+.st{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-dark);margin-bottom:10px}
+.sh{font-size:clamp(24px,3vw,36px);font-weight:800;color:var(--primary);line-height:1.2;margin-bottom:12px;letter-spacing:-.015em}
+.ss{font-size:15px;color:var(--muted);max-width:600px;line-height:1.85;margin-bottom:40px}
+.ds{background:var(--primary);color:#fff}
+.ds .sh{color:#fff}.ds .ss{color:rgba(255,255,255,.5)}.ds .st{color:var(--accent)}
+.alts{background:var(--bg-alt)}
 
 /* HERO */
 .hero{background:linear-gradient(160deg,var(--primary-dark) 0%,var(--primary) 55%,var(--primary-light) 100%);padding:96px 40px 80px;position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;top:-120px;right:-120px;width:600px;height:600px;background:radial-gradient(circle,rgba(0,230,118,.06) 0%,transparent 70%);pointer-events:none}
-.hero::after{content:'';position:absolute;bottom:-80px;left:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(255,215,0,.04) 0%,transparent 70%);pointer-events:none}
 .hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
 .h-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.25);color:var(--accent);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:24px}
 .h-badge::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pdot 2s infinite}
 @keyframes pdot{0%,100%{opacity:1}50%{opacity:.3}}
-.hero-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center}
-.hero h1{font-size:clamp(30px,4.2vw,50px);font-weight:900;color:#fff;line-height:1.08;margin-bottom:20px;letter-spacing:-.02em}
+.hero h1{font-size:clamp(30px,4.2vw,48px);font-weight:900;color:#fff;line-height:1.08;margin-bottom:20px;letter-spacing:-.02em}
 .hero h1 .acc{color:var(--accent)}
-.h-sub{font-size:16px;color:rgba(255,255,255,.5);line-height:1.85;margin-bottom:14px;max-width:500px}
+.h-sub{font-size:16px;color:rgba(255,255,255,.5);line-height:1.85;margin-bottom:14px;max-width:560px}
 .h-meta{display:flex;flex-wrap:wrap;gap:20px;margin-bottom:28px;font-size:13px;color:rgba(255,255,255,.35)}
 .h-meta strong{color:rgba(255,255,255,.7)}
-.h-btns{display:flex;gap:14px;flex-wrap:wrap}
-.btn-p{background:var(--accent);color:var(--primary-dark);border:none;padding:13px 28px;border-radius:60px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Inter',sans-serif;text-decoration:none;display:inline-block;transition:background .2s,transform .1s}
-.btn-p:hover{background:var(--accent-dark);transform:translateY(-1px)}
-.btn-o{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.22);padding:13px 28px;border-radius:60px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;text-decoration:none;display:inline-block;transition:border-color .2s}
-.btn-o:hover{border-color:rgba(255,255,255,.6)}
-.h-panel{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--rl);padding:28px 24px;backdrop-filter:blur(10px)}
-.h-panel-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:18px}
-.h-stats{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px}
-.hs .v{font-size:26px;font-weight:900;color:#fff;line-height:1}
-.hs .v em{font-size:13px;font-weight:600;color:var(--accent);font-style:normal}
-.hs .l{font-size:11.5px;color:rgba(255,255,255,.4);margin-top:5px}
-.h-insight{background:rgba(0,230,118,.08);border:1px solid rgba(0,230,118,.2);border-radius:10px;padding:14px;font-size:12.5px;color:rgba(255,255,255,.6);line-height:1.7}
-.h-insight strong{color:var(--accent)}
-.hero-svg{position:absolute;bottom:0;left:0;width:100%;pointer-events:none}
+.h-kpis{display:flex;flex-wrap:wrap;gap:16px;margin-top:36px}
+.h-kpi{text-align:center;padding:18px 24px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r)}
+.h-kpi .kv{font-size:24px;font-weight:900;color:var(--accent);line-height:1}
+.h-kpi .kl{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-top:6px}
 
-/* SECTION */
-section{padding:88px 40px}
-.inner{max-width:1100px;margin:0 auto}
-.st{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-dark);margin-bottom:10px}
-.sh{font-size:clamp(24px,3vw,36px);font-weight:800;color:var(--primary);line-height:1.2;margin-bottom:12px;letter-spacing:-.015em}
-.ss{font-size:15px;color:var(--muted);max-width:600px;line-height:1.85;margin-bottom:48px}
-.ds{background:var(--primary);color:#fff}
-.ds .sh{color:#fff}
-.ds .ss{color:rgba(255,255,255,.5)}
-.ds .st{color:var(--accent)}
-.alts{background:var(--bg-alt)}
-
-/* PAIN CARDS */
-.pain-lede{font-size:22px;font-weight:800;color:#fff;line-height:1.35;max-width:680px;margin-bottom:36px;opacity:.95}
-.pain-lede .acc{color:var(--accent)}
-.hook-box{background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.18);border-radius:var(--r);padding:20px 24px;margin-bottom:36px;display:flex;align-items:flex-start;gap:16px}
-.hook-icon{width:40px;height:40px;background:rgba(0,230,118,.12);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
-.hook-text{font-size:14px;color:rgba(255,255,255,.75);line-height:1.75}
-.hook-text strong{color:var(--accent)}
-.pain-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.pc{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:24px 20px;transition:border-color .2s}
-.pc:hover{border-color:rgba(255,255,255,.15)}
-.pc-num{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:12px}
-.pc h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:8px;line-height:1.4}
-.pc p{font-size:13px;color:rgba(255,255,255,.5);line-height:1.7}
-.cascade{margin-top:12px;font-size:11.5px;color:rgba(255,255,255,.3);font-style:italic;line-height:1.6;border-top:1px solid rgba(255,255,255,.06);padding-top:10px}
-.cascade em{color:var(--gold);font-style:normal}
-
-/* ROLE SECTION */
-.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
-.role-diagram{background:var(--primary);border:1px solid rgba(255,255,255,.1);border-radius:var(--rl);padding:28px;box-shadow:0 20px 60px rgba(0,0,0,.15)}
-.rd-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.3);margin-bottom:18px}
-.rd-person{display:flex;align-items:center;gap:12px;margin-bottom:14px;padding:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px}
-.rd-avatar{width:36px;height:36px;border-radius:10px;background:rgba(0,230,118,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.rd-name{font-size:13px;font-weight:700;color:#fff;margin-bottom:4px}
-.rd-roles{display:flex;gap:6px;flex-wrap:wrap}
-.rd-role{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px}
-.rd-role.rm{background:rgba(0,230,118,.15);color:var(--accent)}
-.rd-role.ops{background:rgba(255,215,0,.12);color:var(--gold)}
-.rd-role.svc{background:rgba(99,102,241,.15);color:#818cf8}
-.rd-role.admin{background:rgba(239,68,68,.12);color:#ff7878}
-.rd-before .rd-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#ef4444;margin-bottom:10px}
-.rd-after .rd-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:10px;margin-top:16px}
-.rd-sep{border:none;border-top:1px solid rgba(255,255,255,.07);margin:14px 0}
-.role-points{list-style:none;display:flex;flex-direction:column;gap:16px}
-.role-points li{font-size:14px;color:var(--muted);padding-left:22px;position:relative;line-height:1.7}
-.role-points li::before{content:'';position:absolute;left:4px;top:9px;width:7px;height:7px;border-radius:50%;background:var(--accent)}
-.role-points li strong{color:var(--text)}
-
-/* WORKFLOW */
-.wf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.wf-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:24px 20px;box-shadow:0 2px 12px rgba(0,0,0,.04);transition:box-shadow .2s,transform .2s}
-.wf-card:hover{box-shadow:0 10px 36px rgba(0,0,0,.09);transform:translateY(-2px)}
-.wf-icon{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
-.wf-card h4{font-size:14px;font-weight:700;color:var(--primary);margin-bottom:8px}
-.wf-card p{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:12px}
-.wf-badge{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:20px;display:inline-block}
-.wf-badge.acc{background:rgba(0,200,83,.1);color:var(--accent-dark)}
-.wf-badge.gold{background:rgba(255,215,0,.1);color:#b8860b}
-.wf-badge.blue{background:rgba(99,102,241,.1);color:#6366f1}
-
-/* INTERACTIVE DEMO */
-.demo-wrap{background:var(--primary);border-radius:var(--rl);padding:40px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
-.demo-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
-.slider-group{margin-bottom:24px}
-.slider-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.slider-label span{font-size:13px;color:rgba(255,255,255,.6)}
-.slider-label .sv{font-size:18px;font-weight:800;color:var(--accent);font-family:'JetBrains Mono',monospace}
-.slider-input{-webkit-appearance:none;width:100%;height:6px;border-radius:3px;background:rgba(255,255,255,.1);outline:none}
-.slider-input::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 2px 8px rgba(0,230,118,.4)}
-.demo-results{display:flex;flex-direction:column;gap:16px}
-.demo-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:20px}
-.demo-card .dc-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.35);margin-bottom:8px}
-.demo-card .dc-val{font-size:28px;font-weight:900;color:#fff;line-height:1}
-.demo-card .dc-val.red{color:#FF5F57}
-.demo-card .dc-val.green{color:var(--accent)}
-.demo-card .dc-sub{font-size:12px;color:rgba(255,255,255,.4);margin-top:6px}
-.demo-card.highlight{border-color:rgba(0,230,118,.3);background:rgba(0,230,118,.06)}
-.demo-note{margin-top:20px;font-size:12px;color:rgba(255,255,255,.3);line-height:1.7}
-
-/* BI SECTION */
-.bi-wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
-.bi-dash{background:var(--primary);border:1px solid rgba(255,255,255,.1);border-radius:var(--rl);overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.35)}
-.bi-bar{background:rgba(255,255,255,.06);padding:12px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,.06)}
-.bdot{width:11px;height:11px;border-radius:50%}
-.bd1{background:#FF5F57}.bd2{background:#FFBD2E}.bd3{background:#28C840}
-.bi-body{padding:18px}
-.bi-title-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.bi-title{font-size:12px;font-weight:700;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.08em}
-.bi-live{font-size:10px;color:var(--accent);font-weight:700;background:rgba(0,230,118,.1);padding:2px 8px;border-radius:20px}
-.bi-kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
-.bkpi{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:10px}
-.bkpi .bv{font-size:15px;font-weight:800;color:#fff}
-.bkpi .bl{font-size:10px;color:rgba(255,255,255,.35);margin-top:3px;text-transform:uppercase;letter-spacing:.05em}
-.bkpi .bc{font-size:10px;font-weight:700;margin-top:4px}
-.bkpi .bc.up{color:var(--accent)}
-.bkpi .bc.warn{color:var(--gold)}
-.bi-alerts{display:flex;flex-direction:column;gap:7px}
-.bi-alert{display:flex;align-items:flex-start;gap:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:10px 12px}
-.ba-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:5px}
-.ba-dot.g{background:var(--accent)}.ba-dot.y{background:var(--gold)}.ba-dot.r{background:#FF5F57}
-.ba-text{font-size:12px;color:rgba(255,255,255,.65);line-height:1.55}
-.ba-text strong{color:#fff}
-.bi-points{list-style:none;display:flex;flex-direction:column;gap:16px}
-.bi-points li{font-size:14px;color:var(--muted);padding-left:22px;position:relative;line-height:1.7}
-.bi-points li::before{content:'';position:absolute;left:4px;top:9px;width:7px;height:7px;border-radius:50%;background:var(--accent)}
-.bi-points li strong{color:var(--text)}
-
-/* CHAT PREVIEW */
-.chat-window{background:var(--primary);border:1px solid rgba(255,255,255,.1);border-radius:var(--rl);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.25);max-width:560px;margin:0 auto}
-.chat-bar{background:rgba(255,255,255,.06);padding:14px 20px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.06)}
-.chat-avatar{width:32px;height:32px;border-radius:50%;background:rgba(0,230,118,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.chat-name{font-size:13px;font-weight:700;color:#fff}
-.chat-status{font-size:10px;color:var(--accent)}
-.chat-body{padding:20px;display:flex;flex-direction:column;gap:14px;max-height:400px;overflow-y:auto}
-.chat-msg{max-width:85%;padding:12px 16px;border-radius:14px;font-size:13px;line-height:1.65}
-.chat-msg.user{background:rgba(0,230,118,.12);color:rgba(255,255,255,.85);align-self:flex-end;border-bottom-right-radius:4px}
-.chat-msg.ai{background:rgba(255,255,255,.08);color:rgba(255,255,255,.75);align-self:flex-start;border-bottom-left-radius:4px}
-.chat-msg strong{color:#fff}
-.chat-input{padding:14px 20px;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:10px}
-.chat-input input{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:60px;padding:10px 18px;font-size:13px;color:rgba(255,255,255,.3);font-family:'Inter',sans-serif;outline:none}
-
-/* BEFORE AFTER */
-.ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
-.ba-col{border-radius:var(--r);padding:28px 24px}
-.ba-col.before{background:#fef2f2;border:1.5px solid rgba(239,68,68,.15)}
-.ba-col.after{background:rgba(0,200,83,.05);border:1.5px solid rgba(0,200,83,.2)}
-.ba-head{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:800;margin-bottom:20px}
-.ba-head.before{color:#ef4444}
-.ba-head.after{color:var(--accent-dark)}
-.ba-items{list-style:none;display:flex;flex-direction:column;gap:12px}
-.ba-items li{font-size:13.5px;color:var(--text);line-height:1.65;padding-left:20px;position:relative}
-.ba-col.before .ba-items li::before{content:'';position:absolute;left:2px;top:7px;width:10px;height:10px;border:2px solid #ef4444;border-radius:50%}
-.ba-col.after .ba-items li::before{content:'';position:absolute;left:2px;top:7px;width:10px;height:10px;background:var(--accent-dark);border-radius:50%}
-.ba-person{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;padding:3px 10px;border-radius:20px;background:rgba(0,0,0,.05);color:var(--muted)}
-
-/* PHASES */
-.phases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.ph-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:28px 24px;position:relative;box-shadow:0 2px 12px rgba(0,0,0,.04)}
-.ph-num{position:absolute;top:-14px;left:20px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 12px;border-radius:20px;border:1px solid var(--border);background:#fff;color:var(--muted)}
-.ph-weeks{font-size:12px;color:var(--muted);margin-bottom:10px;font-weight:600}
-.ph-title{font-size:17px;font-weight:800;color:var(--primary);margin-bottom:14px}
-.ph-items{list-style:none;display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
-.ph-items li{font-size:13px;color:var(--muted);padding-left:16px;position:relative}
-.ph-items li::before{content:'';position:absolute;left:2px;top:8px;width:5px;height:5px;border-radius:50%;background:var(--accent-dark)}
-.ph-milestone{background:rgba(0,200,83,.07);border:1.5px solid rgba(0,200,83,.22);border-radius:var(--r);padding:16px;display:flex;justify-content:space-between;align-items:center}
-.ph-milestone .pm-label{font-size:12px;font-weight:700;color:var(--accent-dark)}
-.ph-milestone .pm-amt{font-size:17px;font-weight:800;color:var(--primary)}
+/* MODULE CARDS */
+.mod-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.mod-card{border:1px solid var(--border);border-radius:var(--rl);padding:32px;position:relative;overflow:hidden;transition:box-shadow .3s,transform .2s}
+.mod-card:hover{box-shadow:0 8px 32px rgba(0,0,0,.08);transform:translateY(-2px)}
+.mod-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-dark))}
+.mod-num{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-dark);margin-bottom:10px}
+.mod-card h3{font-size:17px;font-weight:800;color:var(--primary);margin-bottom:10px;line-height:1.3}
+.mod-desc{font-size:13.5px;color:var(--muted);line-height:1.7;margin-bottom:16px}
+.feat-list{list-style:none;display:flex;flex-direction:column;gap:7px}
+.feat-list li{font-size:13px;color:var(--text);padding-left:18px;position:relative;line-height:1.6}
+.feat-list li::before{content:'';position:absolute;left:2px;top:8px;width:6px;height:6px;border-radius:50%;background:var(--accent-dark)}
+.mod-card.full{grid-column:1/-1}
+.mod-card.ai::before{background:linear-gradient(90deg,#6B46C1,#9F7AEA)}
+.mod-card.ai .mod-num{color:#6B46C1}
+.mod-card.gold::before{background:linear-gradient(90deg,#D4A843,#E8BF5A)}
+.mod-card.gold .mod-num{color:#D4A843}
 
 /* PRICING */
-.pricing-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;max-width:920px}
+.price-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;max-width:920px}
 .price-card{border-radius:var(--rl);padding:36px 32px;border:1.5px solid var(--border);background:#fff;box-shadow:0 4px 24px rgba(0,0,0,.06);position:relative}
 .price-card.featured{border-color:var(--accent);background:linear-gradient(160deg,rgba(0,230,118,.03) 0%,#fff 100%);box-shadow:0 12px 48px rgba(0,230,118,.08)}
 .rec-badge{position:absolute;top:-14px;right:24px;background:var(--accent);color:var(--primary-dark);font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:5px 16px;border-radius:20px;box-shadow:0 4px 12px rgba(0,230,118,.3)}
@@ -228,1041 +79,486 @@ section{padding:88px 40px}
 .amc-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent-dark);margin-bottom:6px}
 .amc-val{font-size:26px;font-weight:900;color:var(--primary)}
 .amc-sub{font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.65}
-.vps-box{background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-top:14px}
-.vps-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px}
-.vps-val{font-size:17px;font-weight:800;color:var(--text)}
-.vps-sub{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.6}
 .incl-list{list-style:none;display:flex;flex-direction:column;gap:8px}
 .incl-list li{font-size:13px;color:var(--muted);padding-left:22px;position:relative}
 .incl-list li::before{content:'';position:absolute;left:2px;top:7px;width:10px;height:10px;background:var(--accent-dark);border-radius:50%}
 
-/* FAQ */
-.faq-wrap{max-width:780px;display:flex;flex-direction:column;gap:10px}
-.faq-item{border:1px solid rgba(255,255,255,.1);border-radius:var(--r);overflow:hidden;transition:border-color .2s}
-.faq-item.open{border-color:rgba(0,230,118,.3)}
-.faq-q{width:100%;padding:18px 22px;background:rgba(255,255,255,.04);border:none;cursor:pointer;text-align:left;font-size:14px;font-weight:600;color:#fff;font-family:'Inter',sans-serif;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.faq-q .arr{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;transition:transform .2s,background .2s;flex-shrink:0}
-.faq-item.open .faq-q .arr{transform:rotate(180deg);background:rgba(0,230,118,.12)}
-.faq-a{display:none;padding:0 22px 18px;font-size:13.5px;color:rgba(255,255,255,.55);line-height:1.85;border-top:1px solid rgba(255,255,255,.06)}
-.faq-item.open .faq-a{display:block;padding-top:14px}
+/* SUPPORT */
+.support-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.sup-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:22px}
+.sup-card h4{font-size:14px;font-weight:700;color:var(--primary);margin-bottom:6px}
+.sup-card p{font-size:12.5px;color:var(--muted);line-height:1.65}
 
-/* SCOPE */
-.scope-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.scope-card{border-radius:var(--r);padding:28px 24px}
-.scope-card.included{background:rgba(0,200,83,.05);border:1.5px solid rgba(0,200,83,.2)}
-.scope-card.excluded{background:rgba(239,68,68,.04);border:1.5px solid rgba(239,68,68,.12)}
-.scope-card h3{font-size:15px;font-weight:700;margin-bottom:16px}
-.scope-card.included h3{color:var(--accent-dark)}
-.scope-card.excluded h3{color:#ef4444}
-.scope-items{list-style:none;display:flex;flex-direction:column;gap:8px}
-.scope-items li{font-size:13px;color:var(--muted);line-height:1.65;padding-left:22px;position:relative}
-.scope-card.included .scope-items li::before{content:'';position:absolute;left:2px;top:7px;width:10px;height:10px;background:var(--accent-dark);border-radius:50%}
-.scope-card.excluded .scope-items li::before{content:'';position:absolute;left:4px;top:9px;width:6px;height:6px;background:#ef4444;border-radius:50%}
+/* REVEAL */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.rv.vis{opacity:1;transform:none}
 
 /* CTA */
-.cta-s{background:linear-gradient(160deg,var(--primary-dark) 0%,var(--primary) 60%,var(--primary-light) 100%);padding:90px 40px;text-align:center}
-.cta-s h2{font-size:clamp(24px,3.5vw,40px);font-weight:900;color:#fff;margin-bottom:14px;letter-spacing:-.015em}
-.cta-s p{font-size:15px;color:rgba(255,255,255,.45);max-width:440px;margin:0 auto 36px;line-height:1.85}
-.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
-.csig{display:flex;flex-direction:column;align-items:center;gap:4px}
-.csig .cn{font-size:13px;font-weight:600;color:rgba(255,255,255,.5)}
-.csig .cg{font-size:11px;color:rgba(255,255,255,.2);font-family:'JetBrains Mono',monospace}
-
-/* SOW */
-.sow-wrap{background:var(--primary);min-height:100vh}
-.sow-doc{max-width:960px;margin:0 auto;padding:48px 40px}
-.sow-hdr{border-bottom:2px solid rgba(255,255,255,.1);padding-bottom:32px;margin-bottom:40px}
-.sow-hdr h1{font-size:26px;font-weight:900;color:#fff;margin-bottom:18px}
-.sow-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.smi .sk{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.3);margin-bottom:4px}
-.smi .sv{font-size:13px;color:rgba(255,255,255,.75);font-weight:600}
-.sow-sec{margin-bottom:44px}
-.sow-sec h2{font-size:17px;font-weight:800;color:#fff;border-left:3px solid var(--accent);padding-left:14px;margin-bottom:22px}
-.sph{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--r);padding:24px;margin-bottom:16px}
-.sph-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px}
-.sph-title{font-size:15px;font-weight:800;color:#fff}
-.sph-wks{font-size:11px;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.2);color:var(--accent);padding:3px 12px;border-radius:20px;font-weight:700}
-.sh5{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.3);margin-bottom:8px;margin-top:14px}
-.sh5:first-of-type{margin-top:0}
-.sdl{list-style:none;display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
-.sdl li{font-size:12.5px;color:rgba(255,255,255,.65);padding-left:16px;position:relative}
-.sdl li::before{content:'';position:absolute;left:2px;top:8px;width:5px;height:5px;border-radius:50%;background:var(--accent)}
-.sac{background:rgba(0,230,118,.05);border:1px solid rgba(0,230,118,.12);border-radius:8px;padding:14px}
-.sac p{font-size:12px;color:rgba(255,255,255,.45);line-height:1.7;margin-bottom:3px}
-.sac p:last-child{margin-bottom:0}
-.sac p strong{color:var(--accent)}
-.stbl{width:100%;border-collapse:collapse;font-size:12.5px}
-.stbl th{text-align:left;padding:11px 14px;background:rgba(255,255,255,.04);color:rgba(255,255,255,.3);font-size:10px;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid rgba(255,255,255,.06)}
-.stbl td{padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:rgba(255,255,255,.65);vertical-align:top}
-.stbl tr:last-child td{border-bottom:none}
-.stbl td.in{color:var(--accent)}
-.stbl td.out{color:#FF5F57}
-
-/* CANVAS */
-.canvas-wrap{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--r);padding:20px;margin-top:16px}
-.canvas-wrap canvas{width:100%;display:block;border-radius:8px}
-
-/* FLOATING WA */
-.wa-float{position:fixed;bottom:28px;right:28px;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);cursor:pointer;text-decoration:none;z-index:999;transition:transform .2s,box-shadow .2s}
-.wa-float:hover{transform:scale(1.08);box-shadow:0 8px 32px rgba(37,211,102,.5)}
+.cta-s{background:linear-gradient(160deg,var(--primary-dark),var(--primary) 60%,var(--primary-light));padding:80px 40px;text-align:center}
 
 /* RESPONSIVE */
-@media(max-width:900px){
-  .hero-grid,.role-grid,.bi-wrap,.ba-grid,.pricing-grid,.scope-grid,.demo-grid{grid-template-columns:1fr}
-  .h-panel{display:none}
-  .pain-cards,.wf-grid,.phases-grid{grid-template-columns:1fr 1fr}
-  section{padding:60px 24px}
-  .sow-meta{grid-template-columns:1fr 1fr}
-}
-@media(max-width:600px){
-  .pain-cards,.wf-grid,.phases-grid,.h-stats{grid-template-columns:1fr}
-  .tnav{padding:0 16px}
-  .sow-doc{padding:32px 20px}
-  .hero{padding:64px 24px 56px}
-}
-@media print{
-  .tnav,.wa-float,.demo-wrap,.bi-dash,.role-diagram,.chat-window{display:none!important}
-  .rv{opacity:1!important;transform:none!important}
-  .tc{display:block!important}
-  section{padding:32px 20px!important;break-inside:avoid}
-}
+@media(max-width:900px){.mod-grid,.price-grid{grid-template-columns:1fr}.support-grid{grid-template-columns:1fr 1fr}section{padding:56px 24px}.mod-card.full{grid-column:auto}}
+@media(max-width:600px){.support-grid,.h-kpis{grid-template-columns:1fr}.hero{padding:64px 24px 56px}}
+@media print{.rv{opacity:1!important;transform:none!important}section{padding:32px 20px!important;break-inside:avoid}}
 </style>
 </head>
 <body>
 
-<!-- TAB NAV -->
-<nav class="tnav">
-  <div class="tbrand">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00E676" stroke-width="2.5" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-    ACORN <span>WEALTH</span>
-  </div>
-  <button class="tbtn active" onclick="swTab('proposal')">Proposal</button>
-  <button class="tbtn" onclick="swTab('sow')">Scope of Work</button>
-</nav>
-
-<!-- ════════════ PROPOSAL TAB ════════════ -->
-<div id="tab-proposal" class="tc active">
-
-<!-- 1. HERO -->
+<!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="h-badge">Purpose-Built MFD Platform — March 2026</div>
-    <div class="hero-grid">
-      <div>
-        <h1>Complete Control Over Your<br><span class="acc">Mutual Fund Business.</span></h1>
-        <p class="h-sub">One system. Every role, every transaction type, every compliance check — in one login. Software that drives decisions for your RMs.</p>
-        <div class="h-meta">
-          <span>For <strong>Mr. Prasad Sangam, Acorn Wealth</strong></span>
-          <span>By <strong>Tranquil Veda Private Limited</strong></span>
-        </div>
-        <div class="h-btns">
-          <a href="#pricing" class="btn-p">View Investment</a>
-          <button class="btn-o" onclick="swTab('sow')">Scope of Work</button>
-        </div>
-      </div>
-      <div class="h-panel">
-        <div class="h-panel-title">The Problem Today</div>
-        <div class="h-stats">
-          <div class="hs"><div class="v">15 <em>logins</em></div><div class="l">for a 5-person team doing 3 roles each</div></div>
-          <div class="hs"><div class="v">7 <em>types</em></div><div class="l">of transactions. One generic form for all.</div></div>
-          <div class="hs"><div class="v">0 <em>triggers</em></div><div class="l">from Investwell reports. Data without intelligence.</div></div>
-          <div class="hs"><div class="v">30-40<em>%</em></div><div class="l">of RM time spent on admin, not clients.</div></div>
-        </div>
-        <div class="h-insight"><strong>The core problem:</strong> AMFI, BSE, Investwell, KYC — the tools exist. What doesn't exist is a single system that connects them, enforces your compliance, and tells your RMs what to do next.</div>
-      </div>
+    <div class="h-badge">Scope of Work — March 2026</div>
+    <h1>A Complete Platform for<br><span class="acc">Mutual Fund Distribution.</span></h1>
+    <p class="h-sub">A proprietary business operating system built exclusively for Acorn Wealth — covering every investor, every transaction, every compliance check, and every team workflow in one unified platform.</p>
+    <div class="h-meta">
+      <span>For <strong>Mr. Prasad Sangam, Acorn Wealth</strong></span>
+      <span>By <strong>Tranquil Veda Private Limited</strong></span>
+    </div>
+    <div class="h-kpis">
+      <div class="h-kpi"><div class="kv">18</div><div class="kl">Screens</div></div>
+      <div class="h-kpi"><div class="kv">52+</div><div class="kl">Transaction Types</div></div>
+      <div class="h-kpi"><div class="kv">25+</div><div class="kl">Automated Workflows</div></div>
+      <div class="h-kpi"><div class="kv">4</div><div class="kl">Integrations</div></div>
+      <div class="h-kpi"><div class="kv">22</div><div class="kl">Users Supported</div></div>
     </div>
   </div>
-  <svg class="hero-svg" viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="height:60px;display:block">
-    <path d="M0,40 Q360,0 720,30 T1440,20 L1440,60 L0,60Z" fill="rgba(0,230,118,0.04)"/>
-    <path d="M0,50 Q360,20 720,45 T1440,35 L1440,60 L0,60Z" fill="rgba(0,230,118,0.025)"/>
-  </svg>
 </section>
 
-<!-- 2. PAIN SECTION -->
-<section class="ds">
+<!-- PLATFORM OVERVIEW -->
+<section>
   <div class="inner">
-    <div class="st rv">Why Generic CRMs Break for MFDs</div>
-    <p class="pain-lede rv">Zoho Creator is an excellent general-purpose platform. It was never built to understand what a mutual fund distributor does on a <span class="acc">Tuesday afternoon</span>.</p>
-
-    <div class="hook-box rv">
-      <div class="hook-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00E676" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      </div>
-      <div class="hook-text"><strong>The 15-login problem:</strong> In a 5-person MFD firm where each person wears 3 roles (RM, Operations, Service RM), Zoho requires 15 separate logins. This isn't a configuration problem. It's a fundamental design mismatch — Zoho assumes one person does one job.</div>
-    </div>
-
-    <div class="pain-cards">
-      <div class="pc rv">
-        <div class="pc-num">Pain 01</div>
-        <h4>One RM cannot hold Service RM + Operations access simultaneously</h4>
-        <p>Your team switches logins multiple times a day. Every switch is a context break, a delay, and a chance for something to slip.</p>
-        <div class="cascade">This leads to <em>slower client service</em> and attrition tied to the person, not the firm</div>
-      </div>
-      <div class="pc rv">
-        <div class="pc-num">Pain 02</div>
-        <h4>The software is passive. Your RMs are the system.</h4>
-        <p>No pop-up when an SIP is about to lapse. No alert when a KYC expires. No guided step for a transaction type a junior RM has never processed before.</p>
-        <div class="cascade">This leads to <em>missed renewals, compliance gaps</em> and the owner can never step back from operations</div>
-      </div>
-      <div class="pc rv">
-        <div class="pc-num">Pain 03</div>
-        <h4>Investwell gives you reports. Not intelligence.</h4>
-        <p>Your data contains every insight your business needs. None of it gets actioned because there's no layer between "report exists" and "RM does something about it."</p>
-        <div class="cascade">This leads to <em>reactive decisions</em> and AUM attrition mistaken for market conditions</div>
-      </div>
-      <div class="pc rv">
-        <div class="pc-num">Pain 04</div>
-        <h4>Data entry consumes the hours that should go to clients</h4>
-        <p>Generic forms require manual AMFI/BSE data entry. No smart defaults. No auto-population. RMs spend 30-40% of working hours on admin.</p>
-        <div class="cascade">This leads to <em>RM burnout, incomplete records</em> and BI built on data you can't trust</div>
-      </div>
-      <div class="pc rv">
-        <div class="pc-num">Pain 05</div>
-        <h4>7 transaction types handled by 1 generic form</h4>
-        <p>An SIP registration, a switch, a redemption, an STP — each has different compliance steps. Zoho's one-size form verifies none of them.</p>
-        <div class="cascade">This leads to <em>compliance gaps</em> and the owner discovers missed steps months later</div>
-      </div>
-      <div class="pc rv">
-        <div class="pc-num">Pain 06</div>
-        <h4>If your senior RM leaves, so does your client's history</h4>
-        <p>No cross-portfolio visibility. When a client calls and their RM is unavailable, the next person has no context — no recent conversations, no pending transactions.</p>
-        <div class="cascade">This leads to <em>client service gaps</em> and the business being worth less than its AUM</div>
-      </div>
-    </div>
+    <div class="st rv">Platform Overview</div>
+    <h2 class="sh rv">What This Platform Does</h2>
+    <p class="ss rv">This is a purpose-built business operating system for mutual fund distributors. It manages your complete investor lifecycle — from the first prospect meeting to ongoing portfolio reviews — with intelligent automation that tells your team what to do next, enforces compliance at every step, and gives the business owner live visibility into every metric that matters. Below is the complete scope of what is being built.</p>
   </div>
 </section>
 
-<!-- 3. ROLE ARCHITECTURE -->
-<section style="background:var(--bg)">
-  <div class="inner">
-    <div class="role-grid">
-      <div>
-        <div class="st rv">Role Architecture</div>
-        <h2 class="sh rv">One login. Every hat.</h2>
-        <p style="font-size:15px;color:var(--muted);line-height:1.85;margin-bottom:28px" class="rv">Built around how lean MFD teams actually work — not how enterprise software thinks they should.</p>
-        <ul class="role-points rv">
-          <li><strong>Priya logs in once.</strong> She sees her RM task queue, the Ops pending approvals, and the client portfolios she services — all in one view.</li>
-          <li><strong>Permissions flex by context, not by label.</strong> An Admin can narrow their view to act as an RM when needed. No system administrator needed.</li>
-          <li><strong>New RMs onboard in days, not months.</strong> The system shows them what to do next at every step. No tribal knowledge required.</li>
-          <li><strong>Cross-portfolio visibility — firm-level, not RM-level.</strong> When a client calls, any authorized team member can see their full history.</li>
-        </ul>
-      </div>
-      <div class="rv">
-        <div class="role-diagram">
-          <div class="rd-title">Before: Zoho Creator</div>
-          <div class="rd-before">
-            <div class="rd-lbl">15 logins for 5 people</div>
-            <div class="rd-person">
-              <div class="rd-avatar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00E676" stroke-width="2.5" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-              <div>
-                <div class="rd-name">Priya</div>
-                <div class="rd-roles"><span class="rd-role rm">RM login</span><span class="rd-role ops">Ops login</span><span class="rd-role svc">Svc login</span></div>
-              </div>
-            </div>
-            <div class="rd-person">
-              <div class="rd-avatar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-              <div>
-                <div class="rd-name">Rahul</div>
-                <div class="rd-roles"><span class="rd-role rm">RM login</span><span class="rd-role admin">Admin login</span></div>
-              </div>
-            </div>
-            <div style="font-size:11px;color:rgba(255,255,255,.25);margin-top:8px;padding:8px;background:rgba(239,68,68,.06);border-radius:6px;border:1px solid rgba(239,68,68,.12)">Cannot hold multiple roles simultaneously. Switching accounts all day.</div>
-          </div>
-          <hr class="rd-sep"/>
-          <div class="rd-after">
-            <div class="rd-lbl">After: Proprietary Platform</div>
-            <div class="rd-person">
-              <div class="rd-avatar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00E676" stroke-width="2.5" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-              <div>
-                <div class="rd-name">Priya — Single Login</div>
-                <div class="rd-roles"><span class="rd-role rm">RM</span><span class="rd-role ops">Ops</span><span class="rd-role svc">Service RM</span></div>
-              </div>
-            </div>
-            <div class="rd-person">
-              <div class="rd-avatar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-              <div>
-                <div class="rd-name">Rahul — Single Login</div>
-                <div class="rd-roles"><span class="rd-role rm">RM</span><span class="rd-role admin">Admin</span></div>
-              </div>
-            </div>
-            <div style="font-size:11px;color:rgba(0,230,118,.6);margin-top:8px;padding:8px;background:rgba(0,230,118,.06);border-radius:6px;border:1px solid rgba(0,230,118,.15)">All roles, all views, one session. Context switches in 1 click, not 1 logout.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 4. GUIDED WORKFLOWS -->
+<!-- MODULES -->
 <section class="alts">
   <div class="inner">
-    <div class="st rv">Smart Workflow Engine</div>
-    <h2 class="sh rv">The system guides. RMs don't guess.</h2>
-    <p class="ss rv">Every transaction type has its own enforced workflow. Every RM gets a proactive action queue. The software thinks ahead so your team doesn't have to.</p>
-    <div class="wf-grid">
-      <div class="wf-card rv">
-        <div class="wf-icon" style="background:rgba(0,200,83,.1)">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00C853" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-        </div>
-        <h4>7 Transaction Types, 7 Distinct Workflows</h4>
-        <p>SIP, SWP, New Purchase, Redemption, Switch, STP, NFO — each has its own compliance checklist and validation rules. A switch cannot be submitted without verifying exit load.</p>
-        <span class="wf-badge acc">Compliance-enforced</span>
-      </div>
-      <div class="wf-card rv">
-        <div class="wf-icon" style="background:rgba(255,215,0,.1)">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2" stroke-linecap="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
-        </div>
-        <h4>Proactive RM Action Queue</h4>
-        <p>Every RM logs in to a prioritised list. SIP lapses flagged 30/15/7 days ahead. KYC renewals queued 60 days out. Dormant clients surfaced automatically.</p>
-        <span class="wf-badge gold">Zero hand-holding needed</span>
-      </div>
-      <div class="wf-card rv">
-        <div class="wf-icon" style="background:rgba(99,102,241,.1)">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
-        </div>
-        <h4>Contextual Pop-ups and Smart Nudges</h4>
-        <p>Mid-form, the system surfaces current NAV, mandate status, KYC validity, prior transaction history. Data entry drops from 45 minutes to 12 minutes per transaction.</p>
-        <span class="wf-badge blue">Context-aware</span>
-      </div>
-      <div class="wf-card rv">
-        <div class="wf-icon" style="background:rgba(0,200,83,.1)">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00C853" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        </div>
-        <h4>Review and Follow-up Automation</h4>
-        <p>Portfolio review cycles tracked per investor. Follow-up tasks from prior meetings are auto-created from meeting notes — no manual task entry.</p>
-        <span class="wf-badge acc">Relationship continuity</span>
-      </div>
-      <div class="wf-card rv">
-        <div class="wf-icon" style="background:rgba(255,215,0,.1)">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <h4>Ops Approval with Full Audit Trail</h4>
-        <p>Every transaction requiring Ops sign-off enters an approval queue with timestamps, notes, and a full change history. SEBI audit-ready always.</p>
-        <span class="wf-badge gold">Audit-ready always</span>
-      </div>
-      <div class="wf-card rv">
-        <div class="wf-icon" style="background:rgba(99,102,241,.1)">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        </div>
-        <h4>New RM Onboarding in Days, Not Months</h4>
-        <p>The system encodes your firm's process knowledge. A new RM on Day 1 sees exactly what to do for every transaction type. Onboarding cost drops to near zero.</p>
-        <span class="wf-badge blue">Self-guided learning</span>
-      </div>
-    </div>
-  </div>
-</section>
+    <div class="st rv">Complete Module Breakdown</div>
+    <h2 class="sh rv">17 Modules. Every Feature Listed.</h2>
+    <p class="ss rv">Each module below is a fully functional part of the platform. This is not a feature wishlist — every item listed here will be delivered, tested, and operational at go-live.</p>
 
-<!-- 5. INTERACTIVE DEMO: COST SAVINGS CALCULATOR -->
-<section class="ds">
-  <div class="inner">
-    <div class="st rv">Interactive Demo</div>
-    <h2 class="sh rv" style="color:#fff">Calculate Your Zoho Replacement Savings</h2>
-    <p class="ss rv">Adjust the sliders below to see what switching from Zoho Creator to a proprietary platform saves you.</p>
-    <div class="demo-wrap rv">
-      <div class="demo-grid">
-        <div>
-          <div class="slider-group">
-            <div class="slider-label"><span>Team Size</span><span class="sv" id="sv-team">22</span></div>
-            <input type="range" class="slider-input" id="sl-team" min="5" max="50" value="22"/>
-          </div>
-          <div class="slider-group">
-            <div class="slider-label"><span>Zoho Cost Per User / Year</span><span class="sv" id="sv-cost">15,000</span></div>
-            <input type="range" class="slider-input" id="sl-cost" min="8000" max="25000" step="500" value="15000"/>
-          </div>
-          <div class="slider-group">
-            <div class="slider-label"><span>Years of Operation</span><span class="sv" id="sv-years">3</span></div>
-            <input type="range" class="slider-input" id="sl-years" min="1" max="5" value="3"/>
-          </div>
-          <div class="canvas-wrap">
-            <canvas id="savings-chart" height="200"></canvas>
-          </div>
-        </div>
-        <div class="demo-results">
-          <div class="demo-card">
-            <div class="dc-label">Annual Zoho Cost</div>
-            <div class="dc-val red" id="res-zoho">Rs 3,30,000</div>
-            <div class="dc-sub">Recurring every year, growing with each hire</div>
-          </div>
-          <div class="demo-card highlight">
-            <div class="dc-label">Proprietary Platform — One-Time Build</div>
-            <div class="dc-val green" id="res-platform">Rs 4,50,000</div>
-            <div class="dc-sub">Fixed. No per-user pricing. Owned by you.</div>
-          </div>
-          <div class="demo-card">
-            <div class="dc-label">Cumulative Savings Over Period</div>
-            <div class="dc-val green" id="res-savings">Rs 5,40,000</div>
-            <div class="dc-sub" id="res-payback">Payback in 14 months from Zoho savings alone</div>
-          </div>
-        </div>
-      </div>
-      <div class="demo-note">* Platform build cost is fixed regardless of team size. Zoho cost scales linearly with every user added. Savings compound over time.</div>
-    </div>
-  </div>
-</section>
+    <div class="mod-grid">
 
-<!-- 6. BUSINESS INTELLIGENCE / DASHBOARD MOCKUP -->
-<section style="background:var(--bg)">
-  <div class="inner">
-    <div class="bi-wrap">
-      <div>
-        <div class="st rv">Business Intelligence Layer</div>
-        <h2 class="sh rv">From reports you download to triggers you act on.</h2>
-        <p style="font-size:15px;color:var(--muted);line-height:1.85;margin-bottom:28px" class="rv">Investwell gives you reports. AMFI gives you NAV data. BSE gives you transaction status. The platform ingests all of it and turns it into one question: <strong style="color:var(--text)">what should your team do today?</strong></p>
-        <ul class="bi-points rv">
-          <li><strong>Client health scores.</strong> Every investor is scored daily on SIP continuity, portfolio drift, last contact date, and KYC validity.</li>
-          <li><strong>SIP book visibility.</strong> Total SIP inflows by scheme, by RM, by month — live. Trail income forecast for the next 6 months.</li>
-          <li><strong>RM performance dashboard.</strong> AUM movement, client acquisition vs. attrition, task completion rates — visible to the owner without asking anyone.</li>
-          <li><strong>All data feeds into one system — automatically.</strong> AMFI NAV, CVL KRA KYC, BSE/NSE transaction status — no manual pull.</li>
+      <!-- Module 1 -->
+      <div class="mod-card rv">
+        <div class="mod-num">Module 01</div>
+        <h3>Investor Management</h3>
+        <p class="mod-desc">The central record of every investor family Acorn Wealth serves. Every detail — from PAN to bank accounts to investment history — accessible in seconds by any authorised team member.</p>
+        <ul class="feat-list">
+          <li>Complete investor database with PAN-based unique identification</li>
+          <li>Investor 360 profile — 6-tab deep view (Profile, Tasks, Timeline, Folios, Reviews, Documents)</li>
+          <li>Family linking — group investors by family, show combined AUM</li>
+          <li>Tier classification — Platinum, Gold, Silver, Bronze — auto-calculated by AUM</li>
+          <li>Bank account details, nominee information, tax status tracking</li>
+          <li>Document storage — KYC forms, mandates, signatures, uploaded per investor</li>
+          <li>Advanced search — find any investor by name, PAN, phone, or email in under 2 seconds</li>
+          <li>Bulk import from CSV with duplicate detection and validation</li>
         </ul>
       </div>
-      <div class="rv">
-        <div class="bi-dash">
-          <div class="bi-bar">
-            <div class="bdot bd1"></div><div class="bdot bd2"></div><div class="bdot bd3"></div>
-            <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,.45);margin-left:10px">Owner Dashboard — Acorn Wealth</div>
-          </div>
-          <div class="bi-body">
-            <div class="bi-title-row">
-              <div class="bi-title">Business Overview</div>
-              <div class="bi-live">LIVE</div>
-            </div>
-            <div class="bi-kpi-row">
-              <div class="bkpi"><div class="bv">847</div><div class="bl">Investors</div><div class="bc up">+12 this week</div></div>
-              <div class="bkpi"><div class="bv">Rs 2.1L</div><div class="bl">Monthly Trail</div><div class="bc up">+4.2%</div></div>
-              <div class="bkpi"><div class="bv">23</div><div class="bl">Open Tasks</div><div class="bc warn">4 overdue</div></div>
-            </div>
-            <div class="bi-title-row" style="margin-top:14px">
-              <div class="bi-title">Smart Alerts — Action Required</div>
-            </div>
-            <div class="bi-alerts">
-              <div class="bi-alert"><div class="ba-dot g"></div><div class="ba-text"><strong>Priya Sharma:</strong> SIP mandate expires in 7 days. Rs 35,000/month at risk.</div></div>
-              <div class="bi-alert"><div class="ba-dot y"></div><div class="ba-text"><strong>Rajesh Mehta:</strong> 81% equity, age 61. Portfolio review overdue 3 months.</div></div>
-              <div class="bi-alert"><div class="ba-dot r"></div><div class="ba-text"><strong>3 KYC renewals</strong> due in 30 days. Transactions blocked if not renewed.</div></div>
-              <div class="bi-alert"><div class="ba-dot g"></div><div class="ba-text"><strong>STP opportunity:</strong> 4 clients have idle cash in liquid funds for 60+ days.</div></div>
-            </div>
-          </div>
-        </div>
+
+      <!-- Module 2 -->
+      <div class="mod-card rv">
+        <div class="mod-num">Module 02</div>
+        <h3>Transaction and Task Management</h3>
+        <p class="mod-desc">The operational core. Every mutual fund transaction — from SIP registration to redemption — is tracked as a task with a defined lifecycle, checklist, and owner.</p>
+        <ul class="feat-list">
+          <li>52+ pre-configured transaction types covering all MFD operations</li>
+          <li>Core: Purchase, SIP, SWP, STP, Switch, Redemption, NFO</li>
+          <li>Additional: KYC updates, mandate registration, folio consolidation, bank changes, nominee updates</li>
+          <li>8-stage enforced workflow: Created, Assigned to Ops, In Progress, OTP Pending, Pending Verification, Completed, Failed, Cancelled</li>
+          <li>Auto-generated checklists per transaction type — different steps for SIP vs Switch vs Redemption</li>
+          <li>Priority management (High / Medium / Low) with SLA tracking</li>
+          <li>Platform-specific routing — tasks auto-tagged for NSE, BSE, or MFU processing</li>
+          <li>Sub-task support for complex multi-step transactions</li>
+          <li>Auto-generated unique transaction numbers for tracking</li>
+          <li>Bulk task creation and status updates</li>
+        </ul>
       </div>
+
+      <!-- Module 3 -->
+      <div class="mod-card rv">
+        <div class="mod-num">Module 03</div>
+        <h3>Smart RM Action Queue</h3>
+        <p class="mod-desc">Every RM logs in to a prioritised list of actions. The system decides what needs attention — the RM focuses on execution, not on remembering deadlines.</p>
+        <ul class="feat-list">
+          <li>Proactive daily task queue — the system tells each RM who to call and why</li>
+          <li>SIP lapse alerts — flagged 30, 15, and 7 days before mandate expiry</li>
+          <li>KYC renewal warnings — queued 60 days before expiry</li>
+          <li>Mandate expiry detection — daily automated checks at 7 AM</li>
+          <li>Dormant client surfacing — investors with no contact in 60+ days highlighted</li>
+          <li>Birthday reminders — automated daily at 8 AM with auto-created Birthday Wishes task</li>
+          <li>Overdue task escalation — every 4 hours, stuck tasks are flagged to the owner</li>
+          <li>Portfolio review reminders — weekly alerts for upcoming and overdue reviews</li>
+        </ul>
+      </div>
+
+      <!-- Module 4 -->
+      <div class="mod-card rv">
+        <div class="mod-num">Module 04</div>
+        <h3>Business Intelligence and Dashboards</h3>
+        <p class="mod-desc">Live dashboards that give the business owner complete visibility — without asking anyone to pull a report or open a spreadsheet.</p>
+        <ul class="feat-list">
+          <li>Sales Dashboard — 10 live KPI cards: Total Investors, AUM, Calls Today, Reviews Due, Open Tasks, Completed Today, OTP Pending, SLA Breached, Avg TAT, Fresh Business</li>
+          <li>Fresh Business tracker — lumpsum + new SIPs this month vs target</li>
+          <li>Ongoing SIP Book — total monthly recurring SIP value</li>
+          <li>Analytics Dashboard — 6 intelligence tabs:</li>
+          <li>&nbsp;&nbsp;Overview: firm-wide metrics at a glance</li>
+          <li>&nbsp;&nbsp;Task Pipeline: transaction volume by type and status</li>
+          <li>&nbsp;&nbsp;NTA/ETA: New-to-Acorn vs Existing-to-Acorn business split</li>
+          <li>&nbsp;&nbsp;Compliance: KYC status, SLA adherence, document gaps</li>
+          <li>&nbsp;&nbsp;Targets: monthly/quarterly targets vs achievement by RM</li>
+          <li>&nbsp;&nbsp;Escalation: overdue tasks, SLA breaches, high-priority items</li>
+          <li>RM performance tracking — tasks completed, AUM managed, client acquisition vs attrition</li>
+        </ul>
+      </div>
+
+      <!-- Module 5 -->
+      <div class="mod-card rv">
+        <div class="mod-num">Module 05</div>
+        <h3>Prospect Pipeline</h3>
+        <p class="mod-desc">A structured pipeline for converting leads into investors. Every prospective client is tracked from first contact through conversion.</p>
+        <ul class="feat-list">
+          <li>7-stage sales funnel: New Lead, Contacted, Meeting Scheduled, Proposal Sent, Negotiation, Won, Lost</li>
+          <li>Source tracking — Referral, Digital, Event, Cold Call, Walk-In</li>
+          <li>Estimated AUM tracking per prospect</li>
+          <li>One-click conversion to investor — no data re-entry on onboarding</li>
+          <li>Activity history per prospect — every interaction logged</li>
+          <li>Kanban view of pipeline stages with drag-and-drop</li>
+          <li>Conversion rate tracking and source attribution analytics</li>
+        </ul>
+      </div>
+
+      <!-- Module 6 -->
+      <div class="mod-card rv">
+        <div class="mod-num">Module 06</div>
+        <h3>Portfolio Reviews</h3>
+        <p class="mod-desc">Systematic portfolio review scheduling ensures every investor family gets the periodic attention they deserve.</p>
+        <ul class="feat-list">
+          <li>Scheduled review system with status tracking (Scheduled, In Progress, Completed, Overdue)</li>
+          <li>Automatic next-review scheduling — 6-month cycles created on completion</li>
+          <li>Overdue review detection and escalation to business owner</li>
+          <li>Review agenda and meeting notes capture</li>
+          <li>Action item tracking from each review session</li>
+          <li>Review history per investor — permanent advisory record</li>
+          <li>Calendar integration — reviews visible alongside tasks and activities</li>
+        </ul>
+      </div>
+
+      <!-- Module 7 -->
+      <div class="mod-card rv">
+        <div class="mod-num">Module 07</div>
+        <h3>Communication and Activity Log</h3>
+        <p class="mod-desc">Every client interaction — call, meeting, email, note — is logged, timestamped, and linked to the investor's permanent record.</p>
+        <ul class="feat-list">
+          <li>6 activity types: Call, Meeting, Email, Note, Follow-up, Review</li>
+          <li>Complete interaction history per investor</li>
+          <li>Duration and outcome tracking for calls and meetings</li>
+          <li>Follow-up automation — system creates follow-up tasks from logged activities</li>
+          <li>Auto-activity creation on task status changes</li>
+          <li>Color-coded timeline view with filtering by type and date</li>
+          <li>Activity export for compliance and reporting</li>
+        </ul>
+      </div>
+
+      <!-- Module 8 -->
+      <div class="mod-card rv">
+        <div class="mod-num">Module 08</div>
+        <h3>Calendar</h3>
+        <p class="mod-desc">A unified calendar that shows everything happening across the firm — tasks, meetings, reviews, and birthdays — in one view.</p>
+        <ul class="feat-list">
+          <li>Monthly calendar grid with navigation</li>
+          <li>4 event sources: Task due dates, Activities, Portfolio Reviews, Investor Birthdays</li>
+          <li>Color-coded event indicators per type</li>
+          <li>Day detail panel — click any date to see full event list</li>
+          <li>Quick event creation from calendar view</li>
+          <li>Holiday calendar configuration for SLA calculations</li>
+        </ul>
+      </div>
+
+      <!-- Module 9 -->
+      <div class="mod-card rv">
+        <div class="mod-num">Module 09</div>
+        <h3>Kanban Board</h3>
+        <p class="mod-desc">A visual drag-and-drop board for the Operations team to manage transaction flow across all 8 status stages.</p>
+        <ul class="feat-list">
+          <li>8 status columns: Created through Completed, Failed, Cancelled</li>
+          <li>Drag-and-drop to move tasks between stages</li>
+          <li>Card details: transaction type, investor name, amount, platform, priority, date</li>
+          <li>Board view and List view toggle</li>
+          <li>Filter by transaction type, priority, assigned RM</li>
+          <li>Visual count per column for workload assessment</li>
+        </ul>
+      </div>
+
+      <!-- Module 10 — AI -->
+      <div class="mod-card ai rv">
+        <div class="mod-num">Module 10</div>
+        <h3>AI Meeting Processor</h3>
+        <p class="mod-desc">Upload a recording of any client meeting. The system transcribes it in full, extracts action items, and creates tasks automatically — reducing post-meeting admin from 60 minutes to under 5.</p>
+        <ul class="feat-list">
+          <li>Audio recording upload — meetings, calls, voice notes</li>
+          <li>Full automatic transcription of the recording</li>
+          <li>AI extracts action items, investment preferences, and follow-up tasks</li>
+          <li>One-click task creation from extracted items — linked to investor record</li>
+          <li>Client preference capture (risk tolerance changes, retirement plans, etc.)</li>
+          <li>Meeting history per investor — searchable archive</li>
+          <li>Text-based meeting input for quick notes processing</li>
+        </ul>
+      </div>
+
+      <!-- Module 11 — Data Scraping (FULL WIDTH) -->
+      <div class="mod-card full gold rv">
+        <div class="mod-num">Module 11</div>
+        <h3>Automated Report Downloading and Data Sync</h3>
+        <p class="mod-desc">The platform automatically logs into investor and AMC portals, downloads reports, parses the data, and syncs it into the system — eliminating hours of manual report downloading and spreadsheet work every week.</p>
+        <ul class="feat-list">
+          <li>Automated login to CAMS, Karvy/KFintech, and AMC portals</li>
+          <li>Scheduled report downloading — daily, weekly, or on-demand</li>
+          <li>Automatic data parsing and import into the platform</li>
+          <li>Portfolio valuation sync — current holdings, NAV, and value updated automatically</li>
+          <li>Transaction reconciliation — match platform records against downloaded statements</li>
+          <li>Mutual fund NAV price updates — daily automated sync from AMFI</li>
+          <li>SIP status sync — active, paused, cancelled SIPs detected from downloaded data</li>
+          <li>Capital gains data extraction for tax reporting</li>
+          <li>Error detection and discrepancy alerts when downloaded data doesn't match platform records</li>
+          <li>Complete history of all downloaded reports — searchable and exportable</li>
+        </ul>
+      </div>
+
+      <!-- Module 12 -->
+      <div class="mod-card rv">
+        <div class="mod-num">Module 12</div>
+        <h3>Compliance and Audit Trail</h3>
+        <p class="mod-desc">A complete, tamper-proof record of every action taken in the system — essential for SEBI inspections and internal reviews.</p>
+        <ul class="feat-list">
+          <li>Complete change tracking — who changed what, when, with before/after values</li>
+          <li>Filter by entity (Investor, Task, Prospect), action (Create, Update, Delete), user, and date</li>
+          <li>SEBI audit-ready reports — exportable compliance records</li>
+          <li>KYC compliance monitoring — status distribution across all investors</li>
+          <li>SLA breach tracking — which tasks exceeded turnaround time</li>
+          <li>User activity audit — complete history of each team member's actions</li>
+        </ul>
+      </div>
+
+      <!-- Module 13 -->
+      <div class="mod-card rv">
+        <div class="mod-num">Module 13</div>
+        <h3>Data Import and Migration</h3>
+        <p class="mod-desc">All existing data — investors, transactions, activities, prospects — migrated into the new platform with validation and zero data loss.</p>
+        <ul class="feat-list">
+          <li>CSV bulk import with column mapping interface</li>
+          <li>Automatic PAN-based duplicate detection</li>
+          <li>Validation reports showing errors per row before commit</li>
+          <li>Import history with status tracking</li>
+          <li>Support for Investor, Task, Prospect, and Activity imports</li>
+          <li>Complete migration from existing system — all historical data ported</li>
+          <li>Error log download for failed imports</li>
+        </ul>
+      </div>
+
+      <!-- Module 14 -->
+      <div class="mod-card rv">
+        <div class="mod-num">Module 14</div>
+        <h3>Notification System</h3>
+        <p class="mod-desc">Automated, event-driven alerts ensure nothing is missed by any team member.</p>
+        <ul class="feat-list">
+          <li>In-app real-time notification bell with unread count</li>
+          <li>Email notifications for task assignments, completions, and escalations</li>
+          <li>SIP mandate expiry reminders — 30/15/7 days ahead</li>
+          <li>KYC renewal alerts — 60 days ahead</li>
+          <li>Birthday notification — daily at 8 AM</li>
+          <li>Escalation alerts — overdue tasks flagged every 4 hours</li>
+          <li>Review due reminders — weekly for upcoming reviews</li>
+          <li>Notification history — read/unread management</li>
+        </ul>
+      </div>
+
+      <!-- Module 15 -->
+      <div class="mod-card rv">
+        <div class="mod-num">Module 15</div>
+        <h3>Settings and Administration</h3>
+        <p class="mod-desc">Full control over users, roles, templates, targets, holidays, and system configuration — managed by the business owner without technical support.</p>
+        <ul class="feat-list">
+          <li>User management — add, deactivate, assign roles for up to 22 users</li>
+          <li>4 roles: Super Admin, Admin, Relationship Manager, Operations</li>
+          <li>Transaction checklist template management — customise steps per transaction type</li>
+          <li>Holiday calendar configuration — affects SLA calculations automatically</li>
+          <li>Monthly/quarterly target setting per RM and per team</li>
+          <li>Integration credentials management</li>
+          <li>Organisation profile and branding</li>
+          <li>Data export and backup controls</li>
+        </ul>
+      </div>
+
+      <!-- Module 16 -->
+      <div class="mod-card rv">
+        <div class="mod-num">Module 16</div>
+        <h3>Order Placement Integration</h3>
+        <p class="mod-desc">Direct connection to the NSE NMF II platform for placing mutual fund orders and tracking their execution status in real time.</p>
+        <ul class="feat-list">
+          <li>Submit mutual fund orders directly from the platform</li>
+          <li>Real-time order status tracking — Pending, Executed, Rejected, Cancelled</li>
+          <li>Order-to-task linking — every order tied to its parent transaction</li>
+          <li>Automated execution confirmations</li>
+          <li>Status sync every 10 minutes — no manual checking needed</li>
+          <li>Secure encrypted communication with the exchange</li>
+        </ul>
+      </div>
+
+      <!-- Module 17 -->
+      <div class="mod-card rv">
+        <div class="mod-num">Module 17</div>
+        <h3>KYC Verification Integration</h3>
+        <p class="mod-desc">Real-time verification of investor KYC status against the central registry — no manual lookup, no separate portal login.</p>
+        <ul class="feat-list">
+          <li>Real-time PAN verification against CVL KRA (Central KYC Registry)</li>
+          <li>Auto-triggered on investor creation and transaction submission</li>
+          <li>KYC status auto-determination: Verified, Pending, On Hold, Rejected, Not Verified</li>
+          <li>Batch KYC validation — check status for all investors at once</li>
+          <li>KYC renewal tracking — flags investors approaching KYC expiry</li>
+          <li>Blocks transaction submission if KYC is not verified — compliance enforced by the system</li>
+        </ul>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- 7. AI CHAT PREVIEW -->
+<!-- WHAT'S INCLUDED -->
+<section>
+  <div class="inner">
+    <div class="st rv">Everything Included</div>
+    <h2 class="sh rv">What you receive at go-live.</h2>
+    <p class="ss rv">Beyond the 17 modules, the following is included in the engagement at no additional cost.</p>
+    <div class="rv" style="max-width:700px">
+      <ul class="incl-list">
+        <li>All 17 platform modules as described — fully functional and tested</li>
+        <li>Complete data migration from your existing system — all investor and transaction history</li>
+        <li>22-user provisioning — all team members set up with appropriate roles</li>
+        <li>Team training — 2-hour walkthrough session + recorded video for reference</li>
+        <li>30-day post go-live warranty — any bugs fixed at no charge</li>
+        <li>Source code delivered in a private repository controlled by Acorn Wealth</li>
+        <li>Custom domain deployment — platform accessible at your own domain</li>
+        <li>All 4 integrations configured, tested, and operational (KYC, NSE, AI, AMFI NAV sync)</li>
+        <li>Staging environment for pre-launch testing and validation</li>
+        <li>Mobile-responsive — works on desktop, tablet, and phone</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- INVESTMENT -->
 <section class="alts">
-  <div class="inner">
-    <div class="st rv" style="text-align:center">AI-Powered Meeting Processor</div>
-    <h2 class="sh rv" style="text-align:center">Upload a recording. Get tasks in 5 minutes.</h2>
-    <p class="ss rv" style="text-align:center;margin-left:auto;margin-right:auto">Every client meeting generates actionable information. The AI Meeting Processor transcribes the call and extracts tasks, preferences, and follow-ups — linked directly to the investor's CRM record.</p>
-    <div class="chat-window rv">
-      <div class="chat-bar">
-        <div class="chat-avatar">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00E676" stroke-width="2.5" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/></svg>
-        </div>
-        <div>
-          <div class="chat-name">Acorn AI Assistant</div>
-          <div class="chat-status">Online</div>
-        </div>
-      </div>
-      <div class="chat-body">
-        <div class="chat-msg user">I just uploaded my review meeting with Rajesh Mehta from earlier today. Can you process it?</div>
-        <div class="chat-msg ai">Processed the 24-minute recording. Here's what I found:<br/><br/><strong>Action Items:</strong><br/>1. Switch Rs 5L from HDFC Flexi Cap to Axis Bluechip (risk preference change)<br/>2. Start STP of Rs 50K/month from liquid to balanced advantage<br/>3. Add wife Sunita Mehta as joint holder on SBI Magnum<br/><br/><strong>Client Preferences:</strong><br/>- Wants to reduce equity exposure before retirement (2028)<br/>- Interested in monthly income via SWP starting next year<br/><br/>Shall I create these as CRM tasks linked to Rajesh's record?</div>
-        <div class="chat-msg user">Yes, create all three tasks and assign to me.</div>
-        <div class="chat-msg ai">Done. 3 tasks created under Rajesh Mehta's investor record, assigned to you. The switch task has been flagged for Ops approval (exit load check required). Follow-up review scheduled for 90 days.</div>
-      </div>
-      <div class="chat-input">
-        <input type="text" placeholder="Upload recording or type a question..." disabled/>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 8. BEFORE / AFTER -->
-<section style="background:var(--bg)">
-  <div class="inner">
-    <div class="st rv">Day in the Life</div>
-    <h2 class="sh rv">What changes for your team from Day 1.</h2>
-    <p class="ss rv">Three perspectives — the RM, the Ops person, and you as the owner. Same business. Different experience.</p>
-    <div class="ba-grid">
-      <div class="ba-col before rv">
-        <div class="ba-head before">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-          Today — Zoho Creator
-        </div>
-        <div class="ba-person">Priya — RM</div>
-        <ul class="ba-items">
-          <li>Logs in as RM, spots an Ops task, logs out, logs in as Ops, completes it, logs back as RM — three times before 10 AM</li>
-          <li>Manually checks AMFI website for NAV before quoting a redemption amount</li>
-          <li>Forgets to update the SIP amount field. Transaction fails 3 days later</li>
-        </ul>
-        <div style="margin-top:16px"><div class="ba-person">Prasad sir — Owner</div></div>
-        <ul class="ba-items">
-          <li>Spends 2 hours Sunday cross-referencing Investwell PDFs for monthly flows</li>
-          <li>Discovers a compliance step was missed — 3 weeks after it happened</li>
-        </ul>
-      </div>
-      <div class="ba-col after rv">
-        <div class="ba-head after">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00C853" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>
-          With This Platform
-        </div>
-        <div class="ba-person">Priya — RM</div>
-        <ul class="ba-items">
-          <li>One login. RM task queue, Ops approvals, and Service RM follow-ups — all in one dashboard</li>
-          <li>NAV auto-synced. Redemption quote is right there, current, with exit load calculated</li>
-          <li>Transaction form shows only the required SIP fields — validated before submit</li>
-        </ul>
-        <div style="margin-top:16px"><div class="ba-person">Prasad sir — Owner</div></div>
-        <ul class="ba-items">
-          <li>Dashboard shows net flows, SIP book health, RM activity, and at-risk clients — live</li>
-          <li>Compliance steps enforced by the system. Audit trail is automatic</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 9. DELIVERY PHASES -->
-<section class="alts">
-  <div class="inner">
-    <div class="st rv">Delivery Roadmap</div>
-    <h2 class="sh rv">3 months. Working software at every milestone.</h2>
-    <p class="ss rv">Each milestone delivers software your team can actually use. You validate and approve before the next phase begins.</p>
-    <div class="phases-grid">
-      <div class="ph-card rv">
-        <div class="ph-num">Month 1</div>
-        <div class="ph-weeks">Weeks 1 - 4</div>
-        <div class="ph-title">Foundation and Core Platform</div>
-        <ul class="ph-items">
-          <li>Flexible role-permission system (multi-role, single login)</li>
-          <li>Investor management — full 360 view, search, import</li>
-          <li>CVL KRA KYC real-time verification</li>
-          <li>Zoho data migration (investors, activities)</li>
-          <li>Deployment on your VPS with CI/CD</li>
-          <li>All 4 roles can log in and operate</li>
-        </ul>
-        <div class="ph-milestone"><div class="pm-label">M1 — On Signing</div><div class="pm-amt">Rs 1,50,000</div></div>
-      </div>
-      <div class="ph-card rv">
-        <div class="ph-num">Month 2</div>
-        <div class="ph-weeks">Weeks 5 - 9</div>
-        <div class="ph-title">Workflows, BI and Integrations</div>
-        <ul class="ph-items">
-          <li>7 transaction types with enforced checklists</li>
-          <li>Smart RM action queue and proactive alerts</li>
-          <li>Owner BI dashboard (live data from Investwell)</li>
-          <li>AMFI NAV daily auto-sync</li>
-          <li>Ops approval queue with audit trail</li>
-          <li>Transaction history migration from Zoho</li>
-        </ul>
-        <div class="ph-milestone"><div class="pm-label">M2 — Phase 1 Live</div><div class="pm-amt">Rs 1,75,000</div></div>
-      </div>
-      <div class="ph-card rv">
-        <div class="ph-num">Month 3</div>
-        <div class="ph-weeks">Weeks 10 - 13</div>
-        <div class="ph-title">Go-Live and Full Delivery</div>
-        <ul class="ph-items">
-          <li>BSE Star MF + NSE NMF II order placement APIs</li>
-          <li>Portfolio reviews with AI-assisted summaries</li>
-          <li>Custom domain + full production deployment</li>
-          <li>Performance optimization and load testing</li>
-          <li>Team training (2-hour walkthrough + recorded video)</li>
-          <li>30-day hypercare post launch</li>
-        </ul>
-        <div class="ph-milestone"><div class="pm-label">M3 — Go-Live</div><div class="pm-amt">Rs 1,25,000</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 10. PRICING -->
-<a name="pricing"></a>
-<section style="background:var(--bg)">
   <div class="inner">
     <div class="st rv">Investment</div>
-    <h2 class="sh rv">Milestone-based. No surprises.</h2>
-    <p class="ss rv">Pay only when working software is delivered and verified. Flat fees — no percentage of AUM, not tied to your team size, no annual maintenance contract.</p>
-    <div class="pricing-grid">
+    <h2 class="sh rv">Milestone-based. Pay as it's delivered.</h2>
+    <p class="ss rv">The build fee is structured in three milestone payments tied to delivery events — not to calendar dates. Each payment is triggered only when working software is in your hands.</p>
+    <div class="price-grid">
       <div class="price-card featured rv">
         <div class="rec-badge">PLATFORM BUILD</div>
         <div class="pl">3-month delivery</div>
         <div class="ph-head">3 payment milestones</div>
-        <div class="mr"><div><div class="mn">M1 — Contract Signed</div><div class="mw">Week 0 — VPS setup, schema, CI/CD, dev kickoff</div></div><div class="ma">Rs 1,50,000</div></div>
-        <div class="mr"><div><div class="mn">M2 — Phase 1 Live</div><div class="mw">Month 2 — Core platform + workflows + BI live</div></div><div class="ma">Rs 1,75,000</div></div>
-        <div class="mr"><div><div class="mn">M3 — Full Go-Live</div><div class="mw">Month 3 — Production deployed, team trained</div></div><div class="ma">Rs 1,25,000</div></div>
+        <div class="mr"><div><div class="mn">M1 — Project Kickoff</div><div class="mw">Infrastructure setup, architecture, development begins</div></div><div class="ma">Rs 2,00,000</div></div>
+        <div class="mr"><div><div class="mn">M2 — Core Platform Live</div><div class="mw">Investor management, transactions, dashboards, workflows operational</div></div><div class="ma">Rs 1,50,000</div></div>
+        <div class="mr"><div><div class="mn">M3 — Full Go-Live</div><div class="mw">All integrations, AI features, report automation, team trained</div></div><div class="ma">Rs 1,00,000</div></div>
         <hr class="pdiv"/>
         <div class="amc-box">
-          <div class="amc-label">Post-Launch Support (Months 4 - 9 only)</div>
+          <div class="amc-label">Post-Launch Support (6 months)</div>
           <div class="amc-val">Rs 35,000 / month</div>
-          <div class="amc-sub">6 months only. Includes: bug fixes, feature updates, API monitoring, AMFI/BSE continuity, 4 hrs/month change requests. <strong style="color:var(--accent-dark)">No AMC. No annual contract.</strong> After Month 9, support is optional.</div>
-        </div>
-        <div class="vps-box">
-          <div class="vps-label">Infrastructure (VPS) — your only ongoing cost</div>
-          <div class="vps-val">Rs 2,000 - 3,500 / month</div>
-          <div class="vps-sub">Your server, your data. Procured in your name. This is the only cost that continues after the support period ends.</div>
+          <div class="amc-sub">Includes: bug fixes (critical: 4 hours, standard: 72 hours), integration monitoring, performance monitoring, 4 hours/month of change requests, priority WhatsApp + email support (Mon-Sat, 10 AM - 7 PM). <strong style="color:var(--accent-dark)">No annual contract. Review after 6 months.</strong></div>
         </div>
       </div>
       <div class="price-card rv">
         <div class="pl">What the investment covers</div>
-        <div class="ph-head">Everything your team needs</div>
+        <div class="ph-head">The complete platform</div>
         <ul class="incl-list">
-          <li>All 3 delivery phases — full platform, no modules left out</li>
-          <li>Flexible role-permission system (one login, every hat)</li>
-          <li>7 transaction type workflows with compliance enforcement</li>
-          <li>Smart RM action queue — software tells your team what to do</li>
-          <li>Live BI dashboard — intelligence, not just reports</li>
-          <li>All data integrations (AMFI, CVL KRA, BSE, NSE, Investwell)</li>
-          <li>Full Zoho data migration (investors, tasks, history)</li>
-          <li>Custom domain + VPS deployment on your server</li>
-          <li>Mobile-responsive — works on any device</li>
-          <li>2-hour team training + recorded walkthrough</li>
-          <li>30-day hypercare post go-live</li>
+          <li>17 fully functional modules</li>
+          <li>52+ transaction type workflows</li>
+          <li>18 screens — dashboards, boards, profiles, admin panels</li>
+          <li>25+ automated workflows running in the background</li>
+          <li>8 scheduled automation jobs</li>
+          <li>4 external integrations (KYC, NSE, AI, NAV sync)</li>
+          <li>Automated report downloading from investor portals</li>
+          <li>AI-powered meeting processor</li>
+          <li>Complete data migration</li>
+          <li>22 users provisioned with role-based access</li>
+          <li>Team training + 30-day warranty</li>
+          <li>Source code ownership</li>
         </ul>
         <div style="margin-top:20px;padding:16px;background:rgba(0,0,0,.03);border-radius:var(--r);font-size:12.5px;color:var(--muted);line-height:1.7">
-          <strong style="color:var(--text)">AI-Assisted Features:</strong> Portfolio review summaries, meeting transcription, and intelligent client recommendations are included as part of the Phase 3 delivery.
+          <strong style="color:var(--text)">Source code and data:</strong> Full source code is delivered in a private repository controlled by Acorn Wealth. All investor data, transaction records, and business data belong to Acorn Wealth at all times. Any developer can maintain or extend the platform independently.
         </div>
       </div>
     </div>
-    <p style="font-size:12px;color:var(--muted);margin-top:18px">* All amounts exclude GST at 18%. Invoices raised under Tranquil Veda Private Limited (GSTIN: 27AAHCT6956C1Z3). Payment within 7 days of invoice date.</p>
+    <p style="font-size:12px;color:var(--muted);margin-top:18px">* All amounts exclude GST at 18%. Invoices raised under Tranquil Veda Private Limited (GSTIN: 27AAHCT6956C1Z3). Payment within 7 days of milestone acceptance.</p>
   </div>
 </section>
 
-<!-- 11. SCOPE -->
-<section class="alts">
+<!-- SUPPORT DETAIL -->
+<section>
   <div class="inner">
-    <div class="st rv">Scope Clarity</div>
-    <h2 class="sh rv">What is and is not included.</h2>
-    <p class="ss rv">Transparency on scope eliminates surprises. Everything listed below is either firmly in scope or clearly out of scope.</p>
-    <div class="scope-grid rv">
-      <div class="scope-card included">
-        <h3>Included in This Engagement</h3>
-        <ul class="scope-items">
-          <li>All 11 platform modules as described</li>
-          <li>Full migration of all existing Zoho Creator data</li>
-          <li>Staging environment for UAT before each go-live</li>
-          <li>Production deployment on Hostinger VPS (your account)</li>
-          <li>SSL certificate setup and automated renewal</li>
-          <li>CI/CD pipeline (GitHub Actions, auto-deploy on merge)</li>
-          <li>Training session for all 22 users</li>
-          <li>30-day post go-live warranty</li>
-          <li>Source code in your private Git repository</li>
-          <li>AMFI NAV sync, CVL KRA integration, InvestWell feed</li>
-          <li>AI Meeting Processor (OpenAI API, billed to your account)</li>
-        </ul>
+    <div class="st rv">Post-Launch Support — What's Covered</div>
+    <h2 class="sh rv">6 months of dedicated support.</h2>
+    <p class="ss rv">After go-live, the monthly support plan ensures the platform stays stable, secure, and evolving — with a team that already knows every part of the system.</p>
+    <div class="support-grid rv">
+      <div class="sup-card">
+        <h4>Bug Fixes and Security</h4>
+        <p>Critical issues resolved within 4 business hours. Standard bugs within 72 hours. Monthly security patches applied automatically.</p>
       </div>
-      <div class="scope-card excluded">
-        <h3>Out of Scope</h3>
-        <ul class="scope-items">
-          <li>Mobile application (iOS or Android native app)</li>
-          <li>Client-facing investor portal (end-investor login)</li>
-          <li>VPS hosting cost (billed to you directly)</li>
-          <li>Supabase plan cost (billed to you directly)</li>
-          <li>OpenAI API usage cost (billed to your account)</li>
-          <li>New features beyond the 11 defined modules (quoted separately)</li>
-          <li>Third-party integrations not listed above</li>
-        </ul>
+      <div class="sup-card">
+        <h4>Integration Monitoring</h4>
+        <p>KYC verification, NSE order sync, NAV price updates, report downloading — all integrations monitored daily. Failures auto-detected and resolved.</p>
+      </div>
+      <div class="sup-card">
+        <h4>Change Requests</h4>
+        <p>4 hours per month of small configuration changes, report additions, or workflow tweaks. Larger changes quoted separately within 48 hours.</p>
+      </div>
+      <div class="sup-card">
+        <h4>Performance Monitoring</h4>
+        <p>Server uptime monitoring, database health checks, daily backup verification, and performance optimisation.</p>
+      </div>
+      <div class="sup-card">
+        <h4>Priority Support</h4>
+        <p>WhatsApp and email support during business hours (Mon-Sat, 10 AM - 7 PM). Response acknowledgment within 2 hours for any production issue.</p>
+      </div>
+      <div class="sup-card">
+        <h4>Monthly Health Report</h4>
+        <p>Monthly summary of platform uptime, usage statistics, active users, integration health, and any issues resolved during the month.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 12. FAQ -->
-<section class="ds">
-  <div class="inner">
-    <div class="st rv">Questions</div>
-    <h2 class="sh rv" style="color:#fff;margin-bottom:40px">Worth asking before you decide.</h2>
-    <div class="faq-wrap rv">
-      <div class="faq-item">
-        <button class="faq-q">Why not just configure Zoho Creator better?<div class="arr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div></button>
-        <div class="faq-a">The role-permission problem is not a Zoho configuration issue. Zoho Creator's permission model is architecturally one-user-one-role. To give one person simultaneous RM + Ops + Service RM access would require building a custom app inside Zoho — at which point you're spending more on Zoho configuration than on a purpose-built platform. The 7-transaction-type compliance problem has the same root: Zoho's form builder doesn't enforce workflow logic.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">Can we keep using Zoho while this is being built?<div class="arr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div></button>
-        <div class="faq-a">Yes. The platform is built entirely independently from your live Zoho instance. Your team continues using Zoho normally for all 3 months of development. At Month 3 go-live, we do a hard cutover after your team has validated the new platform in parallel.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">Who owns the source code?<div class="arr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div></button>
-        <div class="faq-a">Acorn Wealth receives a perpetual, exclusive-use license. Full source code is delivered in a private Git repository controlled by you. You can hire any developer to maintain or modify the platform at any time. Tranquil Veda retains ownership of the underlying reusable framework (which contains no Acorn-specific data or business logic).</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">What if we want to add features later?<div class="arr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div></button>
-        <div class="faq-a">During the 6-month support period, 4 hours of change requests per month are included. Larger features are quoted separately within 48 hours. After the support period, you can engage us on a project basis or bring in any developer — the standard tech stack (Next.js, FastAPI, PostgreSQL) means any competent developer can pick it up.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">What happens if the platform goes down?<div class="arr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div></button>
-        <div class="faq-a">During the support period: critical issues resolved within 4 business hours. The platform runs on Docker containers with automated health checks, daily backups, and SSL auto-renewal. VPS uptime is monitored 24/7 with automated alerts. After the support period: you have the full source code, Docker setup, and documentation — any devops engineer can manage it.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">How does this compare to Zoho's cost over time?<div class="arr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div></button>
-        <div class="faq-a">Your current Zoho cost is approximately Rs 3,30,000 per year and grows with every hire. The proprietary platform has a fixed build cost, after which your only ongoing expense is VPS hosting (Rs 2,000-3,500/month). Use the interactive calculator above to model different scenarios with your actual numbers.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 13. CTA FOOTER -->
+<!-- CTA FOOTER -->
 <section class="cta-s">
-  <h2 class="rv">Ready to Own Your Platform?</h2>
-  <p class="rv">The platform can be in production and replacing Zoho in 8 weeks from contract signing.</p>
-  <div class="cta-btns rv">
-    <a href="https://wa.me/919765071249?text=Hi%20Vallabh%2C%20I%27d%20like%20to%20discuss%20the%20MFD%20platform%20proposal%20for%20Acorn%20Wealth." class="btn-p" target="_blank" rel="noopener">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="margin-right:4px"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-      WhatsApp
-    </a>
-    <a href="mailto:hello@jarvisdaily.com?subject=Acorn%20Wealth%20Platform%20—%20Next%20Steps" class="btn-o">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="margin-right:4px"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-      Email
-    </a>
+  <div class="rv">
+    <p style="font-family:'Inter',sans-serif;font-size:clamp(1.2rem,2.5vw,1.8rem);font-weight:300;font-style:italic;color:#fff;max-width:520px;margin:0 auto 1rem;line-height:1.3">
+      This is an early scaffolding of the platform vision.
+    </p>
+    <p style="font-size:.95rem;color:rgba(255,255,255,.35);max-width:480px;margin:0 auto 3rem;line-height:1.85">
+      We're excited to take this forward with all of us refining it around what matters most to the business.
+    </p>
   </div>
-  <div class="csig rv">
-    <div class="cn">Shruti and Vallabh — Tranquil Veda Private Limited</div>
-    <div class="cg">GSTIN: 27AAHCT6956C1Z3</div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:3rem">
+    <span style="font-size:1rem;font-weight:700;color:rgba(255,255,255,.55)">Shruti</span>
+    <span style="font-size:.82rem;color:rgba(255,255,255,.3)">Tranquil Veda Private Limited</span>
+    <span style="font-size:.72rem;color:rgba(255,255,255,.15);margin-top:4px;font-family:'JetBrains Mono',monospace">GSTIN: 27AAHCT6956C1Z3</span>
   </div>
-</section>
-
-</div><!-- /tab-proposal -->
-
-
-<!-- ════════════ SCOPE OF WORK TAB ════════════ -->
-<div id="tab-sow" class="tc">
-<div class="sow-wrap">
-<div class="sow-doc">
-
-<div class="sow-hdr">
-  <h1>Statement of Work — Acorn Wealth MFD Platform</h1>
-  <div class="sow-meta">
-    <div class="smi"><div class="sk">Prepared For</div><div class="sv">Mr. Prasad Sangam, Acorn Wealth</div></div>
-    <div class="smi"><div class="sk">Prepared By</div><div class="sv">Tranquil Veda Private Limited</div></div>
-    <div class="smi"><div class="sk">Date</div><div class="sv">March 2026</div></div>
-    <div class="smi"><div class="sk">Version</div><div class="sv">3.0</div></div>
-    <div class="smi"><div class="sk">Delivery</div><div class="sv">13 Weeks (3 Phases)</div></div>
-    <div class="smi"><div class="sk">Status</div><div class="sv" style="color:var(--accent)">Ready for Review</div></div>
-  </div>
-</div>
-
-<div class="sow-sec">
-  <h2>Phase 1 — Foundation and Core Platform</h2>
-  <div class="sph">
-    <div class="sph-row"><div class="sph-title">Investor Management and KYC</div><div class="sph-wks">Weeks 1-4</div></div>
-    <div class="sh5">Deliverables</div>
-    <ul class="sdl">
-      <li>360-degree investor profile (PAN, bank, nominee, risk profile)</li>
-      <li>Family grouping and cross-investor visibility</li>
-      <li>CVL KRA live KYC verification (real-time PAN lookup)</li>
-      <li>Batch KYC validation for portfolio-wide compliance checks</li>
-      <li>Document storage (KYC forms, signatures, mandates)</li>
-      <li>RM assignment and portfolio allocation</li>
-    </ul>
-    <div class="sh5">Acceptance Criteria</div>
-    <div class="sac">
-      <p><strong>AC-1:</strong> Any investor can be found by PAN, name, or phone in under 2 seconds</p>
-      <p><strong>AC-2:</strong> KYC verification returns live status from CVL KRA within the investor form</p>
-      <p><strong>AC-3:</strong> All existing Zoho investor records migrated and verified</p>
+  <div style="border-top:1px solid rgba(255,255,255,.06);padding-top:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;max-width:1100px;margin:0 auto">
+    <span style="font-size:.75rem;color:rgba(255,255,255,.15)">Prepared for Mr. Prasad Sangam, Acorn Wealth. Confidential.</span>
+    <div style="display:flex;align-items:center;gap:.5rem">
+      <span style="width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block;animation:pdot 2s infinite"></span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:.68rem;color:rgba(255,255,255,.2);letter-spacing:.1em">PROPOSAL ACTIVE</span>
     </div>
   </div>
-  <div class="sph">
-    <div class="sph-row"><div class="sph-title">Role-Based Access Control</div><div class="sph-wks">Weeks 1-2</div></div>
-    <div class="sh5">Deliverables</div>
-    <ul class="sdl">
-      <li>4 roles: Admin, RM, Operations, Service RM</li>
-      <li>Multi-role per user (single login, all contexts)</li>
-      <li>Row-level security at database layer (Supabase RLS)</li>
-      <li>User management panel (add, deactivate, assign roles)</li>
-      <li>22-user provisioning on go-live</li>
-    </ul>
-  </div>
-  <div class="sph">
-    <div class="sph-row"><div class="sph-title">Zoho Data Migration</div><div class="sph-wks">Weeks 2-4</div></div>
-    <ul class="sdl">
-      <li>Export all Zoho Creator data (investors, activities, tasks)</li>
-      <li>Field mapping and schema transformation</li>
-      <li>PAN-based deduplication and validation</li>
-      <li>Migration verification report with discrepancy flags</li>
-    </ul>
-  </div>
-</div>
-
-<div class="sow-sec">
-  <h2>Phase 2 — Workflows, BI and Integrations</h2>
-  <div class="sph">
-    <div class="sph-row"><div class="sph-title">Transaction and Task Management</div><div class="sph-wks">Weeks 5-7</div></div>
-    <ul class="sdl">
-      <li>7 transaction types: SIP, SWP, New Purchase, Redemption, Switch, STP, NFO</li>
-      <li>Per-type compliance checklists and field validation</li>
-      <li>Kanban board, calendar view, and filtered list view</li>
-      <li>RM-to-Ops assignment and approval queue</li>
-      <li>Smart RM action queue (proactive task surfacing)</li>
-      <li>SIP lapse alerts (30/15/7 day lead time)</li>
-      <li>KYC renewal warnings (60-day lead time)</li>
-    </ul>
-  </div>
-  <div class="sph">
-    <div class="sph-row"><div class="sph-title">Dashboard and Analytics</div><div class="sph-wks">Weeks 6-8</div></div>
-    <ul class="sdl">
-      <li>Sales Dashboard — pipeline, RM performance, conversion</li>
-      <li>Business Dashboard — AUM, SIP book, revenue trends</li>
-      <li>Analytics Dashboard — investor segmentation, scheme concentration</li>
-      <li>Client health scores (SIP continuity, drift, last contact, KYC)</li>
-      <li>Trail income forecast (6-month projection)</li>
-    </ul>
-  </div>
-  <div class="sph">
-    <div class="sph-row"><div class="sph-title">External Data Integrations</div><div class="sph-wks">Weeks 7-9</div></div>
-    <ul class="sdl">
-      <li>AMFI NAV daily auto-sync (all AMCs, all schemes)</li>
-      <li>CVL KRA KYC verification (real-time + batch)</li>
-      <li>InvestWell data feed (transaction pull, SIP data sync)</li>
-      <li>Integration health monitoring and failure recovery</li>
-    </ul>
-  </div>
-</div>
-
-<div class="sow-sec">
-  <h2>Phase 3 — Go-Live and Full Delivery</h2>
-  <div class="sph">
-    <div class="sph-row"><div class="sph-title">Order Placement APIs</div><div class="sph-wks">Weeks 10-11</div></div>
-    <ul class="sdl">
-      <li>BSE Star MF integration for direct order placement</li>
-      <li>NSE NMF II integration as secondary channel</li>
-      <li>Order status tracking and reconciliation</li>
-    </ul>
-  </div>
-  <div class="sph">
-    <div class="sph-row"><div class="sph-title">AI Meeting Processor</div><div class="sph-wks">Weeks 11-12</div></div>
-    <ul class="sdl">
-      <li>Audio recording upload and transcription (OpenAI Whisper)</li>
-      <li>AI action item extraction (GPT-4o)</li>
-      <li>One-click CRM task creation from extracted items</li>
-      <li>Meeting history linked to investor records</li>
-    </ul>
-  </div>
-  <div class="sph">
-    <div class="sph-row"><div class="sph-title">Production Deployment and Training</div><div class="sph-wks">Weeks 12-13</div></div>
-    <ul class="sdl">
-      <li>Custom domain configuration</li>
-      <li>Performance optimization and load testing</li>
-      <li>Notifications (email + in-app real-time alerts)</li>
-      <li>Team training session (2-hour walkthrough, recorded)</li>
-      <li>30-day hypercare post launch</li>
-    </ul>
-  </div>
-</div>
-
-<div class="sow-sec">
-  <h2>Technical Architecture</h2>
-  <table class="stbl">
-    <thead><tr><th>Layer</th><th>Technology</th><th>Purpose</th></tr></thead>
-    <tbody>
-      <tr><td>Frontend</td><td>Next.js 14</td><td>React framework with App Router. All UI — dashboards, forms, kanban boards, reports.</td></tr>
-      <tr><td>Backend</td><td>FastAPI (Python)</td><td>High-performance API. Business logic, external integrations, data processing.</td></tr>
-      <tr><td>Database</td><td>Supabase (PostgreSQL)</td><td>Production-grade PostgreSQL with auth, real-time subscriptions, file storage.</td></tr>
-      <tr><td>Auth</td><td>Supabase Auth + RBAC</td><td>Row-level security. Roles enforced at database level, not just UI.</td></tr>
-      <tr><td>Hosting</td><td>Hostinger VPS + Docker</td><td>Containerised deployment. Nginx, SSL, automated daily backups. Your control.</td></tr>
-      <tr><td>CI/CD</td><td>GitHub Actions</td><td>Automated deployment. Every approved change deploys to production.</td></tr>
-    </tbody>
-  </table>
-</div>
-
-<div class="sow-sec">
-  <h2>Payment Schedule</h2>
-  <table class="stbl">
-    <thead><tr><th>Milestone</th><th>Trigger</th><th>Amount</th></tr></thead>
-    <tbody>
-      <tr><td>M1 — Kickoff</td><td>On contract signing and SOW finalisation</td><td class="in">Rs 1,50,000 + GST</td></tr>
-      <tr><td>M2 — Phase 1 Live</td><td>All Phase 1 + Phase 2 modules deployed to production</td><td class="in">Rs 1,75,000 + GST</td></tr>
-      <tr><td>M3 — Full Go-Live</td><td>All Phase 3 modules live, team trained, UAT sign-off</td><td class="in">Rs 1,25,000 + GST</td></tr>
-    </tbody>
-  </table>
-  <div class="sac" style="margin-top:16px">
-    <p><strong>UAT Policy:</strong> Each milestone includes a 7-business-day acceptance window. If no written rejection is received within the window, the milestone is considered accepted.</p>
-    <p><strong>Payment Terms:</strong> Invoice payable within 7 days of milestone acceptance. Development for subsequent milestone begins only after preceding payment is cleared.</p>
-  </div>
-</div>
-
-<div class="sow-sec">
-  <h2>Intellectual Property</h2>
-  <table class="stbl">
-    <thead><tr><th>What</th><th>Ownership</th></tr></thead>
-    <tbody>
-      <tr><td>Custom business logic built for Acorn Wealth</td><td class="in">Acorn Wealth — perpetual, irrevocable license</td></tr>
-      <tr><td>Database schemas, configurations, data models</td><td class="in">Acorn Wealth</td></tr>
-      <tr><td>All investor data, transaction records, business data</td><td class="in">Acorn Wealth — at all times</td></tr>
-      <tr><td>Source code (delivered in private Git repo)</td><td class="in">Acorn Wealth — perpetual use license</td></tr>
-      <tr><td>Underlying platform framework and reusable components</td><td class="out">Tranquil Veda Private Limited</td></tr>
-      <tr><td>Generic architectural patterns and integration utilities</td><td class="out">Tranquil Veda Private Limited</td></tr>
-    </tbody>
-  </table>
-</div>
-
-<div class="sow-sec">
-  <h2>Post-Launch Support</h2>
-  <table class="stbl">
-    <thead><tr><th>Item</th><th>Detail</th></tr></thead>
-    <tbody>
-      <tr><td>Monthly Fee</td><td class="in">Rs 35,000 + GST</td></tr>
-      <tr><td>Duration</td><td>6 months (Months 4-9), then optional month-to-month</td></tr>
-      <tr><td>Bug Fixes</td><td>Critical: 4 business hours. Standard: 72 hours.</td></tr>
-      <tr><td>Change Requests</td><td>4 hours/month included. Excess quoted separately.</td></tr>
-      <tr><td>Monitoring</td><td>VPS uptime, database health, backup verification, SSL renewal</td></tr>
-      <tr><td>Integration Maintenance</td><td>AMFI NAV, CVL KRA, InvestWell feed health</td></tr>
-      <tr><td>Support Hours</td><td>Mon-Sat, 10 AM - 7 PM. WhatsApp + email.</td></tr>
-    </tbody>
-  </table>
-</div>
-
-<div style="border-top:1px solid rgba(255,255,255,.08);padding-top:28px;font-size:12px;color:rgba(255,255,255,.25);line-height:1.8">
-  This document is prepared by Tranquil Veda Private Limited (Brand: Jarvis Daily) for Acornia Financial Services / Acorn Wealth. GSTIN: 27AAHCT6956C1Z3. All amounts are exclusive of GST at 18%. This document is confidential and intended solely for Mr. Prasad Sangam and authorised representatives of Acorn Wealth. Proposal validity: 30 days from date of issue.
-</div>
-
-</div>
-</div>
-</div><!-- /tab-sow -->
-
-
-<!-- FLOATING WHATSAPP -->
-<a class="wa-float" href="https://wa.me/919765071249?text=Hi%20Vallabh%2C%20I%27d%20like%20to%20discuss%20the%20Acorn%20Wealth%20platform%20proposal." target="_blank" rel="noopener">
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-</a>
-
+</section>
 
 <script>
-/* Tab switching */
-function swTab(id){
-  document.querySelectorAll('.tc').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('tab-'+id).classList.add('active');
-  document.querySelectorAll('.tbtn').forEach(b=>{if(b.textContent.toLowerCase().includes(id==='sow'?'scope':'proposal'))b.classList.add('active')});
-  window.scrollTo(0,0);
-}
-
-/* Scroll reveal */
-const obs=new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}})
-},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
-
-/* FAQ accordion */
-document.querySelectorAll('.faq-q').forEach(q=>{
-  q.addEventListener('click',()=>{
-    const item=q.parentElement;
-    const wasOpen=item.classList.contains('open');
-    document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
-    if(!wasOpen)item.classList.add('open');
-  });
-});
-
-/* Interactive Cost Calculator */
-const slTeam=document.getElementById('sl-team');
-const slCost=document.getElementById('sl-cost');
-const slYears=document.getElementById('sl-years');
-const svTeam=document.getElementById('sv-team');
-const svCost=document.getElementById('sv-cost');
-const svYears=document.getElementById('sv-years');
-const resZoho=document.getElementById('res-zoho');
-const resPlatform=document.getElementById('res-platform');
-const resSavings=document.getElementById('res-savings');
-const resPayback=document.getElementById('res-payback');
-const canvas=document.getElementById('savings-chart');
-const ctx=canvas.getContext('2d');
-
-function fmt(n){return n.toLocaleString('en-IN')}
-
-function updateCalc(){
-  const team=parseInt(slTeam.value);
-  const cost=parseInt(slCost.value);
-  const years=parseInt(slYears.value);
-  svTeam.textContent=team;
-  svCost.textContent=fmt(cost);
-  svYears.textContent=years;
-  const annualZoho=team*cost;
-  const totalZoho=annualZoho*years;
-  const platformCost=450000;
-  const supportCost=35000*6;
-  const vpsCost=3000*12*years;
-  const totalPlatform=platformCost+supportCost+vpsCost;
-  const savings=totalZoho-totalPlatform;
-  const paybackMonths=Math.ceil(platformCost/(annualZoho/12));
-  resZoho.textContent='Rs '+fmt(annualZoho)+' / year';
-  resPlatform.textContent='Rs '+fmt(platformCost);
-  if(savings>0){
-    resSavings.textContent='Rs '+fmt(savings);
-    resSavings.className='dc-val green';
-    resPayback.textContent='Payback in '+paybackMonths+' months from Zoho savings alone';
-  }else{
-    resSavings.textContent='Rs '+fmt(Math.abs(savings))+' premium';
-    resSavings.className='dc-val';
-    resPayback.textContent='Premium is offset by ownership, no vendor lock-in, and fixed costs';
-  }
-  drawChart(annualZoho,platformCost,supportCost,vpsCost,years);
-}
-
-function drawChart(annualZoho,platformCost,supportCost,vpsCost,years){
-  const dpr=window.devicePixelRatio||1;
-  const rect=canvas.getBoundingClientRect();
-  canvas.width=rect.width*dpr;
-  canvas.height=200*dpr;
-  ctx.scale(dpr,dpr);
-  const W=rect.width,H=200;
-  ctx.clearRect(0,0,W,H);
-
-  const months=years*12;
-  const maxVal=annualZoho*years*1.15;
-  const pad={t:20,b:30,l:10,r:10};
-  const gW=W-pad.l-pad.r;
-  const gH=H-pad.t-pad.b;
-
-  /* Zoho line */
-  ctx.beginPath();
-  ctx.strokeStyle='#FF5F57';
-  ctx.lineWidth=2.5;
-  for(let m=0;m<=months;m++){
-    const x=pad.l+(m/months)*gW;
-    const y=pad.t+gH-(((annualZoho/12)*m)/maxVal)*gH;
-    m===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
-  }
-  ctx.stroke();
-
-  /* Platform line */
-  ctx.beginPath();
-  ctx.strokeStyle='#00E676';
-  ctx.lineWidth=2.5;
-  for(let m=0;m<=months;m++){
-    let cumPlatform=platformCost;
-    if(m>3)cumPlatform+=Math.min(m-3,6)*35000;
-    cumPlatform+=m*3000;
-    const x=pad.l+(m/months)*gW;
-    const y=pad.t+gH-(cumPlatform/maxVal)*gH;
-    m===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
-  }
-  ctx.stroke();
-
-  /* Labels */
-  ctx.font='600 10px Inter,sans-serif';
-  ctx.fillStyle='#FF5F57';
-  ctx.fillText('Zoho (cumulative)',pad.l+4,pad.t+12);
-  ctx.fillStyle='#00E676';
-  ctx.fillText('Platform (cumulative)',pad.l+4,pad.t+26);
-
-  /* Year markers */
-  ctx.fillStyle='rgba(255,255,255,.2)';
-  ctx.font='500 10px Inter,sans-serif';
-  for(let y=1;y<=years;y++){
-    const x=pad.l+(y*12/months)*gW;
-    ctx.fillText('Y'+y,x-8,H-8);
-    ctx.beginPath();
-    ctx.strokeStyle='rgba(255,255,255,.06)';
-    ctx.lineWidth=1;
-    ctx.moveTo(x,pad.t);
-    ctx.lineTo(x,H-pad.b);
-    ctx.stroke();
-  }
-}
-
-slTeam.addEventListener('input',updateCalc);
-slCost.addEventListener('input',updateCalc);
-slYears.addEventListener('input',updateCalc);
-window.addEventListener('resize',updateCalc);
-updateCalc();
 </script>
 </body>
 </html>
