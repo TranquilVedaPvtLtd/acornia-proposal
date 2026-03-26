@@ -101,8 +101,68 @@ section{padding:80px 40px}
 @media(max-width:600px){.support-grid,.h-kpis{grid-template-columns:1fr}.hero{padding:64px 24px 56px}}
 @media print{.rv{opacity:1!important;transform:none!important}section{padding:32px 20px!important;break-inside:avoid}}
 </style>
-  <!-- Privacy-friendly analytics by Plausible -->
-  <script async src="https://plausible.io/js/pa-xq902NpApISNRnl92vZFt.js"></script>
+  <!-- PostHog Analytics — invisible to visitors -->
+  <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+" (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_T1F5Q1UoBkMJT1DVJlt7V5TwkvSNuRmJaOZu0dt0u65', {
+      api_host: 'https://us.i.posthog.com',
+      persistence: 'memory',
+      autocapture: true,
+      capture_pageview: true,
+      capture_pageleave: true
+    });
+    (function() {
+      var _start = Date.now();
+      var _title = document.title;
+
+      // Time on page
+      window.addEventListener('beforeunload', function() {
+        posthog.capture('time_on_page', { seconds: Math.round((Date.now() - _start) / 1000), proposal: _title });
+      });
+
+      // Scroll depth milestones
+      var _reached = {};
+      window.addEventListener('scroll', function() {
+        var pct = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+        [25, 50, 75, 100].forEach(function(m) {
+          if (!_reached[m] && pct >= m) { _reached[m] = true; posthog.capture('scroll_depth', { percent: m, proposal: _title }); }
+        });
+      }, { passive: true });
+
+      // Section visibility
+      if ('IntersectionObserver' in window) {
+        var _obs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(e) {
+            if (e.isIntersecting) {
+              var id = e.target.id || e.target.getAttribute('data-section') || e.target.className.split(' ')[0];
+              if (id) posthog.capture('section_viewed', { section: id, proposal: _title });
+            }
+          });
+        }, { threshold: 0.4 });
+        document.querySelectorAll('section[id], [data-section]').forEach(function(el) { _obs.observe(el); });
+      }
+
+      // WhatsApp button clicks
+      document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"], .whatsapp-float, .floating-wa').forEach(function(el) {
+        el.addEventListener('click', function() { posthog.capture('whatsapp_clicked', { proposal: _title }); });
+      });
+
+      // FAQ opens
+      document.querySelectorAll('.faq-q, .faq-item').forEach(function(el) {
+        el.addEventListener('click', function() {
+          var q = el.querySelector('h3,h4,span,p');
+          posthog.capture('faq_opened', { question: q ? q.textContent.trim().slice(0, 80) : 'unknown', proposal: _title });
+        });
+      });
+
+      // All CTA / email / tel link clicks
+      document.querySelectorAll('.cta-btn, .btn, [class*="cta"], a[href*="mailto"], a[href*="tel"]').forEach(function(el) {
+        el.addEventListener('click', function() {
+          posthog.capture('cta_clicked', { text: el.textContent.trim().slice(0, 60), href: el.href || '', proposal: _title });
+        });
+      });
+    })();
+  </script>
   <script>
     window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
     plausible.init()
