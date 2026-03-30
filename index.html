@@ -61,6 +61,17 @@ section{padding:80px 40px}
 .mod-card.ai .mod-num{color:#6B46C1}
 .mod-card.gold::before{background:linear-gradient(90deg,#D4A843,#E8BF5A)}
 .mod-card.gold .mod-num{color:#D4A843}
+.mod-card.wa::before{background:linear-gradient(90deg,#25D366,#128C7E)}
+.mod-card.wa .mod-num{color:#128C7E}
+.mod-card.coin::before{background:linear-gradient(90deg,#FFD700,#FFA000)}
+.mod-card.coin .mod-num{color:#D4A843}
+.mod-card.score::before{background:linear-gradient(90deg,#FF6B35,#E91E63)}
+.mod-card.score .mod-num{color:#E91E63}
+.mod-card.verify::before{background:linear-gradient(90deg,#2196F3,#1565C0)}
+.mod-card.verify .mod-num{color:#1565C0}
+
+/* NEW SECTION BADGE */
+.new-badge{display:inline-block;background:linear-gradient(135deg,#FFD700,#FFA000);color:var(--primary-dark);font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:10px;margin-left:8px;vertical-align:middle;line-height:1.6}
 
 /* PRICING */
 .price-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;max-width:920px}
@@ -169,7 +180,7 @@ section{padding:80px 40px}
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="h-badge">Scope of Work — March 2026</div>
+    <div class="h-badge">Scope of Work — March 2026 (Updated)</div>
     <h1>A Complete Platform for<br><span class="acc">Mutual Fund Distribution.</span></h1>
     <p class="h-sub">A proprietary business operating system built exclusively for Acorn Wealth — covering every investor, every transaction, every compliance check, and every team workflow in one unified platform.</p>
     <div class="h-meta">
@@ -177,11 +188,12 @@ section{padding:80px 40px}
       <span>By <strong>Tranquil Veda Private Limited</strong></span>
     </div>
     <div class="h-kpis">
-      <div class="h-kpi"><div class="kv">18</div><div class="kl">Screens</div></div>
+      <div class="h-kpi"><div class="kv">22+</div><div class="kl">Screens</div></div>
       <div class="h-kpi"><div class="kv">52+</div><div class="kl">Transaction Types</div></div>
-      <div class="h-kpi"><div class="kv">25+</div><div class="kl">Automated Workflows</div></div>
-      <div class="h-kpi"><div class="kv">4</div><div class="kl">Integrations</div></div>
+      <div class="h-kpi"><div class="kv">30+</div><div class="kl">Automated Workflows</div></div>
+      <div class="h-kpi"><div class="kv">6+</div><div class="kl">Integrations</div></div>
       <div class="h-kpi"><div class="kv">22</div><div class="kl">Users Supported</div></div>
+      <div class="h-kpi"><div class="kv">21</div><div class="kl">Modules</div></div>
     </div>
   </div>
 </section>
@@ -196,10 +208,10 @@ section{padding:80px 40px}
 </section>
 
 <!-- MODULES -->
-<section class="alts">
+<section class="alts" id="modules" data-section="modules">
   <div class="inner">
     <div class="st rv">Complete Module Breakdown</div>
-    <h2 class="sh rv">17 Modules. Every Feature Listed.</h2>
+    <h2 class="sh rv">21 Modules. Every Feature Listed.</h2>
     <p class="ss rv">Each module below is a fully functional part of the platform. This is not a feature wishlist — every item listed here will be delivered, tested, and operational at go-live.</p>
 
     <div class="mod-grid">
@@ -214,7 +226,7 @@ section{padding:80px 40px}
           <li>Investor 360 profile — 6-tab deep view (Profile, Tasks, Timeline, Folios, Reviews, Documents)</li>
           <li>Family linking — group investors by family, show combined AUM</li>
           <li>Tier classification — Platinum, Gold, Silver, Bronze — auto-calculated by AUM</li>
-          <li>Bank account details, nominee information, tax status tracking</li>
+          <li>Bank account details, nominee records, joint holder records, tax status tracking</li>
           <li>Document storage — KYC forms, mandates, signatures, uploaded per investor</li>
           <li>Advanced search — find any investor by name, PAN, phone, or email in under 2 seconds</li>
           <li>Bulk import from CSV with duplicate detection and validation</li>
@@ -231,9 +243,10 @@ section{padding:80px 40px}
           <li>Core: Purchase, SIP, SWP, STP, Switch, Redemption, NFO</li>
           <li>Additional: KYC updates, mandate registration, folio consolidation, bank changes, nominee updates</li>
           <li>8-stage enforced workflow: Created, Assigned to Ops, In Progress, OTP Pending, Pending Verification, Completed, Failed, Cancelled</li>
-          <li>Auto-generated checklists per transaction type — different steps for SIP vs Switch vs Redemption</li>
-          <li>Priority management (High / Medium / Low) with SLA tracking</li>
+          <li>104 pre-configured checklist templates — auto-populated per transaction type</li>
+          <li>Priority management (High / Medium / Low / Urgent) with SLA tracking</li>
           <li>Platform-specific routing — tasks auto-tagged for NSE, BSE, or MFU processing</li>
+          <li>Transaction draft approval workflow — maker-checker for controlled processing</li>
           <li>Sub-task support for complex multi-step transactions</li>
           <li>Auto-generated unique transaction numbers for tracking</li>
           <li>Bulk task creation and status updates</li>
@@ -283,10 +296,10 @@ section{padding:80px 40px}
         <h3>Prospect Pipeline</h3>
         <p class="mod-desc">A structured pipeline for converting leads into investors. Every prospective client is tracked from first contact through conversion.</p>
         <ul class="feat-list">
-          <li>7-stage sales funnel: New Lead, Contacted, Meeting Scheduled, Proposal Sent, Negotiation, Won, Lost</li>
-          <li>Source tracking — Referral, Digital, Event, Cold Call, Walk-In</li>
+          <li>8-stage sales funnel: New Lead, Contacted, Interested, Meeting Scheduled, Proposal Sent, Negotiation, Won, Lost</li>
+          <li>Source tracking — Referral, Website, BNI, Social Media, Cold Call, Walk-In, Event, Partner</li>
           <li>Estimated AUM tracking per prospect</li>
-          <li>One-click conversion to investor — no data re-entry on onboarding</li>
+          <li>One-click conversion to investor — all data carried over, no re-entry</li>
           <li>Activity history per prospect — every interaction logged</li>
           <li>Kanban view of pipeline stages with drag-and-drop</li>
           <li>Conversion rate tracking and source attribution analytics</li>
@@ -304,6 +317,8 @@ section{padding:80px 40px}
           <li>Overdue review detection and escalation to business owner</li>
           <li>Review agenda and meeting notes capture</li>
           <li>Action item tracking from each review session</li>
+          <li>Risk score tracking — Conservative, Moderate, Aggressive, Very Aggressive</li>
+          <li>Investment vs current value comparison with return percentages</li>
           <li>Review history per investor — permanent advisory record</li>
           <li>Calendar integration — reviews visible alongside tasks and activities</li>
         </ul>
@@ -318,6 +333,7 @@ section{padding:80px 40px}
           <li>6 activity types: Call, Meeting, Email, Note, Follow-up, Review</li>
           <li>Complete interaction history per investor</li>
           <li>Duration and outcome tracking for calls and meetings</li>
+          <li>Call direction tracking — Inbound, Outbound, Missed</li>
           <li>Follow-up automation — system creates follow-up tasks from logged activities</li>
           <li>Auto-activity creation on task status changes</li>
           <li>Color-coded timeline view with filtering by type and date</li>
@@ -349,6 +365,8 @@ section{padding:80px 40px}
           <li>8 status columns: Created through Completed, Failed, Cancelled</li>
           <li>Drag-and-drop to move tasks between stages</li>
           <li>Card details: transaction type, investor name, amount, platform, priority, date</li>
+          <li>Checklist progress indicator on each card</li>
+          <li>Overdue and stale task visual alerts</li>
           <li>Board view and List view toggle</li>
           <li>Filter by transaction type, priority, assigned RM</li>
           <li>Visual count per column for workload assessment</li>
@@ -361,12 +379,12 @@ section{padding:80px 40px}
         <h3>AI Meeting Processor</h3>
         <p class="mod-desc">Upload a recording of any client meeting. The system transcribes it in full, extracts action items, and creates tasks automatically — reducing post-meeting admin from 60 minutes to under 5.</p>
         <ul class="feat-list">
-          <li>Audio recording upload — meetings, calls, voice notes</li>
+          <li>Audio recording upload — meetings, calls, voice notes (no file size limit)</li>
           <li>Full automatic transcription of the recording</li>
           <li>AI extracts action items, investment preferences, and follow-up tasks</li>
           <li>One-click task creation from extracted items — linked to investor record</li>
           <li>Client preference capture (risk tolerance changes, retirement plans, etc.)</li>
-          <li>Meeting history per investor — searchable archive</li>
+          <li>Meeting history per investor — searchable archive with full-text search</li>
           <li>Text-based meeting input for quick notes processing</li>
         </ul>
       </div>
@@ -425,7 +443,7 @@ section{padding:80px 40px}
       <div class="mod-card rv">
         <div class="mod-num">Module 14</div>
         <h3>Notification System</h3>
-        <p class="mod-desc">Automated, event-driven alerts ensure nothing is missed by any team member.</p>
+        <p class="mod-desc">Automated, event-driven alerts ensure nothing is missed by any team member — across in-app, email, and WhatsApp channels.</p>
         <ul class="feat-list">
           <li>In-app real-time notification bell with unread count</li>
           <li>Email notifications for task assignments, completions, and escalations</li>
@@ -435,6 +453,7 @@ section{padding:80px 40px}
           <li>Escalation alerts — overdue tasks flagged every 4 hours</li>
           <li>Review due reminders — weekly for upcoming reviews</li>
           <li>Notification history — read/unread management</li>
+          <li>Per-user notification preferences (in-app, email, WhatsApp)</li>
         </ul>
       </div>
 
@@ -446,10 +465,12 @@ section{padding:80px 40px}
         <ul class="feat-list">
           <li>User management — add, deactivate, assign roles for up to 22 users</li>
           <li>4 roles: Super Admin, Admin, Relationship Manager, Operations</li>
-          <li>Transaction checklist template management — customise steps per transaction type</li>
+          <li>Transaction checklist template management — 104 pre-configured, fully customisable</li>
           <li>Holiday calendar configuration — affects SLA calculations automatically</li>
           <li>Monthly/quarterly target setting per RM and per team</li>
-          <li>Integration credentials management</li>
+          <li>Integration credentials management (Cashfree, NSE, WhatsApp, AI)</li>
+          <li>Gold coin rule configuration (Module 18)</li>
+          <li>Scorecard parameter management (Module 20)</li>
           <li>Organisation profile and branding</li>
           <li>Data export and backup controls</li>
         </ul>
@@ -461,7 +482,7 @@ section{padding:80px 40px}
         <h3>Order Placement Integration</h3>
         <p class="mod-desc">Direct connection to the NSE NMF II platform for placing mutual fund orders and tracking their execution status in real time.</p>
         <ul class="feat-list">
-          <li>Submit mutual fund orders directly from the platform</li>
+          <li>Submit mutual fund orders directly from the platform (Purchase, SIP, Redemption, Switch)</li>
           <li>Real-time order status tracking — Pending, Executed, Rejected, Cancelled</li>
           <li>Order-to-task linking — every order tied to its parent transaction</li>
           <li>Automated execution confirmations</li>
@@ -470,18 +491,92 @@ section{padding:80px 40px}
         </ul>
       </div>
 
-      <!-- Module 17 -->
-      <div class="mod-card rv">
+      <!-- Module 17 — Updated for Cashfree -->
+      <div class="mod-card verify rv">
         <div class="mod-num">Module 17</div>
-        <h3>KYC Verification Integration</h3>
-        <p class="mod-desc">Real-time verification of investor KYC status against the central registry — no manual lookup, no separate portal login.</p>
+        <h3>KYC and Verification Integration <span class="new-badge">ENHANCED</span></h3>
+        <p class="mod-desc">Real-time verification of investor identity and bank accounts via Cashfree APIs — PAN validation, bank account verification, and KYC compliance enforcement at every step.</p>
         <ul class="feat-list">
-          <li>Real-time PAN verification against CVL KRA (Central KYC Registry)</li>
+          <li>Real-time PAN verification via Cashfree API — validates PAN, returns registered name from IT department, PAN status, and Aadhaar linking status</li>
+          <li>Bank account verification via Cashfree — validates account number + IFSC, confirms account holder name match</li>
+          <li>Name match scoring — system checks if investor's name matches PAN/bank records</li>
           <li>Auto-triggered on investor creation and transaction submission</li>
           <li>KYC status auto-determination: Verified, Pending, On Hold, Rejected, Not Verified</li>
           <li>Batch KYC validation — check status for all investors at once</li>
           <li>KYC renewal tracking — flags investors approaching KYC expiry</li>
           <li>Blocks transaction submission if KYC is not verified — compliance enforced by the system</li>
+        </ul>
+      </div>
+
+      <!-- Module 18 — NEW: Gold Coin Gamification -->
+      <div class="mod-card coin full rv">
+        <div class="mod-num">Module 18</div>
+        <h3>RM Gold Coin Incentive System <span class="new-badge">NEW</span></h3>
+        <p class="mod-desc">A gamification engine that rewards relationship managers with gold coins for meeting hygiene and business targets. Animated coin displays on login create a motivating, visible incentive layer that drives daily performance.</p>
+        <ul class="feat-list">
+          <li>Gold coin balance visible on every RM's dashboard — animated coin display on login</li>
+          <li>Configurable earning rules — Admin sets coin values and conditions per rule</li>
+          <li>Hygiene rewards: daily call targets met, all tasks updated, activity logging compliance, zero SLA breaches</li>
+          <li>Business rewards: new SIP registered, fresh lumpsum (slab-based), new investor onboarded, AUM milestones</li>
+          <li>Achievement rewards: monthly target hit, prospect converted, review completed on time</li>
+          <li>Rule engine with daily/weekly/monthly reset periods per rule</li>
+          <li>RM Leaderboard — top performers by coins, weekly and monthly views</li>
+          <li>Coin history ledger — complete record of earnings with reasons and dates</li>
+          <li>Animated gold coin shower effect on login showing current balance</li>
+          <li>Achievement badges for milestone coin counts</li>
+        </ul>
+      </div>
+
+      <!-- Module 19 — NEW: WhatsApp Integration -->
+      <div class="mod-card wa rv">
+        <div class="mod-num">Module 19</div>
+        <h3>WhatsApp Customer Notifications <span class="new-badge">NEW</span></h3>
+        <p class="mod-desc">Automated WhatsApp messages keep investors informed at every step of their transaction — from submission to completion — with email as automatic fallback if delivery fails.</p>
+        <ul class="feat-list">
+          <li>WhatsApp Business API integration for utility/transactional messages</li>
+          <li>Auto-triggered on key events: task created, completed, failed, SIP registered</li>
+          <li>Pre-approved message templates with dynamic variable substitution (investor name, scheme, amount, reference)</li>
+          <li>Automatic email fallback — if WhatsApp delivery fails, email is sent instead</li>
+          <li>Delivery status tracking — Sent, Delivered, Read, Failed — logged per message</li>
+          <li>Birthday greetings and portfolio review reminders via WhatsApp</li>
+          <li>Template management — Admin can enable/disable message templates</li>
+          <li>Delivery analytics — sent, delivered, and read rates across all messages</li>
+        </ul>
+      </div>
+
+      <!-- Module 20 — NEW: RM Scorecard -->
+      <div class="mod-card score rv">
+        <div class="mod-num">Module 20</div>
+        <h3>RM Performance Scorecard <span class="new-badge">NEW</span></h3>
+        <p class="mod-desc">A structured, weighted scorecard system for each relationship manager — designed for performance appraisals. Configurable parameters across business, operations, engagement, and compliance dimensions.</p>
+        <ul class="feat-list">
+          <li>Business metrics (~40%): AUM growth, fresh business vs target, SIP book growth, client acquisition, prospect conversion rate</li>
+          <li>Operational metrics (~30%): task completion rate, SLA adherence, activity logging frequency, review completion on schedule</li>
+          <li>Client engagement (~20%): call frequency per client, dormant client reactivation, client feedback scores</li>
+          <li>Compliance metrics (~10%): KYC compliance %, document completeness, audit findings</li>
+          <li>Configurable weights — Admin adjusts parameter importance per appraisal cycle</li>
+          <li>Period selection: Monthly, Quarterly, Annual scorecards</li>
+          <li>Visual score representation — radar charts, progress bars, trend graphs</li>
+          <li>RM vs team average comparison view</li>
+          <li>Export scorecard data for HR and appraisal use</li>
+          <li>Period locking — lock scores after review completion</li>
+        </ul>
+      </div>
+
+      <!-- Module 21 — Scheme Master -->
+      <div class="mod-card rv">
+        <div class="mod-num">Module 21</div>
+        <h3>Scheme Master and Portfolio Data Engine <span class="new-badge">NEW</span></h3>
+        <p class="mod-desc">The foundation data layer — a complete mutual fund scheme database with daily NAV sync, folio tracking, SIP registration management, and bank mandate lifecycle tracking.</p>
+        <ul class="feat-list">
+          <li>Complete mutual fund scheme master from AMFI — scheme code, name, AMC, category, NAV</li>
+          <li>Daily automated NAV sync — all scheme prices updated every morning</li>
+          <li>Folio management — track folios per investor with units, current value, AMC</li>
+          <li>SIP registration tracking — amount, frequency, start/end dates, status, linked mandate</li>
+          <li>Bank mandate lifecycle — creation, limits, validity dates, expiry alerts</li>
+          <li>Nominee records per investor — name, relationship, allocation percentage</li>
+          <li>Joint holder records per investor — name, PAN, relationship</li>
+          <li>Historical NAV data for performance calculations</li>
         </ul>
       </div>
 
@@ -494,26 +589,27 @@ section{padding:80px 40px}
   <div class="inner">
     <div class="st rv">Everything Included</div>
     <h2 class="sh rv">What you receive at go-live.</h2>
-    <p class="ss rv">Beyond the 17 modules, the following is included in the engagement at no additional cost.</p>
+    <p class="ss rv">Beyond the 21 modules, the following is included in the engagement at no additional cost.</p>
     <div class="rv" style="max-width:700px">
       <ul class="incl-list">
-        <li>All 17 platform modules as described — fully functional and tested</li>
+        <li>All 21 platform modules as described — fully functional and tested</li>
         <li>Complete data migration from your existing system — all investor and transaction history</li>
         <li>22-user provisioning — all team members set up with appropriate roles</li>
         <li>Team training — 2-hour walkthrough session + recorded video for reference</li>
         <li>30-day post go-live warranty — any bugs fixed at no charge</li>
         <li>Source code delivered in a private repository controlled by Acorn Wealth</li>
         <li>Custom domain deployment — platform accessible at your own domain</li>
-        <li>All 4 integrations configured, tested, and operational (KYC, NSE, AI, AMFI NAV sync)</li>
+        <li>All 6+ integrations configured, tested, and operational (Cashfree KYC, Cashfree Bank, NSE, AI, AMFI NAV sync, WhatsApp)</li>
         <li>Staging environment for pre-launch testing and validation</li>
         <li>Mobile-responsive — works on desktop, tablet, and phone</li>
+        <li>104 pre-configured transaction checklist templates ready to use</li>
       </ul>
     </div>
   </div>
 </section>
 
 <!-- INVESTMENT -->
-<section class="alts">
+<section class="alts" id="investment" data-section="investment">
   <div class="inner">
     <div class="st rv">Investment</div>
     <h2 class="sh rv">Milestone-based. Pay as it's delivered.</h2>
@@ -525,7 +621,7 @@ section{padding:80px 40px}
         <div class="ph-head">3 payment milestones</div>
         <div class="mr"><div><div class="mn">M1 — Project Kickoff</div><div class="mw">Infrastructure setup, architecture, development begins</div></div><div class="ma">Rs 2,00,000</div></div>
         <div class="mr"><div><div class="mn">M2 — Core Platform Live</div><div class="mw">Investor management, transactions, dashboards, workflows operational</div></div><div class="ma">Rs 1,50,000</div></div>
-        <div class="mr"><div><div class="mn">M3 — Full Go-Live</div><div class="mw">All integrations, AI features, report automation, team trained</div></div><div class="ma">Rs 1,00,000</div></div>
+        <div class="mr"><div><div class="mn">M3 — Full Go-Live</div><div class="mw">All integrations, AI features, gamification, WhatsApp, scorecards, team trained</div></div><div class="ma">Rs 1,00,000</div></div>
         <hr class="pdiv"/>
         <div class="amc-box">
           <div class="amc-label">Post-Launch Support (6 months)</div>
@@ -537,14 +633,17 @@ section{padding:80px 40px}
         <div class="pl">What the investment covers</div>
         <div class="ph-head">The complete platform</div>
         <ul class="incl-list">
-          <li>17 fully functional modules</li>
+          <li>21 fully functional modules</li>
           <li>52+ transaction type workflows</li>
-          <li>18 screens — dashboards, boards, profiles, admin panels</li>
-          <li>25+ automated workflows running in the background</li>
-          <li>8 scheduled automation jobs</li>
-          <li>4 external integrations (KYC, NSE, AI, NAV sync)</li>
+          <li>22+ screens — dashboards, boards, profiles, scorecards, admin panels</li>
+          <li>30+ automated workflows running in the background</li>
+          <li>12+ scheduled automation jobs</li>
+          <li>6+ external integrations (Cashfree, NSE, AI, NAV sync, WhatsApp, CAMS/KFintech)</li>
           <li>Automated report downloading from investor portals</li>
           <li>AI-powered meeting processor</li>
+          <li>RM Gold Coin gamification engine</li>
+          <li>RM Performance Scorecard system</li>
+          <li>WhatsApp customer notifications with email fallback</li>
           <li>Complete data migration</li>
           <li>22 users provisioned with role-based access</li>
           <li>Team training + 30-day warranty</li>
@@ -560,7 +659,7 @@ section{padding:80px 40px}
 </section>
 
 <!-- SUPPORT DETAIL -->
-<section>
+<section id="support" data-section="support">
   <div class="inner">
     <div class="st rv">Post-Launch Support — What's Covered</div>
     <h2 class="sh rv">6 months of dedicated support.</h2>
@@ -572,7 +671,7 @@ section{padding:80px 40px}
       </div>
       <div class="sup-card">
         <h4>Integration Monitoring</h4>
-        <p>KYC verification, NSE order sync, NAV price updates, report downloading — all integrations monitored daily. Failures auto-detected and resolved.</p>
+        <p>Cashfree verification, NSE order sync, NAV updates, WhatsApp delivery, CAMS/KFintech downloads — all integrations monitored daily. Failures auto-detected and resolved.</p>
       </div>
       <div class="sup-card">
         <h4>Change Requests</h4>
@@ -598,7 +697,7 @@ section{padding:80px 40px}
 <section class="cta-s">
   <div class="rv">
     <p style="font-family:'Inter',sans-serif;font-size:clamp(1.2rem,2.5vw,1.8rem);font-weight:300;font-style:italic;color:#fff;max-width:520px;margin:0 auto 1rem;line-height:1.3">
-      This is an early scaffolding of the platform vision.
+      21 modules. 6 integrations. One unified platform.
     </p>
     <p style="font-size:.95rem;color:rgba(255,255,255,.35);max-width:480px;margin:0 auto 3rem;line-height:1.85">
       We're excited to take this forward with all of us refining it around what matters most to the business.
