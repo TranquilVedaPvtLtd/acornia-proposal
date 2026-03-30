@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Acorn Wealth — Platform Architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<style>
+:root{
+  --primary:#0A1628;--primary-light:#152238;--primary-dark:#060E1A;
+  --accent:#00E676;--accent-dark:#00C853;
+  --gold:#FFD700;--red:#FF1744;
+  --bg:#FFFFFF;--bg-alt:#F8FAFC;
+  --text:#1A2942;--muted:#64748B;
+  --border:rgba(0,0,0,.08);
+  --r:12px;--rl:20px;
+  --blue:#2196F3;--purple:#6B46C1;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:#fff;color:var(--text);font-size:15px;line-height:1.7}
+section{padding:80px 40px}
+.inner{max-width:1100px;margin:0 auto}
+.st{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-dark);margin-bottom:10px}
+.sh{font-size:clamp(24px,3vw,36px);font-weight:800;color:var(--primary);line-height:1.2;margin-bottom:12px;letter-spacing:-.015em}
+.ss{font-size:15px;color:var(--muted);max-width:640px;line-height:1.85;margin-bottom:40px}
+.ds{background:var(--primary);color:#fff}
+.ds .sh{color:#fff}.ds .ss{color:rgba(255,255,255,.5)}.ds .st{color:var(--accent)}
+.alts{background:var(--bg-alt)}
+
+/* HERO */
+.hero{background:linear-gradient(160deg,var(--primary-dark) 0%,var(--primary) 55%,var(--primary-light) 100%);padding:96px 40px 80px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-120px;right:-120px;width:600px;height:600px;background:radial-gradient(circle,rgba(0,230,118,.06) 0%,transparent 70%);pointer-events:none}
+.hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.h-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.25);color:var(--accent);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:24px}
+.h-badge::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pdot 2s infinite}
+@keyframes pdot{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-size:clamp(30px,4.2vw,48px);font-weight:900;color:#fff;line-height:1.08;margin-bottom:20px;letter-spacing:-.02em}
+.hero h1 .acc{color:var(--accent)}
+.h-sub{font-size:16px;color:rgba(255,255,255,.5);line-height:1.85;margin-bottom:14px;max-width:560px}
+
+/* TECH CARDS */
+.tech-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.tech-card{border:1px solid var(--border);border-radius:var(--rl);padding:28px;position:relative;overflow:hidden;transition:box-shadow .3s,transform .2s}
+.tech-card:hover{box-shadow:0 8px 32px rgba(0,0,0,.08);transform:translateY(-2px)}
+.tech-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-dark))}
+.tech-card.blue::before{background:linear-gradient(90deg,#2196F3,#1565C0)}
+.tech-card.purple::before{background:linear-gradient(90deg,#6B46C1,#9F7AEA)}
+.tech-card.gold::before{background:linear-gradient(90deg,#D4A843,#E8BF5A)}
+.tech-card.orange::before{background:linear-gradient(90deg,#FF6B35,#E91E63)}
+.tech-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-dark);margin-bottom:8px}
+.tech-card.blue .tech-label{color:#1565C0}
+.tech-card.purple .tech-label{color:#6B46C1}
+.tech-card.gold .tech-label{color:#D4A843}
+.tech-card.orange .tech-label{color:#E91E63}
+.tech-card h3{font-size:17px;font-weight:800;color:var(--primary);margin-bottom:8px;line-height:1.3}
+.tech-card p{font-size:13px;color:var(--muted);line-height:1.7}
+.tech-card .tech-tag{display:inline-block;background:var(--bg-alt);border:1px solid var(--border);border-radius:6px;padding:2px 10px;font-size:11px;font-weight:600;color:var(--primary);margin-top:12px;margin-right:4px}
+
+/* DIAGRAM CONTAINER */
+.diagram-box{background:#fff;border:1.5px solid var(--border);border-radius:var(--rl);padding:40px;margin-bottom:32px;overflow-x:auto}
+.diagram-box .mermaid{display:flex;justify-content:center}
+.diagram-title{font-size:14px;font-weight:700;color:var(--primary);margin-bottom:20px;text-transform:uppercase;letter-spacing:.08em}
+
+/* DECISION TABLE */
+.dec-table{width:100%;border-collapse:collapse;font-size:13.5px}
+.dec-table th{background:var(--primary);color:#fff;padding:12px 16px;text-align:left;font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.dec-table td{padding:12px 16px;border-bottom:1px solid var(--border);vertical-align:top}
+.dec-table tr:hover{background:rgba(0,230,118,.03)}
+.dec-table .chosen{color:var(--accent-dark);font-weight:700}
+.dec-table .reason{color:var(--muted);font-size:12px;line-height:1.6}
+
+/* LAYER CARDS */
+.layer-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.layer-card{border:1px solid var(--border);border-radius:var(--rl);padding:28px;background:#fff}
+.layer-card h4{font-size:15px;font-weight:800;color:var(--primary);margin-bottom:12px}
+.layer-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+.layer-list li{font-size:13px;color:var(--text);padding-left:18px;position:relative;line-height:1.6}
+.layer-list li::before{content:'';position:absolute;left:2px;top:8px;width:6px;height:6px;border-radius:50%;background:var(--accent-dark)}
+
+/* SECURITY STACK */
+.sec-stack{display:flex;flex-direction:column;gap:0;max-width:700px}
+.sec-layer{padding:16px 24px;border:1px solid var(--border);font-size:13.5px;font-weight:600;color:var(--primary);display:flex;align-items:center;gap:12px}
+.sec-layer:first-child{border-radius:var(--r) var(--r) 0 0;background:linear-gradient(90deg,rgba(0,230,118,.08),rgba(0,230,118,.02))}
+.sec-layer:last-child{border-radius:0 0 var(--r) var(--r)}
+.sec-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--primary);color:var(--accent);font-size:12px;font-weight:800;flex-shrink:0}
+.sec-desc{font-size:12px;color:var(--muted);font-weight:400;margin-left:auto}
+
+/* SCHEDULE TABLE */
+.sched-table{width:100%;border-collapse:collapse;font-size:13px}
+.sched-table th{background:var(--bg-alt);color:var(--primary);padding:10px 14px;text-align:left;font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;border-bottom:2px solid var(--border)}
+.sched-table td{padding:10px 14px;border-bottom:1px solid var(--border)}
+.sched-table .time{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent-dark);font-weight:600}
+
+/* FULL WIDTH CARD */
+.full-card{grid-column:1/-1}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.rv.vis{opacity:1;transform:none}
+
+/* CTA */
+.cta-s{background:linear-gradient(160deg,var(--primary-dark),var(--primary) 60%,var(--primary-light));padding:80px 40px;text-align:center}
+
+@media(max-width:900px){.tech-grid{grid-template-columns:1fr}.layer-grid{grid-template-columns:1fr}section{padding:56px 24px}}
+@media(max-width:600px){.hero{padding:64px 24px 56px}}
+@media print{.rv{opacity:1!important;transform:none!important}section{padding:32px 20px!important;break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="h-badge">Architecture Document — March 2026</div>
+    <h1>Platform<br><span class="acc">Architecture.</span></h1>
+    <p class="h-sub">How Acornia is built — the technology stack, data architecture, integration design, and infrastructure decisions behind the platform.</p>
+  </div>
+</section>
+
+<!-- ARCHITECTURE OVERVIEW -->
+<section>
+  <div class="inner">
+    <div class="st rv">Architecture Overview</div>
+    <h2 class="sh rv">Modern, Scalable, Cost-Effective</h2>
+    <p class="ss rv">Acornia uses a modern full-stack architecture with clear separation of concerns — a React frontend, PostgreSQL database with row-level security, hybrid cloud storage, and serverless functions for integrations.</p>
+
+    <div class="diagram-box rv">
+      <div class="diagram-title">System Architecture</div>
+      <div class="mermaid">
+graph TB
+    subgraph Client["Client Layer"]
+        Browser["Browser<br/>(Desktop / Tablet / Mobile)"]
+    end
+
+    subgraph Frontend["Frontend — Next.js 15"]
+        SSR["Server Components<br/>(SSR)"]
+        CSR["Client Components<br/>(Interactive UI)"]
+        API["API Routes<br/>(/api/*)"]
+    end
+
+    subgraph Supabase["Supabase Platform"]
+        Auth["Auth<br/>(JWT + RBAC)"]
+        DB["PostgreSQL<br/>Database"]
+        RLS["Row Level<br/>Security"]
+        RT["Realtime<br/>(WebSocket)"]
+        EF["Edge Functions<br/>(Deno)"]
+        ST["Storage<br/>(Avatars)"]
+        Cron["pg_cron<br/>(Scheduled Jobs)"]
+    end
+
+    subgraph CF["Cloudflare"]
+        R2["R2 Storage<br/>(Documents & Reports)"]
+        CDN["CDN"]
+    end
+
+    subgraph External["External Services"]
+        Cash["Cashfree API<br/>(PAN + Bank)"]
+        NSE["NSE NMF II<br/>(Orders)"]
+        AMFI["AMFI<br/>(NAV Data)"]
+        OAI["OpenAI<br/>(GPT-4o + Whisper)"]
+        WA["WhatsApp<br/>Business API"]
+        EM["Email<br/>(Resend)"]
+    end
+
+    subgraph Auto["Browser Automation"]
+        PW["Playwright"]
+        CAMS["CAMS"]
+        KFin["KFintech"]
+    end
+
+    Browser --> CDN --> SSR
+    Browser --> CSR
+    CSR --> API
+    SSR --> DB
+    API --> Auth --> DB
+    API --> EF
+    DB --> RLS
+    DB --> Cron
+    RT --> Browser
+    EF --> Cash
+    EF --> NSE
+    EF --> OAI
+    EF --> WA
+    EF --> EM
+    Cron --> AMFI
+    Cron --> EF
+    API --> ST
+    API --> R2
+    PW --> CAMS
+    PW --> KFin
+    PW --> R2
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECHNOLOGY STACK -->
+<section class="alts">
+  <div class="inner">
+    <div class="st rv">Technology Stack</div>
+    <h2 class="sh rv">What Powers the Platform</h2>
+    <p class="ss rv">Every technology choice is driven by reliability, cost-efficiency, and developer productivity. No over-engineering — just the right tool for each job.</p>
+
+    <div class="tech-grid">
+
+      <div class="tech-card rv">
+        <div class="tech-label">Frontend Framework</div>
+        <h3>Next.js 15</h3>
+        <p>React framework with server-side rendering, static generation, and API routes. Server components reduce client-side JavaScript for faster page loads.</p>
+        <span class="tech-tag">TypeScript</span>
+        <span class="tech-tag">App Router</span>
+        <span class="tech-tag">SSR</span>
+      </div>
+
+      <div class="tech-card blue rv">
+        <div class="tech-label">Database</div>
+        <h3>Supabase PostgreSQL</h3>
+        <p>ACID-compliant relational database with built-in auth, row-level security, realtime subscriptions, and edge functions — all in one platform.</p>
+        <span class="tech-tag">PostgreSQL</span>
+        <span class="tech-tag">RLS</span>
+        <span class="tech-tag">Realtime</span>
+      </div>
+
+      <div class="tech-card gold rv">
+        <div class="tech-label">Bulk Storage</div>
+        <h3>Cloudflare R2</h3>
+        <p>S3-compatible object storage with zero egress fees. Perfect for CAMS/KFintech reports, investor documents, and meeting audio — downloads cost nothing.</p>
+        <span class="tech-tag">Zero Egress</span>
+        <span class="tech-tag">S3 API</span>
+        <span class="tech-tag">Global CDN</span>
+      </div>
+
+      <div class="tech-card purple rv">
+        <div class="tech-label">UI Components</div>
+        <h3>shadcn/ui + Tailwind</h3>
+        <p>Accessible, customisable component library built on Radix primitives with Tailwind CSS. Professional UI without the overhead of a heavy component framework.</p>
+        <span class="tech-tag">Radix</span>
+        <span class="tech-tag">Tailwind</span>
+        <span class="tech-tag">Accessible</span>
+      </div>
+
+      <div class="tech-card rv">
+        <div class="tech-label">Authentication</div>
+        <h3>Supabase Auth</h3>
+        <p>Built-in authentication with JWT sessions, role-based access control, and native integration with PostgreSQL row-level security. No additional vendor needed.</p>
+        <span class="tech-tag">JWT</span>
+        <span class="tech-tag">RBAC</span>
+        <span class="tech-tag">4 Roles</span>
+      </div>
+
+      <div class="tech-card orange rv">
+        <div class="tech-label">Animations</div>
+        <h3>Framer Motion</h3>
+        <p>Production-grade animation library for React. Powers the gold coin animations, page transitions, Kanban drag-and-drop, and dashboard micro-interactions.</p>
+        <span class="tech-tag">Gold Coins</span>
+        <span class="tech-tag">Transitions</span>
+        <span class="tech-tag">60fps</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- KEY DECISIONS -->
+<section>
+  <div class="inner">
+    <div class="st rv">Key Decisions</div>
+    <h2 class="sh rv">Why This Stack?</h2>
+    <p class="ss rv">Every architectural choice has a clear rationale tied to the platform's specific needs — financial data compliance, cost efficiency, and developer velocity.</p>
+
+    <div class="rv" style="overflow-x:auto">
+      <table class="dec-table">
+        <thead>
+          <tr>
+            <th>Decision</th>
+            <th>Choice</th>
+            <th>Alternatives</th>
+            <th>Rationale</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Database</td>
+            <td class="chosen">Supabase PostgreSQL</td>
+            <td>PlanetScale, Neon, Firebase</td>
+            <td class="reason">Auth + Realtime + RLS + Edge Functions in one platform. ACID compliance critical for financial data. No vendor lock-in — standard PostgreSQL underneath.</td>
+          </tr>
+          <tr>
+            <td>Bulk Storage</td>
+            <td class="chosen">Cloudflare R2</td>
+            <td>AWS S3, Supabase Storage only</td>
+            <td class="reason">Zero egress fees — critical for report downloads (CAMS/KFintech data can be large and frequently accessed). S3-compatible, so easy to migrate if needed.</td>
+          </tr>
+          <tr>
+            <td>Frontend</td>
+            <td class="chosen">Next.js 15</td>
+            <td>Remix, SvelteKit, Vite SPA</td>
+            <td class="reason">Largest React ecosystem. Server components reduce bundle size. API routes eliminate need for separate backend. Vercel hosting with zero-config deploys.</td>
+          </tr>
+          <tr>
+            <td>Auth</td>
+            <td class="chosen">Supabase Auth</td>
+            <td>Clerk, NextAuth, Auth0</td>
+            <td class="reason">Native integration with RLS — database permissions enforced at SQL level, not just API level. No additional vendor cost. JWT-based, stateless.</td>
+          </tr>
+          <tr>
+            <td>Realtime</td>
+            <td class="chosen">Supabase Realtime</td>
+            <td>Pusher, Ably, Socket.io</td>
+            <td class="reason">Included in Supabase plan — no extra cost. WebSocket-based, listens to database changes directly. Perfect for notification bell and Kanban updates.</td>
+          </tr>
+          <tr>
+            <td>Verification</td>
+            <td class="chosen">Cashfree API</td>
+            <td>Surepass, CVL KRA direct</td>
+            <td class="reason">Single vendor for both PAN and bank verification. Well-documented API, sandbox environment for testing, reasonable pricing, good uptime.</td>
+          </tr>
+          <tr>
+            <td>Report Automation</td>
+            <td class="chosen">Playwright</td>
+            <td>Puppeteer, Selenium</td>
+            <td class="reason">Best cross-browser support, typed API, auto-waits for elements. Actively maintained by Microsoft. Can run in lightweight containers.</td>
+          </tr>
+          <tr>
+            <td>Hosting</td>
+            <td class="chosen">Vercel</td>
+            <td>Cloudflare Pages, Railway</td>
+            <td class="reason">Best Next.js support (created by same team). Edge functions, preview deploys per PR, analytics built-in. Zero-config deployment from GitHub.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- HYBRID STORAGE -->
+<section class="alts">
+  <div class="inner">
+    <div class="st rv">Storage Architecture</div>
+    <h2 class="sh rv">Hybrid Storage Strategy</h2>
+    <p class="ss rv">Two storage systems, each optimised for a different access pattern — fast frequent access for small files, and cost-free bulk access for documents and reports.</p>
+
+    <div class="diagram-box rv">
+      <div class="diagram-title">Storage Routing</div>
+      <div class="mermaid">
+graph LR
+    Upload["File Upload"] --> Router{"File Type<br/>& Size?"}
+
+    Router -->|"Avatars, thumbnails<br/>< 5MB, frequent"| SB["Supabase Storage<br/>- Native auth integration<br/>- RLS protected<br/>- CDN via Supabase"]
+
+    Router -->|"Reports, documents<br/>audio, exports"| R2["Cloudflare R2<br/>- Zero egress cost<br/>- S3-compatible API<br/>- Global CDN"]
+
+    subgraph SB_Files["Supabase Storage"]
+        A1["User Avatars"]
+        A2["KYC Thumbnails"]
+        A3["Temp Uploads"]
+    end
+
+    subgraph R2_Files["Cloudflare R2"]
+        B1["CAMS/KFintech Reports"]
+        B2["Investor Documents"]
+        B3["Meeting Recordings"]
+        B4["Export Files (PDF, CSV)"]
+        B5["Import Archives"]
+    end
+      </div>
+    </div>
+
+    <div class="layer-grid rv">
+      <div class="layer-card">
+        <h4>Supabase Storage</h4>
+        <ul class="layer-list">
+          <li>User avatars and profile images</li>
+          <li>KYC document thumbnails</li>
+          <li>Small files under 5MB</li>
+          <li>Protected by Supabase Auth + RLS</li>
+          <li>Included in Supabase plan</li>
+        </ul>
+      </div>
+      <div class="layer-card">
+        <h4>Cloudflare R2</h4>
+        <ul class="layer-list">
+          <li>CAMS and KFintech downloaded reports</li>
+          <li>Investor KYC documents and bank proofs</li>
+          <li>Meeting audio recordings</li>
+          <li>Exported reports (PDF, CSV, Excel)</li>
+          <li>Zero egress fees on all downloads</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DATA FLOW -->
+<section>
+  <div class="inner">
+    <div class="st rv">Data Flows</div>
+    <h2 class="sh rv">How Data Moves Through the System</h2>
+    <p class="ss rv">Key operational flows showing how transactions, verifications, and notifications are processed end-to-end.</p>
+
+    <div class="diagram-box rv">
+      <div class="diagram-title">Task Creation Flow</div>
+      <div class="mermaid">
+sequenceDiagram
+    participant RM as RM (Browser)
+    participant Next as Next.js API
+    participant DB as PostgreSQL
+    participant CF as Cashfree
+    participant WA as WhatsApp API
+    participant RT as Realtime
+
+    RM->>Next: Create Task (investor, type, scheme, amount)
+    Next->>DB: Check investor KYC status
+
+    alt KYC Not Verified
+        Next->>CF: POST /pan (verify PAN)
+        CF-->>Next: PAN status + registered name
+        alt PAN Invalid
+            Next-->>RM: Error: KYC verification failed
+        end
+    end
+
+    Next->>DB: Fetch TaskTemplate for type
+    Next->>DB: INSERT task + checklist_items
+    Next->>DB: INSERT audit_log (task created)
+    Next->>DB: Auto-generate TASK-{number}
+    DB-->>RT: Broadcast task:created
+    RT-->>RM: Kanban board updates live
+
+    Next->>WA: Send "task received" to investor
+
+    alt WhatsApp Fails
+        WA-->>Next: Delivery failed
+        Next->>Next: Send email fallback
+    end
+
+    Next-->>RM: Task created successfully
+      </div>
+    </div>
+
+    <div class="diagram-box rv">
+      <div class="diagram-title">CAMS/KFintech Report Sync Flow</div>
+      <div class="mermaid">
+sequenceDiagram
+    participant Cron as pg_cron (Daily)
+    participant EF as Edge Function
+    participant PW as Playwright
+    participant CAMS as CAMS Portal
+    participant R2 as Cloudflare R2
+    participant DB as PostgreSQL
+
+    Cron->>EF: Trigger daily report sync
+    EF->>PW: Launch browser automation
+
+    PW->>CAMS: Login with credentials
+    CAMS-->>PW: Authenticated session
+    PW->>CAMS: Navigate to reports, download
+    CAMS-->>PW: CSV/Excel report files
+    PW->>R2: Upload raw reports
+
+    EF->>R2: Read downloaded files
+    EF->>EF: Parse CSV/Excel data
+    EF->>DB: Update folios, holdings, SIP status
+    EF->>DB: Run reconciliation checks
+
+    alt Discrepancy Found
+        EF->>DB: Create discrepancy alert
+        DB->>DB: INSERT notification
+    end
+      </div>
+    </div>
+
+    <div class="diagram-box rv">
+      <div class="diagram-title">Gold Coin Calculation Flow</div>
+      <div class="mermaid">
+sequenceDiagram
+    participant Cron as pg_cron (Daily 11:59 PM)
+    participant DB as PostgreSQL
+    participant Calc as Coin Calculator
+
+    Cron->>DB: Fetch all active gold_coin_rules
+    Cron->>DB: For each RM, fetch today's metrics
+
+    loop Each RM + Each Rule
+        Calc->>DB: Evaluate rule conditions against RM data
+        alt Conditions Met
+            Calc->>DB: INSERT gold_coin_ledger (coins earned)
+            Calc->>DB: INSERT notification (You earned X coins!)
+        end
+    end
+
+    Note over DB: Next RM login triggers<br/>animated coin balance display
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUTH & RBAC -->
+<section class="alts">
+  <div class="inner">
+    <div class="st rv">Authentication & Access Control</div>
+    <h2 class="sh rv">4 Roles. Database-Level Security.</h2>
+    <p class="ss rv">Row Level Security (RLS) enforces access control at the database level — not just the UI. Even if the API layer is bypassed, the database itself rejects unauthorised queries.</p>
+
+    <div class="diagram-box rv">
+      <div class="diagram-title">Authentication Flow</div>
+      <div class="mermaid">
+sequenceDiagram
+    participant User
+    participant Browser
+    participant Next as Next.js
+    participant Auth as Supabase Auth
+    participant DB as PostgreSQL (RLS)
+
+    User->>Browser: Enter email + password
+    Browser->>Next: POST /api/auth/login
+    Next->>Auth: signInWithPassword()
+    Auth->>DB: Validate credentials
+    DB-->>Auth: User record + role
+    Auth-->>Next: JWT token + session
+    Next-->>Browser: Set secure cookie
+
+    Browser->>Next: GET /investors (with cookie)
+    Next->>Auth: Verify JWT
+    Auth-->>Next: User ID + role
+    Next->>DB: SELECT * FROM investors
+    DB->>DB: RLS policy filters by role
+    DB-->>Next: Only authorised records
+    Next-->>Browser: Filtered investor list
+      </div>
+    </div>
+
+    <div class="rv" style="overflow-x:auto">
+      <table class="dec-table">
+        <thead>
+          <tr>
+            <th>Permission</th>
+            <th>Super Admin</th>
+            <th>Admin</th>
+            <th>RM</th>
+            <th>Operations</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>View all investors</td><td class="chosen">Full</td><td class="chosen">Full</td><td>Own assigned</td><td>Read-only</td></tr>
+          <tr><td>Create/edit investors</td><td class="chosen">Yes</td><td class="chosen">Yes</td><td>Own only</td><td>No</td></tr>
+          <tr><td>Create tasks</td><td class="chosen">Yes</td><td class="chosen">Yes</td><td class="chosen">Yes</td><td>No</td></tr>
+          <tr><td>Process tasks (status)</td><td class="chosen">Yes</td><td class="chosen">Yes</td><td>Limited</td><td class="chosen">Yes</td></tr>
+          <tr><td>View analytics</td><td class="chosen">Full</td><td class="chosen">Full</td><td>Own RM tab</td><td>No</td></tr>
+          <tr><td>Manage settings</td><td class="chosen">Yes</td><td class="chosen">Yes</td><td>No</td><td>No</td></tr>
+          <tr><td>Manage users</td><td class="chosen">Yes</td><td>No</td><td>No</td><td>No</td></tr>
+          <tr><td>Configure coin rules</td><td class="chosen">Yes</td><td class="chosen">Yes</td><td>No</td><td>No</td></tr>
+          <tr><td>View scorecards</td><td class="chosen">All RMs</td><td class="chosen">All RMs</td><td>Own only</td><td>No</td></tr>
+          <tr><td>Export data</td><td class="chosen">Yes</td><td class="chosen">Yes</td><td>No</td><td>No</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRATIONS -->
+<section>
+  <div class="inner">
+    <div class="st rv">External Integrations</div>
+    <h2 class="sh rv">6 Integration Points</h2>
+    <p class="ss rv">Each integration is isolated in its own service module with error handling, retry logic, and credential rotation support.</p>
+
+    <div class="diagram-box rv">
+      <div class="diagram-title">Integration Map</div>
+      <div class="mermaid">
+graph LR
+    subgraph Platform["Acornia Platform"]
+        API["API Routes"]
+        EF["Edge Functions"]
+        CRON["pg_cron"]
+        PW["Playwright"]
+    end
+
+    subgraph Verify["Verification"]
+        PAN["Cashfree PAN<br/>POST /pan"]
+        BANK["Cashfree Bank<br/>POST /bank-account"]
+    end
+
+    subgraph Trading["Trading"]
+        ORDER["NSE NMF II<br/>Order Placement"]
+        STATUS["NSE Status<br/>10-min Polling"]
+    end
+
+    subgraph Data["Data Feeds"]
+        AMFI2["AMFI NAV<br/>Daily CSV"]
+        CAMS2["CAMS Portal<br/>Browser Login"]
+        KFIN2["KFintech<br/>Browser Login"]
+    end
+
+    subgraph Comms["Communication"]
+        WA2["WhatsApp API<br/>Utility Messages"]
+        EM2["Resend Email<br/>Transactional"]
+    end
+
+    subgraph AI2["AI"]
+        GPT["GPT-4o<br/>Task Extraction"]
+        WHISP["Whisper<br/>Transcription"]
+    end
+
+    API --> PAN
+    API --> BANK
+    EF --> ORDER
+    CRON --> STATUS
+    CRON --> AMFI2
+    PW --> CAMS2
+    PW --> KFIN2
+    EF --> WA2
+    EF --> EM2
+    API --> GPT
+    API --> WHISP
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULED JOBS -->
+<section class="alts">
+  <div class="inner">
+    <div class="st rv">Scheduled Automations</div>
+    <h2 class="sh rv">12 Background Jobs. Always Running.</h2>
+    <p class="ss rv">All scheduled jobs run via pg_cron — PostgreSQL's native job scheduler — ensuring reliability without external dependencies.</p>
+
+    <div class="rv" style="overflow-x:auto">
+      <table class="sched-table">
+        <thead>
+          <tr><th>Job</th><th>Schedule</th><th>What It Does</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>AMFI NAV Sync</td><td class="time">Daily 6:00 AM</td><td>Fetches latest NAV for all mutual fund schemes from AMFI</td></tr>
+          <tr><td>Birthday Reminders</td><td class="time">Daily 8:00 AM</td><td>Creates birthday notifications for today's investor birthdays</td></tr>
+          <tr><td>Mandate Expiry Check</td><td class="time">Daily 7:00 AM</td><td>Flags bank mandates expiring in 30, 15, or 7 days</td></tr>
+          <tr><td>SIP Lapse Alerts</td><td class="time">Daily 9:00 AM</td><td>Alerts for SIPs expiring in 30, 15, or 7 days</td></tr>
+          <tr><td>KYC Renewal Check</td><td class="time">Daily 9:30 AM</td><td>Flags investors with KYC expiring within 60 days</td></tr>
+          <tr><td>Overdue Escalation</td><td class="time">Every 4 hours</td><td>Escalates tasks that have crossed their deadline</td></tr>
+          <tr><td>Review Reminders</td><td class="time">Monday 9:00 AM</td><td>Weekly alert for portfolio reviews due this week</td></tr>
+          <tr><td>NSE Order Sync</td><td class="time">Every 10 minutes</td><td>Polls NSE NMF II for order execution status updates</td></tr>
+          <tr><td>Investor Tier Update</td><td class="time">1st of month, 2 AM</td><td>Recalculates investor tier (Platinum/Gold/Silver/Bronze) by AUM</td></tr>
+          <tr><td>Gold Coin Daily</td><td class="time">Daily 11:59 PM</td><td>Evaluates coin rules and awards coins to qualifying RMs</td></tr>
+          <tr><td>Scorecard Monthly</td><td class="time">1st of month, 3 AM</td><td>Calculates monthly RM scorecard scores across all parameters</td></tr>
+          <tr><td>CAMS/KFintech Sync</td><td class="time">Daily 6:30 AM</td><td>Triggers Playwright to download latest reports from portals</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SECURITY -->
+<section>
+  <div class="inner">
+    <div class="st rv">Security Architecture</div>
+    <h2 class="sh rv">7 Layers of Protection</h2>
+    <p class="ss rv">Defence in depth — every layer independently protects the system. A breach at one layer does not compromise the others.</p>
+
+    <div class="sec-stack rv">
+      <div class="sec-layer"><span class="sec-num">1</span>Cloudflare CDN + WAF + DDoS Protection<span class="sec-desc">Edge-level filtering</span></div>
+      <div class="sec-layer"><span class="sec-num">2</span>HTTPS Everywhere (TLS 1.3)<span class="sec-desc">Encryption in transit</span></div>
+      <div class="sec-layer"><span class="sec-num">3</span>Supabase Auth (JWT Sessions)<span class="sec-desc">Identity verification</span></div>
+      <div class="sec-layer"><span class="sec-num">4</span>Row Level Security (PostgreSQL RLS)<span class="sec-desc">Database-level access control</span></div>
+      <div class="sec-layer"><span class="sec-num">5</span>API Input Validation (Zod Schemas)<span class="sec-desc">Data integrity enforcement</span></div>
+      <div class="sec-layer"><span class="sec-num">6</span>Encrypted Secrets (Supabase Vault)<span class="sec-desc">API keys, credentials protected</span></div>
+      <div class="sec-layer"><span class="sec-num">7</span>Complete Audit Trail (Every Mutation)<span class="sec-desc">Full accountability</span></div>
+    </div>
+
+    <div class="layer-grid rv" style="margin-top:32px">
+      <div class="layer-card">
+        <h4>Sensitive Data Handling</h4>
+        <ul class="layer-list">
+          <li>Passwords: bcrypt hashed (Supabase Auth)</li>
+          <li>API keys: AES-256 encrypted (Supabase Vault)</li>
+          <li>PAN numbers: Displayed masked (last 4 only)</li>
+          <li>Bank accounts: Last 4 digits stored only</li>
+          <li>Platform credentials: Encrypted at rest</li>
+          <li>Meeting audio: Signed URLs (time-limited access)</li>
+        </ul>
+      </div>
+      <div class="layer-card">
+        <h4>Backup & Recovery</h4>
+        <ul class="layer-list">
+          <li>Database: Supabase daily automated backups</li>
+          <li>Point-in-time recovery available</li>
+          <li>R2 Storage: 99.999999999% durability</li>
+          <li>Code: GitHub with branch protection</li>
+          <li>Secrets: Separate from code, rotatable</li>
+          <li>Uptime target: 99.5%</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPLOYMENT -->
+<section class="alts">
+  <div class="inner">
+    <div class="st rv">Deployment</div>
+    <h2 class="sh rv">Three Environments. Zero-Downtime Deploys.</h2>
+    <p class="ss rv">Code flows from development to staging to production with automated testing at every step.</p>
+
+    <div class="diagram-box rv">
+      <div class="diagram-title">CI/CD Pipeline</div>
+      <div class="mermaid">
+graph LR
+    A["Push to<br/>GitHub"] --> B["GitHub Actions"]
+    B --> C["Lint +<br/>Type Check"]
+    C --> D["Unit Tests<br/>(Vitest)"]
+    D --> E["E2E Tests<br/>(Playwright)"]
+    E --> F{"Branch?"}
+    F -->|"PR"| G["Deploy to<br/>Staging (Preview)"]
+    F -->|"main"| H["Deploy to<br/>Production"]
+    H --> I["Post-Deploy<br/>Health Check"]
+      </div>
+    </div>
+
+    <div class="layer-grid rv">
+      <div class="layer-card">
+        <h4>Environment Setup</h4>
+        <ul class="layer-list">
+          <li>Development: Supabase local (Docker)</li>
+          <li>Staging: Supabase project + Vercel preview</li>
+          <li>Production: Supabase project + Vercel production</li>
+          <li>Each environment fully isolated</li>
+        </ul>
+      </div>
+      <div class="layer-card">
+        <h4>Infrastructure</h4>
+        <ul class="layer-list">
+          <li>Frontend: Vercel (edge-optimised)</li>
+          <li>Database: Supabase Cloud (managed)</li>
+          <li>Storage: Cloudflare R2 (global CDN)</li>
+          <li>Browser Automation: Fly.io container</li>
+          <li>Email: Resend (transactional)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<section class="cta-s">
+  <div class="rv">
+    <p style="font-family:'Inter',sans-serif;font-size:clamp(1.2rem,2.5vw,1.8rem);font-weight:300;font-style:italic;color:#fff;max-width:520px;margin:0 auto 1rem;line-height:1.3">
+      Built for reliability. Designed for scale.
+    </p>
+    <p style="font-size:.95rem;color:rgba(255,255,255,.35);max-width:480px;margin:0 auto 3rem;line-height:1.85">
+      A modern architecture that grows with the business — no vendor lock-in, no hidden costs, full source code ownership.
+    </p>
+  </div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:3rem">
+    <span style="font-size:1rem;font-weight:700;color:rgba(255,255,255,.55)">Tranquil Veda Private Limited</span>
+    <span style="font-size:.82rem;color:rgba(255,255,255,.3)">Architecture Document v1.0 — March 2026</span>
+  </div>
+  <div style="border-top:1px solid rgba(255,255,255,.06);padding-top:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;max-width:1100px;margin:0 auto">
+    <span style="font-size:.75rem;color:rgba(255,255,255,.15)">Prepared for Mr. Prasad Sangam, Acorn Wealth. Confidential.</span>
+    <div style="display:flex;align-items:center;gap:.5rem">
+      <span style="width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block;animation:pdot 2s infinite"></span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:.68rem;color:rgba(255,255,255,.2);letter-spacing:.1em">ARCHITECTURE v1.0</span>
+    </div>
+  </div>
+</section>
+
+<script>
+mermaid.initialize({
+  startOnLoad: true,
+  theme: 'base',
+  themeVariables: {
+    primaryColor: '#152238',
+    primaryTextColor: '#fff',
+    primaryBorderColor: '#00C853',
+    lineColor: '#64748B',
+    secondaryColor: '#F8FAFC',
+    tertiaryColor: '#fff',
+    fontSize: '13px',
+    fontFamily: 'Inter, system-ui, sans-serif'
+  },
+  flowchart: { curve: 'basis', padding: 20 },
+  sequence: { actorMargin: 60, messageMargin: 40 }
+});
+
+const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
