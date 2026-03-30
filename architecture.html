@@ -167,8 +167,7 @@ graph TB
 
     subgraph Auto["Browser Automation"]
         PW["Playwright"]
-        CAMS["CAMS"]
-        KFin["KFintech"]
+        IW["InvestWell"]
     end
 
     Browser --> CDN --> SSR
@@ -189,8 +188,7 @@ graph TB
     Cron --> EF
     API --> ST
     API --> R2
-    PW --> CAMS
-    PW --> KFin
+    PW --> IW
     PW --> R2
       </div>
     </div>
@@ -227,7 +225,7 @@ graph TB
       <div class="tech-card gold rv">
         <div class="tech-label">Bulk Storage</div>
         <h3>Cloudflare R2</h3>
-        <p>S3-compatible object storage with zero egress fees. Perfect for CAMS/KFintech reports, investor documents, and meeting audio — downloads cost nothing.</p>
+        <p>S3-compatible object storage with zero egress fees. Perfect for InvestWell reports, investor documents, and meeting audio — downloads cost nothing.</p>
         <span class="tech-tag">Zero Egress</span>
         <span class="tech-tag">S3 API</span>
         <span class="tech-tag">Global CDN</span>
@@ -292,7 +290,7 @@ graph TB
             <td>Bulk Storage</td>
             <td class="chosen">Cloudflare R2</td>
             <td>AWS S3, Supabase Storage only</td>
-            <td class="reason">Zero egress fees — critical for report downloads (CAMS/KFintech data can be large and frequently accessed). S3-compatible, so easy to migrate if needed.</td>
+            <td class="reason">Zero egress fees — critical for report downloads (InvestWell data can be large and frequently accessed). S3-compatible, so easy to migrate if needed.</td>
           </tr>
           <tr>
             <td>Frontend</td>
@@ -360,7 +358,7 @@ graph LR
     end
 
     subgraph R2_Files["Cloudflare R2"]
-        B1["CAMS/KFintech Reports"]
+        B1["InvestWell Reports"]
         B2["Investor Documents"]
         B3["Meeting Recordings"]
         B4["Export Files (PDF, CSV)"]
@@ -383,7 +381,7 @@ graph LR
       <div class="layer-card">
         <h4>Cloudflare R2</h4>
         <ul class="layer-list">
-          <li>CAMS and KFintech downloaded reports</li>
+          <li>InvestWell downloaded reports</li>
           <li>Investor KYC documents and bank proofs</li>
           <li>Meeting audio recordings</li>
           <li>Exported reports (PDF, CSV, Excel)</li>
@@ -442,23 +440,23 @@ sequenceDiagram
     </div>
 
     <div class="diagram-box rv">
-      <div class="diagram-title">CAMS/KFintech Report Sync Flow</div>
+      <div class="diagram-title">InvestWell Report Sync Flow</div>
       <div class="mermaid">
 sequenceDiagram
     participant Cron as pg_cron (Daily)
     participant EF as Edge Function
     participant PW as Playwright
-    participant CAMS as CAMS Portal
+    participant IW as InvestWell Portal
     participant R2 as Cloudflare R2
     participant DB as PostgreSQL
 
     Cron->>EF: Trigger daily report sync
     EF->>PW: Launch browser automation
 
-    PW->>CAMS: Login with credentials
-    CAMS-->>PW: Authenticated session
-    PW->>CAMS: Navigate to reports, download
-    CAMS-->>PW: CSV/Excel report files
+    PW->>IW: Login with credentials
+    IW-->>PW: Authenticated session
+    PW->>IW: Navigate to reports, download
+    IW-->>PW: CSV/Excel report files
     PW->>R2: Upload raw reports
 
     EF->>R2: Read downloaded files
@@ -591,8 +589,7 @@ graph LR
 
     subgraph Data["Data Feeds"]
         AMFI2["AMFI NAV<br/>Daily CSV"]
-        CAMS2["CAMS Portal<br/>Browser Login"]
-        KFIN2["KFintech<br/>Browser Login"]
+        IW2["InvestWell<br/>Browser Automation"]
     end
 
     subgraph Comms["Communication"]
@@ -610,8 +607,7 @@ graph LR
     EF --> ORDER
     CRON --> STATUS
     CRON --> AMFI2
-    PW --> CAMS2
-    PW --> KFIN2
+    PW --> IW2
     EF --> WA2
     EF --> EM2
     API --> GPT
@@ -645,7 +641,7 @@ graph LR
           <tr><td>Investor Tier Update</td><td class="time">1st of month, 2 AM</td><td>Recalculates investor tier (Platinum/Gold/Silver/Bronze) by AUM</td></tr>
           <tr><td>Gold Coin Daily</td><td class="time">Daily 11:59 PM</td><td>Evaluates coin rules and awards coins to qualifying RMs</td></tr>
           <tr><td>Scorecard Monthly</td><td class="time">1st of month, 3 AM</td><td>Calculates monthly RM scorecard scores across all parameters</td></tr>
-          <tr><td>CAMS/KFintech Sync</td><td class="time">Daily 6:30 AM</td><td>Triggers Playwright to download latest reports from portals</td></tr>
+          <tr><td>InvestWell Sync</td><td class="time">Daily 6:30 AM</td><td>Triggers Playwright to download latest reports from InvestWell</td></tr>
         </tbody>
       </table>
     </div>
