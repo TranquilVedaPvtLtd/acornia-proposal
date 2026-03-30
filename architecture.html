@@ -135,25 +135,25 @@ graph TB
         Browser["Browser<br/>(Desktop / Tablet / Mobile)"]
     end
 
-    subgraph Frontend["Frontend — Next.js 15"]
-        SSR["Server Components<br/>(SSR)"]
-        CSR["Client Components<br/>(Interactive UI)"]
-        API["API Routes<br/>(/api/*)"]
+    subgraph VPS["Hostinger VPS (8 GB RAM, 4 vCPU)"]
+        Nginx["Nginx<br/>Reverse Proxy + SSL"]
+        SSR["Next.js Server<br/>(SSR + API Routes)"]
+        PM2["PM2<br/>Process Manager"]
+        PW["Playwright<br/>(Browser Automation)"]
+        Cron_L["Node-cron<br/>(Scheduled Jobs)"]
     end
 
-    subgraph Supabase["Supabase Platform"]
+    subgraph Supabase["Supabase Cloud"]
         Auth["Auth<br/>(JWT + RBAC)"]
         DB["PostgreSQL<br/>Database"]
         RLS["Row Level<br/>Security"]
         RT["Realtime<br/>(WebSocket)"]
-        EF["Edge Functions<br/>(Deno)"]
         ST["Storage<br/>(Avatars)"]
-        Cron["pg_cron<br/>(Scheduled Jobs)"]
     end
 
     subgraph CF["Cloudflare"]
         R2["R2 Storage<br/>(Documents & Reports)"]
-        CDN["CDN"]
+        CDN["CDN + DNS"]
     end
 
     subgraph External["External Services"]
@@ -163,31 +163,23 @@ graph TB
         OAI["OpenAI<br/>(GPT-4o + Whisper)"]
         WA["WhatsApp<br/>Business API"]
         EM["Email<br/>(Resend)"]
+        IW["InvestWell<br/>Portal"]
     end
 
-    subgraph Auto["Browser Automation"]
-        PW["Playwright"]
-        IW["InvestWell"]
-    end
-
-    Browser --> CDN --> SSR
-    Browser --> CSR
-    CSR --> API
-    SSR --> DB
-    API --> Auth --> DB
-    API --> EF
+    Browser --> CDN --> Nginx --> SSR
+    PM2 --> SSR
+    SSR --> Auth --> DB
     DB --> RLS
-    DB --> Cron
     RT --> Browser
-    EF --> Cash
-    EF --> NSE
-    EF --> OAI
-    EF --> WA
-    EF --> EM
-    Cron --> AMFI
-    Cron --> EF
-    API --> ST
-    API --> R2
+    SSR --> Cash
+    SSR --> NSE
+    SSR --> OAI
+    SSR --> WA
+    SSR --> EM
+    Cron_L --> AMFI
+    Cron_L --> SSR
+    SSR --> ST
+    SSR --> R2
     PW --> IW
     PW --> R2
       </div>
@@ -324,9 +316,9 @@ graph TB
           </tr>
           <tr>
             <td>Hosting</td>
-            <td class="chosen">Vercel</td>
-            <td>Cloudflare Pages, Railway</td>
-            <td class="reason">Best Next.js support (created by same team). Edge functions, preview deploys per PR, analytics built-in. Zero-config deployment from GitHub.</td>
+            <td class="chosen">Hostinger VPS (KVM 4)</td>
+            <td>Vercel, Cloudflare Pages, Railway</td>
+            <td class="reason">Full server control. Playwright browser automation runs natively on the same machine. Predictable monthly cost. Mumbai data centre for lowest latency. No vendor lock-in.</td>
           </tr>
         </tbody>
       </table>
@@ -358,8 +350,8 @@ graph LR
     end
 
     subgraph R2_Files["Cloudflare R2"]
-        B1["InvestWell Reports"]
-        B2["Investor Documents"]
+        B1["InvestWell Excel Reports (raw)"]
+        B2["Investor Documents (KYC, Bank)"]
         B3["Meeting Recordings"]
         B4["Export Files (PDF, CSV)"]
         B5["Import Archives"]
@@ -381,7 +373,8 @@ graph LR
       <div class="layer-card">
         <h4>Cloudflare R2</h4>
         <ul class="layer-list">
-          <li>InvestWell downloaded reports</li>
+          <li>InvestWell raw Excel files (archive + audit trail)</li>
+          <li>Parsed data (PAN, SIPs, folios, capital gains) goes to Supabase PostgreSQL</li>
           <li>Investor KYC documents and bank proofs</li>
           <li>Meeting audio recordings</li>
           <li>Exported reports (PDF, CSV, Excel)</li>
@@ -440,34 +433,39 @@ sequenceDiagram
     </div>
 
     <div class="diagram-box rv">
-      <div class="diagram-title">InvestWell Report Sync Flow</div>
+      <div class="diagram-title">InvestWell Report Sync — Excel Processing Flow</div>
       <div class="mermaid">
 sequenceDiagram
-    participant Cron as pg_cron (Daily)
-    participant EF as Edge Function
-    participant PW as Playwright
+    participant Cron as Node-cron (Daily 6:30 AM)
+    participant PW as Playwright (on VPS)
     participant IW as InvestWell Portal
     participant R2 as Cloudflare R2
-    participant DB as PostgreSQL
+    participant Parser as Excel Parser (SheetJS)
+    participant DB as Supabase PostgreSQL
 
-    Cron->>EF: Trigger daily report sync
-    EF->>PW: Launch browser automation
-
+    Cron->>PW: Trigger daily report sync
     PW->>IW: Login with credentials
     IW-->>PW: Authenticated session
-    PW->>IW: Navigate to reports, download
-    IW-->>PW: CSV/Excel report files
-    PW->>R2: Upload raw reports
+    PW->>IW: Navigate to reports, download Excel
+    IW-->>PW: Excel files (.xlsx)
 
-    EF->>R2: Read downloaded files
-    EF->>EF: Parse CSV/Excel data
-    EF->>DB: Update folios, holdings, SIP status
-    EF->>DB: Run reconciliation checks
+    Note over PW,R2: Step 1: Archive raw Excel
+    PW->>R2: Upload raw Excel files (audit trail)
 
+    Note over Parser,DB: Step 2: Parse and extract data
+    PW->>Parser: Read Excel files
+    Parser->>Parser: Extract PAN, folios, SIP details, AUM, capital gains
+    Parser->>DB: Upsert investors (AUM, tier recalc)
+    Parser->>DB: Upsert folios (units, current value)
+    Parser->>DB: Upsert SIP registrations (status, amounts)
+    Parser->>DB: Store capital gains data
+
+    Note over Parser,DB: Step 3: Reconciliation
+    Parser->>DB: Compare parsed data vs existing records
     alt Discrepancy Found
-        EF->>DB: Create discrepancy alert
-        DB->>DB: INSERT notification
+        Parser->>DB: Create discrepancy alert notification
     end
+    Parser->>DB: Log sync status (success/partial/failed)
       </div>
     </div>
 
@@ -622,7 +620,7 @@ graph LR
   <div class="inner">
     <div class="st rv">Scheduled Automations</div>
     <h2 class="sh rv">12 Background Jobs. Always Running.</h2>
-    <p class="ss rv">All scheduled jobs run via pg_cron — PostgreSQL's native job scheduler — ensuring reliability without external dependencies.</p>
+    <p class="ss rv">All scheduled jobs run via Node-cron on the VPS — running alongside the application — ensuring reliability without external dependencies.</p>
 
     <div class="rv" style="overflow-x:auto">
       <table class="sched-table">
@@ -692,12 +690,128 @@ graph LR
   </div>
 </section>
 
-<!-- DEPLOYMENT -->
+<!-- VPS SPECIFICATIONS -->
 <section class="alts">
   <div class="inner">
+    <div class="st rv">Server Specifications</div>
+    <h2 class="sh rv">Hostinger VPS — Production Server</h2>
+    <p class="ss rv">A single VPS hosts the application, background jobs, and browser automation. Supabase Cloud handles the database. This gives full control over the server at a predictable monthly cost.</p>
+
+    <div class="diagram-box rv">
+      <div class="diagram-title">VPS Architecture</div>
+      <div class="mermaid">
+graph TB
+    subgraph VPS["Hostinger VPS — KVM 4"]
+        direction TB
+        OS["Ubuntu 24.04 LTS"]
+        NG["Nginx (Reverse Proxy + SSL)"]
+        NJ["Node.js 20 LTS"]
+        NX["Next.js 15 (SSR + API)"]
+        PM["PM2 (Process Manager)"]
+        PW2["Playwright + Chromium<br/>(InvestWell Automation)"]
+        CR["Node-cron<br/>(12 Scheduled Jobs)"]
+    end
+
+    subgraph Managed["Managed Services (External)"]
+        SB["Supabase Cloud<br/>PostgreSQL + Auth + Realtime"]
+        R2B["Cloudflare R2<br/>Document Storage"]
+        CF2["Cloudflare DNS + CDN"]
+    end
+
+    CF2 --> NG
+    NG --> NX
+    PM --> NX
+    PM --> CR
+    NX --> SB
+    NX --> R2B
+    PW2 --> R2B
+      </div>
+    </div>
+
+    <div class="rv" style="overflow-x:auto">
+      <table class="dec-table">
+        <thead>
+          <tr>
+            <th>Specification</th>
+            <th>Recommended</th>
+            <th>Why</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Plan</strong></td>
+            <td class="chosen">KVM 4 or higher</td>
+            <td class="reason">Sufficient for Next.js SSR + Playwright browser automation running concurrently</td>
+          </tr>
+          <tr>
+            <td><strong>RAM</strong></td>
+            <td class="chosen">8 GB minimum</td>
+            <td class="reason">Next.js SSR: ~1-2 GB, Playwright + Chromium: ~1-2 GB per instance, Node-cron jobs: ~500 MB, OS overhead: ~1 GB. Leaves headroom for traffic spikes.</td>
+          </tr>
+          <tr>
+            <td><strong>CPU</strong></td>
+            <td class="chosen">4 vCPU cores</td>
+            <td class="reason">SSR rendering is CPU-bound. 4 cores handle 22 concurrent users + background jobs without contention.</td>
+          </tr>
+          <tr>
+            <td><strong>Storage</strong></td>
+            <td class="chosen">100 GB NVMe SSD</td>
+            <td class="reason">OS + Node.js + Playwright Chromium (~500 MB) + application code + logs + temporary Excel files during processing. Bulk storage offloaded to R2.</td>
+          </tr>
+          <tr>
+            <td><strong>Bandwidth</strong></td>
+            <td class="chosen">8 TB / month</td>
+            <td class="reason">22 users, SSR pages, API calls. Bulk document downloads served from R2 CDN (not VPS bandwidth).</td>
+          </tr>
+          <tr>
+            <td><strong>OS</strong></td>
+            <td class="chosen">Ubuntu 24.04 LTS</td>
+            <td class="reason">Long-term support, best Node.js/Playwright compatibility, widest ecosystem</td>
+          </tr>
+          <tr>
+            <td><strong>Location</strong></td>
+            <td class="chosen">Mumbai (India)</td>
+            <td class="reason">Lowest latency for Indian users. Critical for InvestWell browser automation (Indian portal).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="layer-grid rv" style="margin-top:32px">
+      <div class="layer-card">
+        <h4>Software Stack on VPS</h4>
+        <ul class="layer-list">
+          <li>Ubuntu 24.04 LTS (base OS)</li>
+          <li>Nginx (reverse proxy, SSL termination via Let's Encrypt)</li>
+          <li>Node.js 20 LTS (application runtime)</li>
+          <li>PM2 (process manager — auto-restart, clustering, logs)</li>
+          <li>Playwright + Chromium (headless browser for InvestWell)</li>
+          <li>Node-cron (12 scheduled background jobs)</li>
+          <li>UFW firewall (ports 80, 443, 22 only)</li>
+          <li>Fail2ban (SSH brute-force protection)</li>
+        </ul>
+      </div>
+      <div class="layer-card">
+        <h4>What Runs Externally (Not on VPS)</h4>
+        <ul class="layer-list">
+          <li>Database: Supabase Cloud (managed PostgreSQL)</li>
+          <li>Auth: Supabase Auth (managed, JWT-based)</li>
+          <li>Realtime: Supabase Realtime (WebSocket, managed)</li>
+          <li>Document Storage: Cloudflare R2 (zero egress CDN)</li>
+          <li>DNS + CDN: Cloudflare (DDoS protection included)</li>
+          <li>Email: Resend (transactional email API)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPLOYMENT -->
+<section>
+  <div class="inner">
     <div class="st rv">Deployment</div>
-    <h2 class="sh rv">Three Environments. Zero-Downtime Deploys.</h2>
-    <p class="ss rv">Code flows from development to staging to production with automated testing at every step.</p>
+    <h2 class="sh rv">GitHub to Production in Minutes.</h2>
+    <p class="ss rv">Code is deployed from GitHub to the VPS via automated pipeline. Staging and production are isolated environments on the same server.</p>
 
     <div class="diagram-box rv">
       <div class="diagram-title">CI/CD Pipeline</div>
@@ -708,9 +822,10 @@ graph LR
     C --> D["Unit Tests<br/>(Vitest)"]
     D --> E["E2E Tests<br/>(Playwright)"]
     E --> F{"Branch?"}
-    F -->|"PR"| G["Deploy to<br/>Staging (Preview)"]
-    F -->|"main"| H["Deploy to<br/>Production"]
-    H --> I["Post-Deploy<br/>Health Check"]
+    F -->|"PR"| G["Deploy to<br/>Staging<br/>(staging.domain.com)"]
+    F -->|"main"| H["SSH Deploy<br/>to VPS"]
+    H --> I["PM2 Reload<br/>(Zero Downtime)"]
+    I --> J["Health Check"]
       </div>
     </div>
 
@@ -718,19 +833,20 @@ graph LR
       <div class="layer-card">
         <h4>Environment Setup</h4>
         <ul class="layer-list">
-          <li>Development: Supabase local (Docker)</li>
-          <li>Staging: Supabase project + Vercel preview</li>
-          <li>Production: Supabase project + Vercel production</li>
-          <li>Each environment fully isolated</li>
+          <li>Development: Local machine + Supabase local (Docker)</li>
+          <li>Staging: VPS subdomain (staging.acornia.com) + Supabase staging project</li>
+          <li>Production: VPS primary domain (app.acornia.com) + Supabase production project</li>
+          <li>Each environment has isolated database and env variables</li>
         </ul>
       </div>
       <div class="layer-card">
-        <h4>Infrastructure</h4>
+        <h4>Infrastructure Summary</h4>
         <ul class="layer-list">
-          <li>Frontend: Vercel (edge-optimised)</li>
-          <li>Database: Supabase Cloud (managed)</li>
-          <li>Storage: Cloudflare R2 (global CDN)</li>
-          <li>Browser Automation: Fly.io container</li>
+          <li>Application Server: Hostinger VPS KVM 4 (Mumbai)</li>
+          <li>Database: Supabase Cloud (managed PostgreSQL)</li>
+          <li>File Storage: Cloudflare R2 (zero egress)</li>
+          <li>DNS + CDN + WAF: Cloudflare</li>
+          <li>SSL: Let's Encrypt (auto-renewed via Certbot)</li>
           <li>Email: Resend (transactional)</li>
         </ul>
       </div>
