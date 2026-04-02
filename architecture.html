@@ -137,10 +137,18 @@ graph TB
 
     subgraph VPS["Hostinger VPS (8 GB RAM, 4 vCPU)"]
         Nginx["Nginx<br/>Reverse Proxy + SSL"]
-        SSR["Next.js Server<br/>(SSR + API Routes)"]
-        PM2["PM2<br/>Process Manager"]
-        PW["Playwright<br/>(Browser Automation)"]
-        Cron_L["Node-cron<br/>(Scheduled Jobs)"]
+        subgraph Svc1["app.acornia.com"]
+            SSR["Next.js Server<br/>Acornia CRM<br/>(SSR + API Routes)"]
+            PM2["PM2<br/>Process Manager"]
+            PW["Playwright<br/>(Browser Automation)"]
+            Cron_L["Node-cron<br/>(Scheduled Jobs)"]
+        end
+        subgraph Svc2["hr.acornia.com"]
+            Frappe["Frappe HR<br/>(Employee Mgmt,<br/>Payroll, Attendance)"]
+        end
+        subgraph Svc3["chat.acornia.com"]
+            MM["Mattermost<br/>(Team Communication,<br/>Webhooks, Bots)"]
+        end
     end
 
     subgraph Supabase["Supabase Cloud"]
@@ -166,7 +174,10 @@ graph TB
         IW["InvestWell<br/>Portal"]
     end
 
-    Browser --> CDN --> Nginx --> SSR
+    Browser --> CDN --> Nginx
+    Nginx --> SSR
+    Nginx --> Frappe
+    Nginx --> MM
     PM2 --> SSR
     SSR --> Auth --> DB
     DB --> RLS
@@ -176,6 +187,8 @@ graph TB
     SSR --> OAI
     SSR --> WA
     SSR --> EM
+    SSR --> MM
+    SSR --> Frappe
     Cron_L --> AMFI
     Cron_L --> SSR
     SSR --> ST
@@ -250,6 +263,24 @@ graph TB
         <span class="tech-tag">60fps</span>
       </div>
 
+      <div class="tech-card blue rv">
+        <div class="tech-label">Team Communication</div>
+        <h3>Mattermost</h3>
+        <p>Self-hosted team messaging with webhooks, slash commands, and bot framework. MIT-licensed, unlimited users, integrates with Acornia for real-time alerts and internal coordination.</p>
+        <span class="tech-tag">Webhooks</span>
+        <span class="tech-tag">Slash Commands</span>
+        <span class="tech-tag">Bot Framework</span>
+      </div>
+
+      <div class="tech-card gold rv">
+        <div class="tech-label">HR System</div>
+        <h3>Frappe HR</h3>
+        <p>Self-hosted HR management with employee records, payroll, attendance tracking, appraisals, and full India statutory compliance (PF, ESI, TDS). Excellent REST API for integration.</p>
+        <span class="tech-tag">Payroll</span>
+        <span class="tech-tag">Attendance</span>
+        <span class="tech-tag">India Compliance</span>
+      </div>
+
     </div>
   </div>
 </section>
@@ -319,6 +350,18 @@ graph TB
             <td class="chosen">Hostinger VPS (KVM 4)</td>
             <td>Vercel, Cloudflare Pages, Railway</td>
             <td class="reason">Full server control. Playwright browser automation runs natively on the same machine. Predictable monthly cost. Mumbai data centre for lowest latency. No vendor lock-in.</td>
+          </tr>
+          <tr>
+            <td>Team Communication</td>
+            <td class="chosen">Mattermost</td>
+            <td>Rocket.Chat, Zulip, Element</td>
+            <td class="reason">MIT license, unlimited users, simplest setup. Rocket.Chat has a 50-user cap on free tier. Zulip requires complex thread-based setup. Element/Matrix is over-engineered for a small team.</td>
+          </tr>
+          <tr>
+            <td>HR System</td>
+            <td class="chosen">Frappe HR</td>
+            <td>OrangeHRM, Odoo HR, IceHRM</td>
+            <td class="reason">Native Indian payroll with PF/ESI/TDS support out of the box. Excellent REST API for integration with Acornia. OrangeHRM lacks Indian payroll. Odoo HR is too heavy. IceHRM has limited features.</td>
           </tr>
         </tbody>
       </table>
@@ -561,7 +604,7 @@ sequenceDiagram
 <section>
   <div class="inner">
     <div class="st rv">External Integrations</div>
-    <h2 class="sh rv">6 Integration Points</h2>
+    <h2 class="sh rv">8 Integration Points</h2>
     <p class="ss rv">Each integration is isolated in its own service module with error handling, retry logic, and credential rotation support.</p>
 
     <div class="diagram-box rv">
@@ -600,6 +643,11 @@ graph LR
         WHISP["Whisper<br/>Transcription"]
     end
 
+    subgraph Internal["Internal Services (VPS)"]
+        MMI["Mattermost<br/>Webhooks + Alerts"]
+        FRI["Frappe HR<br/>Attendance + Payroll API"]
+    end
+
     API --> PAN
     API --> BANK
     EF --> ORDER
@@ -610,6 +658,8 @@ graph LR
     EF --> EM2
     API --> GPT
     API --> WHISP
+    API --> MMI
+    CRON --> FRI
       </div>
     </div>
   </div>
@@ -619,7 +669,7 @@ graph LR
 <section class="alts">
   <div class="inner">
     <div class="st rv">Scheduled Automations</div>
-    <h2 class="sh rv">12 Background Jobs. Always Running.</h2>
+    <h2 class="sh rv">14 Background Jobs. Always Running.</h2>
     <p class="ss rv">All scheduled jobs run via Node-cron on the VPS — running alongside the application — ensuring reliability without external dependencies.</p>
 
     <div class="rv" style="overflow-x:auto">
@@ -640,6 +690,8 @@ graph LR
           <tr><td>Gold Coin Daily</td><td class="time">Daily 11:59 PM</td><td>Evaluates coin rules and awards coins to qualifying RMs</td></tr>
           <tr><td>Scorecard Monthly</td><td class="time">1st of month, 3 AM</td><td>Calculates monthly RM scorecard scores across all parameters</td></tr>
           <tr><td>InvestWell Sync</td><td class="time">Daily 6:30 AM</td><td>Triggers Playwright to download latest reports from InvestWell</td></tr>
+          <tr><td>Frappe HR Sync</td><td class="time">Daily 7:30 AM</td><td>Pulls attendance and leave data from Frappe HR via REST API</td></tr>
+          <tr><td>Scorecard to Frappe HR</td><td class="time">2nd of month, 4 AM</td><td>Pushes monthly scorecard results to Frappe HR for appraisal records</td></tr>
         </tbody>
       </table>
     </div>
@@ -705,11 +757,19 @@ graph TB
         direction TB
         OS["Ubuntu 24.04 LTS"]
         NG["Nginx (Reverse Proxy + SSL)"]
-        NJ["Node.js 20 LTS"]
-        NX["Next.js 15 (SSR + API)"]
-        PM["PM2 (Process Manager)"]
-        PW2["Playwright + Chromium<br/>(InvestWell Automation)"]
-        CR["Node-cron<br/>(12 Scheduled Jobs)"]
+        subgraph S1["app.acornia.com"]
+            NJ["Node.js 20 LTS"]
+            NX["Next.js 15 (SSR + API)"]
+            PM["PM2 (Process Manager)"]
+            PW2["Playwright + Chromium<br/>(InvestWell Automation)"]
+            CR["Node-cron<br/>(14 Scheduled Jobs)"]
+        end
+        subgraph S2["hr.acornia.com"]
+            FHR["Frappe HR<br/>(Payroll, Attendance,<br/>India Compliance)"]
+        end
+        subgraph S3["chat.acornia.com"]
+            MMD["Mattermost<br/>(Team Messaging,<br/>Webhooks, Bots)"]
+        end
     end
 
     subgraph Managed["Managed Services (External)"]
@@ -720,10 +780,14 @@ graph TB
 
     CF2 --> NG
     NG --> NX
+    NG --> FHR
+    NG --> MMD
     PM --> NX
     PM --> CR
     NX --> SB
     NX --> R2B
+    NX --> FHR
+    NX --> MMD
     PW2 --> R2B
       </div>
     </div>
@@ -746,7 +810,7 @@ graph TB
           <tr>
             <td><strong>RAM</strong></td>
             <td class="chosen">8 GB minimum</td>
-            <td class="reason">Next.js SSR: ~1-2 GB, Playwright + Chromium: ~1-2 GB per instance, Node-cron jobs: ~500 MB, OS overhead: ~1 GB. Leaves headroom for traffic spikes.</td>
+            <td class="reason">Acornia (Next.js SSR + API) ~2 GB, Frappe HR ~1.5 GB, Mattermost ~500 MB, Playwright + Chromium ~1 GB, OS overhead ~1 GB = ~6.5 GB with headroom. Consider upgrading to 16 GB KVM if usage grows.</td>
           </tr>
           <tr>
             <td><strong>CPU</strong></td>
@@ -786,7 +850,9 @@ graph TB
           <li>Node.js 20 LTS (application runtime)</li>
           <li>PM2 (process manager — auto-restart, clustering, logs)</li>
           <li>Playwright + Chromium (headless browser for InvestWell)</li>
-          <li>Node-cron (12 scheduled background jobs)</li>
+          <li>Frappe HR (employee management, payroll, India compliance)</li>
+          <li>Mattermost (team messaging, webhooks, bots)</li>
+          <li>Node-cron (14 scheduled background jobs)</li>
           <li>UFW firewall (ports 80, 443, 22 only)</li>
           <li>Fail2ban (SSH brute-force protection)</li>
         </ul>
@@ -824,8 +890,13 @@ graph LR
     E --> F{"Branch?"}
     F -->|"PR"| G["Deploy to<br/>Staging<br/>(staging.domain.com)"]
     F -->|"main"| H["SSH Deploy<br/>to VPS"]
-    H --> I["PM2 Reload<br/>(Zero Downtime)"]
-    I --> J["Health Check"]
+    H --> I["Nginx routes 3 services"]
+    I --> I1["app.acornia.com<br/>PM2 Reload Next.js"]
+    I --> I2["hr.acornia.com<br/>Frappe HR"]
+    I --> I3["chat.acornia.com<br/>Mattermost"]
+    I1 --> J["Health Check"]
+    I2 --> J
+    I3 --> J
       </div>
     </div>
 
