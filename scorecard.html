@@ -947,6 +947,269 @@ h1, h2, h3, h4 {
   </div>
 </section>
 
+<!-- ===== OPS DIVIDER ===== -->
+<section style="padding:48px 40px;text-align:center;background:var(--bg-cream)">
+  <div class="container reveal">
+    <div style="width:60px;height:2px;background:#0D7377;margin:0 auto 20px"></div>
+    <h2 style="font-family:'DM Serif Display',serif;font-size:28px;color:#2D2D2D;margin-bottom:8px">Operations Team Scorecard</h2>
+    <p style="font-size:15px;color:#7A7267;max-width:560px;margin:0 auto">A parallel evaluation framework for the back-office team -- measuring throughput, quality, efficiency, and reliability across 16 parameters.</p>
+  </div>
+</section>
+
+<!-- ===== OPS SECTION: 4 PERSPECTIVES ===== -->
+<section class="section section--white">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Ops Perspectives</p>
+      <h2 class="section-title">Four Ops Perspectives</h2>
+      <p class="section-desc">Each perspective captures a distinct dimension of operations performance, weighted by strategic importance.</p>
+    </div>
+    <div class="perspectives-grid">
+
+      <div class="card perspective-card perspective-card--financial reveal">
+        <div class="perspective-header">
+          <h3 class="perspective-title">Productivity / Throughput</h3>
+          <div class="weight-circle weight-circle--amber">35%</div>
+        </div>
+        <p class="perspective-desc">Volume and consistency of task execution -- the core operational output every ops member is accountable for.</p>
+        <ul class="param-list">
+          <li>Tasks Completed</li>
+          <li>Checklist Items</li>
+          <li>Complex Task Ratio</li>
+          <li>Multi-RM Breadth</li>
+          <li>Daily Consistency</li>
+        </ul>
+      </div>
+
+      <div class="card perspective-card perspective-card--client reveal">
+        <div class="perspective-header">
+          <h3 class="perspective-title">Quality / Accuracy</h3>
+          <div class="weight-circle weight-circle--teal">30%</div>
+        </div>
+        <p class="perspective-desc">Precision and correctness of work output -- first-time-right execution, compliance, and submission accuracy.</p>
+        <ul class="param-list">
+          <li>First-Time-Right</li>
+          <li>Checklist Compliance</li>
+          <li>Data Accuracy</li>
+          <li>Submission Success</li>
+        </ul>
+      </div>
+
+      <div class="card perspective-card perspective-card--process reveal">
+        <div class="perspective-header">
+          <h3 class="perspective-title">Process Efficiency</h3>
+          <div class="weight-circle weight-circle--sage">20%</div>
+        </div>
+        <p class="perspective-desc">Speed and flow of task processing -- turnaround times, responsiveness, and workflow momentum.</p>
+        <ul class="param-list">
+          <li>Processing Time</li>
+          <li>OTP Turnaround</li>
+          <li>Zero-Stale Tasks</li>
+          <li>Workflow Velocity</li>
+        </ul>
+      </div>
+
+      <div class="card perspective-card perspective-card--discipline reveal">
+        <div class="perspective-header">
+          <h3 class="perspective-title">Discipline / Reliability</h3>
+          <div class="weight-circle weight-circle--purple">15%</div>
+        </div>
+        <p class="perspective-desc">Dependability and adherence to standards -- SLA compliance, daily engagement, and audit-readiness.</p>
+        <ul class="param-list">
+          <li>SLA Adherence</li>
+          <li>Daily Pickup</li>
+          <li>Escalation Speed</li>
+          <li>System Compliance</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== OPS SECTION: 16 PARAMETERS TABLE ===== -->
+<section class="section section--cream">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Ops Parameters</p>
+      <h2 class="section-title">16 Parameters. Execution Excellence.</h2>
+      <p class="section-desc">The complete ops parameter set with weights and measurement definitions.</p>
+    </div>
+    <div class="card reveal" style="padding:0; overflow-x:auto;">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width:40px">#</th>
+            <th>Parameter</th>
+            <th style="width:90px">Perspective</th>
+            <th style="width:70px">Weight</th>
+            <th>What It Measures</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="group-header"><td colspan="5">Productivity / Throughput (35%)</td></tr>
+          <tr><td>P1.1</td><td>Tasks Completed Per Period</td><td><span class="perspective-dot dot--amber"></span> Productivity</td><td>10%</td><td>Volume vs team average</td></tr>
+          <tr><td>P1.2</td><td>Checklist Items Completed</td><td><span class="perspective-dot dot--amber"></span> Productivity</td><td>8%</td><td>Granular execution count</td></tr>
+          <tr><td>P1.3</td><td>Complex Task Ratio</td><td><span class="perspective-dot dot--amber"></span> Productivity</td><td>7%</td><td>% hard tasks (onboarding, consolidation, registration)</td></tr>
+          <tr><td>P1.4</td><td>Multi-RM Support Breadth</td><td><span class="perspective-dot dot--amber"></span> Productivity</td><td>5%</td><td>Served all active RMs equitably</td></tr>
+          <tr><td>P1.5</td><td>Daily Throughput Consistency</td><td><span class="perspective-dot dot--amber"></span> Productivity</td><td>5%</td><td>Consistent daily output, no batching</td></tr>
+
+          <tr class="group-header"><td colspan="5">Quality / Accuracy (30%)</td></tr>
+          <tr><td>P2.1</td><td>First-Time-Right Rate</td><td><span class="perspective-dot dot--teal"></span> Quality</td><td>10%</td><td>Tasks completed without hitting failed status</td></tr>
+          <tr><td>P2.2</td><td>Checklist Compliance Rate</td><td><span class="perspective-dot dot--teal"></span> Quality</td><td>7%</td><td>Mandatory ops checklist items completed</td></tr>
+          <tr><td>P2.3</td><td>Data Accuracy Score</td><td><span class="perspective-dot dot--teal"></span> Quality</td><td>7%</td><td>No corrections needed after ops entry</td></tr>
+          <tr><td>P2.4</td><td>Platform Submission Success</td><td><span class="perspective-dot dot--teal"></span> Quality</td><td>6%</td><td>NSE/BSE submissions that succeed first time</td></tr>
+
+          <tr class="group-header"><td colspan="5">Process Efficiency (20%)</td></tr>
+          <tr><td>P3.1</td><td>Average Processing Time</td><td><span class="perspective-dot dot--sage"></span> Efficiency</td><td>7%</td><td>Assignment to completion vs SLA benchmark</td></tr>
+          <tr><td>P3.2</td><td>OTP Attempt Responsiveness</td><td><span class="perspective-dot dot--sage"></span> Efficiency</td><td>5%</td><td>Time to initiate OTP call after task reaches OTP stage</td></tr>
+          <tr><td>P3.3</td><td>Zero-Stale-Task Rate</td><td><span class="perspective-dot dot--sage"></span> Efficiency</td><td>5%</td><td>No tasks idle more than 24 business hours</td></tr>
+          <tr><td>P3.4</td><td>Workflow Progression Speed</td><td><span class="perspective-dot dot--sage"></span> Efficiency</td><td>3%</td><td>Status transitions per day</td></tr>
+
+          <tr class="group-header"><td colspan="5">Discipline / Reliability (15%)</td></tr>
+          <tr><td>P4.1</td><td>SLA Adherence Rate</td><td><span class="perspective-dot dot--purple"></span> Discipline</td><td>5%</td><td>Tasks completed within deadline</td></tr>
+          <tr><td>P4.2</td><td>Daily Task Pickup</td><td><span class="perspective-dot dot--purple"></span> Discipline</td><td>4%</td><td>Picked up at least one task every working day</td></tr>
+          <tr><td>P4.3</td><td>Escalation Handling Speed</td><td><span class="perspective-dot dot--purple"></span> Discipline</td><td>3%</td><td>Response time to urgent/high priority tasks</td></tr>
+          <tr><td>P4.4</td><td>System Usage Compliance</td><td><span class="perspective-dot dot--purple"></span> Discipline</td><td>3%</td><td>Proper audit trail on all actions</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===== OPS SECTION: SAMPLE CALCULATION ===== -->
+<section class="section section--white">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Ops Sample</p>
+      <h2 class="section-title">Sample: Ops Member Shruti -- March 2026</h2>
+      <p class="section-desc">A worked example showing how raw ops data translates into a composite score and rating.</p>
+    </div>
+
+    <div class="sample-profile reveal">
+      <div class="sample-stat">
+        <div class="sample-stat-value">8</div>
+        <div class="sample-stat-label">RMs Supported</div>
+      </div>
+      <div class="sample-stat">
+        <div class="sample-stat-value">142</div>
+        <div class="sample-stat-label">Tasks Completed</div>
+      </div>
+      <div class="sample-stat">
+        <div class="sample-stat-value">26</div>
+        <div class="sample-stat-label">Working Days</div>
+      </div>
+    </div>
+
+    <div class="card reveal" style="padding:0; overflow-x:auto;">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width:40px">#</th>
+            <th>Parameter</th>
+            <th style="width:36px"></th>
+            <th style="width:110px">Raw Value</th>
+            <th style="width:70px">Score</th>
+            <th style="width:65px">Weight</th>
+            <th style="width:85px">Weighted</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="group-header"><td colspan="7">Productivity / Throughput (35%)</td></tr>
+          <tr><td>P1.1</td><td>Tasks Completed</td><td><span class="perspective-dot dot--amber"></span></td><td>142 (avg 120)</td><td>83</td><td>10%</td><td>8.30</td></tr>
+          <tr><td>P1.2</td><td>Checklist Items</td><td><span class="perspective-dot dot--amber"></span></td><td>580</td><td>81</td><td>8%</td><td>6.48</td></tr>
+          <tr><td>P1.3</td><td>Complex Ratio</td><td><span class="perspective-dot dot--amber"></span></td><td>28%</td><td>73</td><td>7%</td><td>5.11</td></tr>
+          <tr><td>P1.4</td><td>Multi-RM Breadth</td><td><span class="perspective-dot dot--amber"></span></td><td>8/8 RMs</td><td>100</td><td>5%</td><td>5.00</td></tr>
+          <tr><td>P1.5</td><td>Daily Consistency</td><td><span class="perspective-dot dot--amber"></span></td><td>92%</td><td>85</td><td>5%</td><td>4.25</td></tr>
+          <tr class="subtotal-row"><td></td><td colspan="5" style="text-align:right">Productivity Subtotal</td><td>29.14</td></tr>
+
+          <tr class="group-header"><td colspan="7">Quality / Accuracy (30%)</td></tr>
+          <tr><td>P2.1</td><td>First-Time-Right</td><td><span class="perspective-dot dot--teal"></span></td><td>96.5%</td><td>88</td><td>10%</td><td>8.80</td></tr>
+          <tr><td>P2.2</td><td>Checklist Compliance</td><td><span class="perspective-dot dot--teal"></span></td><td>99.2%</td><td>92</td><td>7%</td><td>6.44</td></tr>
+          <tr><td>P2.3</td><td>Data Accuracy</td><td><span class="perspective-dot dot--teal"></span></td><td>97.1%</td><td>88</td><td>7%</td><td>6.16</td></tr>
+          <tr><td>P2.4</td><td>Submission Success</td><td><span class="perspective-dot dot--teal"></span></td><td>95.8%</td><td>88</td><td>6%</td><td>5.28</td></tr>
+          <tr class="subtotal-row"><td></td><td colspan="5" style="text-align:right">Quality Subtotal</td><td>26.68</td></tr>
+
+          <tr class="group-header"><td colspan="7">Process Efficiency (20%)</td></tr>
+          <tr><td>P3.1</td><td>Processing Time</td><td><span class="perspective-dot dot--sage"></span></td><td>4.2 hrs (SLA 8h)</td><td>86</td><td>7%</td><td>6.02</td></tr>
+          <tr><td>P3.2</td><td>OTP Response</td><td><span class="perspective-dot dot--sage"></span></td><td>22 min</td><td>78</td><td>5%</td><td>3.90</td></tr>
+          <tr><td>P3.3</td><td>Zero-Stale Tasks</td><td><span class="perspective-dot dot--sage"></span></td><td>88%</td><td>72</td><td>5%</td><td>3.60</td></tr>
+          <tr><td>P3.4</td><td>Workflow Speed</td><td><span class="perspective-dot dot--sage"></span></td><td>2.3/day</td><td>82</td><td>3%</td><td>2.46</td></tr>
+          <tr class="subtotal-row"><td></td><td colspan="5" style="text-align:right">Efficiency Subtotal</td><td>15.98</td></tr>
+
+          <tr class="group-header"><td colspan="7">Discipline / Reliability (15%)</td></tr>
+          <tr><td>P4.1</td><td>SLA Adherence</td><td><span class="perspective-dot dot--purple"></span></td><td>94%</td><td>68</td><td>5%</td><td>3.40</td></tr>
+          <tr><td>P4.2</td><td>Daily Pickup</td><td><span class="perspective-dot dot--purple"></span></td><td>92%</td><td>80</td><td>4%</td><td>3.20</td></tr>
+          <tr><td>P4.3</td><td>Escalation Speed</td><td><span class="perspective-dot dot--purple"></span></td><td>45 min</td><td>75</td><td>3%</td><td>2.25</td></tr>
+          <tr><td>P4.4</td><td>System Compliance</td><td><span class="perspective-dot dot--purple"></span></td><td>98.5%</td><td>88</td><td>3%</td><td>2.64</td></tr>
+          <tr class="subtotal-row"><td></td><td colspan="5" style="text-align:right">Discipline Subtotal</td><td>11.49</td></tr>
+
+          <tr class="total-row">
+            <td></td>
+            <td colspan="4" style="text-align:right; font-size:15px;">
+              Total Score
+            </td>
+            <td colspan="2" style="font-size:18px; color:var(--amber);">
+              83.29 &nbsp; <span class="score-badge badge--teal">Excellent</span>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="4" style="text-align:right; font-weight:600; color:var(--text-muted);">Gold Coins Earned</td>
+            <td colspan="2" style="font-weight:700; color:var(--amber);">~480 coins</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="display:flex;gap:16px;margin-top:28px;flex-wrap:wrap" class="reveal">
+      <div style="background:var(--teal-light);border:1px solid var(--teal);border-radius:8px;padding:16px 28px;text-align:center;flex:1;min-width:160px">
+        <div style="font-family:'DM Serif Display',serif;font-size:28px;color:var(--teal)">83.29</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:2px">Composite Score</div>
+      </div>
+      <div style="background:var(--teal-light);border:1px solid var(--teal);border-radius:8px;padding:16px 28px;text-align:center;flex:1;min-width:160px">
+        <div style="font-family:'DM Serif Display',serif;font-size:28px;color:var(--teal)">Excellent</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:2px">Rating</div>
+      </div>
+      <div style="background:var(--amber-light);border:1px solid var(--amber);border-radius:8px;padding:16px 28px;text-align:center;flex:1;min-width:160px">
+        <div style="font-family:'DM Serif Display',serif;font-size:28px;color:var(--amber)">~480</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:2px">Gold Coins</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== OPS SECTION: RM VS OPS COMPARISON ===== -->
+<section class="section section--cream">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Comparison</p>
+      <h2 class="section-title">Two Roles. One Framework.</h2>
+      <p class="section-desc">How the RM and Operations scorecards align in structure while reflecting distinct accountabilities.</p>
+    </div>
+    <div class="card reveal" style="padding:0; overflow-x:auto;">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th>RM Scorecard</th>
+            <th>Ops Scorecard</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="font-weight:600">Parameters</td><td>20</td><td>16</td></tr>
+          <tr><td style="font-weight:600">Top Perspective</td><td>Financial (40%)</td><td>Productivity (35%)</td></tr>
+          <tr><td style="font-weight:600">Key Driver</td><td>Revenue &amp; AUM growth</td><td>Throughput &amp; accuracy</td></tr>
+          <tr><td style="font-weight:600">Quality Weight</td><td>25% (Client)</td><td>30% (Quality)</td></tr>
+          <tr><td style="font-weight:600">Gold Coins / month</td><td>~400-600</td><td>~350-550</td></tr>
+          <tr><td style="font-weight:600">Measured By</td><td>Investors assigned</td><td>Tasks processed</td></tr>
+          <tr><td style="font-weight:600">Rating Scale</td><td>Same 5-tier scale</td><td>Same 5-tier scale</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
 <!-- ===== SECTION 7: EXPERT VALIDATION ===== -->
 <section class="section section--white">
   <div class="container">
@@ -1039,6 +1302,9 @@ h1, h2, h3, h4 {
       </div>
       <p class="expert-note">
         Expert findings have been incorporated into the parameter weights and scoring thresholds. The confidence score reflects consensus across financial advisory, CRM operations, and behavioral science perspectives. Areas below 80% consensus are flagged for quarterly review.
+      </p>
+      <p class="expert-note" style="margin-top:16px;">
+        <strong>Operations scorecard reviewed at 8/10 confidence.</strong> Key findings: swap Quality above Productivity in weight, restructure OTP metric to measure attempt responsiveness not resolution time, address volume-over-complexity gaming risk.
       </p>
     </div>
   </div>
