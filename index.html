@@ -218,16 +218,18 @@ section{padding:80px 40px}
       <div class="mod-card rv">
         <div class="mod-num">Module 01</div>
         <h3>Investor Management</h3>
-        <p class="mod-desc">The central, unified record of every investor family Acorn Wealth serves — replacing fragmented spreadsheets and disconnected records. Every detail from PAN to bank accounts to investment history to family relationships is accessible in seconds by any authorised team member. Built for compliance with SEBI's KYC and recordkeeping norms, this is the foundation that every other module depends on — when an RM picks up a call, the investor's complete profile appears instantly, including their portfolio, recent activities, family members, KYC status, and pending tasks.</p>
+        <p class="mod-desc">The central, unified record of every investor family Acorn Wealth serves — replacing fragmented spreadsheets and disconnected records. Each investor is uniquely identified by their InvestWell Code (I-Well Code), the same identifier used in the existing InvestWell platform, ensuring zero data duplication and seamless reconciliation between Acornia and InvestWell. Every detail from the InvestWell mapping to PAN to bank accounts to investment history to family relationships is accessible in seconds by any authorised team member. Built for compliance with SEBI's KYC and recordkeeping norms, this is the foundation that every other module depends on — when an RM picks up a call, the investor's complete profile appears instantly, including their portfolio, recent activities, family members, KYC status, and pending tasks.</p>
         <ul class="feat-list">
-          <li>Complete investor database with PAN-based unique identification</li>
+          <li>Complete investor database with InvestWell Code as the unique identifier — same identifier used in the existing InvestWell platform</li>
+          <li>PAN validated and stored as a verified secondary attribute alongside other KYC details</li>
+          <li>RM-to-investor mapping sourced directly from InvestWell — single source of truth for client assignments</li>
           <li>Investor 360 profile — 6-tab deep view (Profile, Tasks, Timeline, Folios, Reviews, Documents)</li>
           <li>Family linking — group investors by family, show combined AUM</li>
           <li>Tier classification — Platinum, Gold, Silver, Bronze — auto-calculated by AUM</li>
           <li>Bank account details, nominee records, joint holder records, tax status tracking</li>
           <li>Document storage — KYC forms, mandates, signatures, uploaded per investor</li>
-          <li>Advanced search — find any investor by name, PAN, phone, or email in under 2 seconds</li>
-          <li>Bulk import from CSV with duplicate detection and validation</li>
+          <li>Advanced search — find any investor by InvestWell Code, name, PAN, phone, or email in under 2 seconds</li>
+          <li>Bulk import from CSV with InvestWell Code-based duplicate detection and validation</li>
         </ul>
       </div>
 
@@ -391,7 +393,7 @@ section{padding:80px 40px}
       <div class="mod-card full gold rv">
         <div class="mod-num">Module 11</div>
         <h3>Automated Report Downloading and Data Sync</h3>
-        <p class="mod-desc">The platform automatically logs into the InvestWell platform on a scheduled basis, downloads portfolio reports, parses the spreadsheet data, and syncs holdings, NAV, transaction details, SIP statuses, and capital gains directly into the system. Eliminates the manual report-downloading work that consumes hours of operations team time every week. Discrepancy alerts notify the team if downloaded data doesn't match platform records, catching reconciliation issues before they become problems. The complete download history is searchable and exportable, providing full auditability.</p>
+        <p class="mod-desc">The platform automatically logs into the InvestWell platform on a scheduled basis, downloads portfolio reports, parses the spreadsheet data, and syncs holdings, NAV, transaction details, SIP statuses, capital gains, and the authoritative RM-to-investor assignment mapping directly into the system. InvestWell remains the source of truth for both investor master data (via the InvestWell Code) and RM ownership of each client, ensuring Acornia and InvestWell stay perfectly aligned. Eliminates the manual report-downloading work that consumes hours of operations team time every week. Discrepancy alerts notify the team if downloaded data doesn't match platform records, catching reconciliation issues before they become problems. The complete download history is searchable and exportable, providing full auditability.</p>
         <ul class="feat-list">
           <li>Automated login to InvestWell platform via browser automation</li>
           <li>Scheduled report downloading — daily, weekly, or on-demand</li>
@@ -401,6 +403,7 @@ section{padding:80px 40px}
           <li>Mutual fund NAV price updates — daily automated sync from AMFI</li>
           <li>SIP status sync — active, paused, cancelled SIPs detected from downloaded data</li>
           <li>Capital gains data extraction for tax reporting</li>
+          <li>RM-to-investor assignment mapping sourced from InvestWell — keeps Acornia and InvestWell perfectly aligned on who owns which client</li>
           <li>Error detection and discrepancy alerts when downloaded data doesn't match platform records</li>
           <li>Complete history of all downloaded reports — searchable and exportable</li>
         </ul>
@@ -430,7 +433,7 @@ section{padding:80px 40px}
         <p class="mod-desc">All existing data — investors, transactions, activities, prospects, and historical records from the current Zoho system — migrated into the new platform with validation, duplicate detection, and zero data loss. The CSV import interface allows ongoing bulk operations with column mapping, row-level validation, and complete error logs for failed imports. Critical for the initial onboarding phase and for periodic bulk updates of investor data, scheme master records, and historical transaction archives.</p>
         <ul class="feat-list">
           <li>CSV bulk import with column mapping interface</li>
-          <li>Automatic PAN-based duplicate detection</li>
+          <li>Automatic InvestWell Code-based duplicate detection (with secondary PAN validation)</li>
           <li>Validation reports showing errors per row before commit</li>
           <li>Import history with status tracking</li>
           <li>Support for Investor, Task, Prospect, and Activity imports</li>
