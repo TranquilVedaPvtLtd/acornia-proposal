@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acornia - Slate CRM Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue: #0057FF;
+    --blue-hover: #003ECB;
+    --blue-active: #002F9A;
+    --blue-bg: #F0F5FF;
+    --bg: #F9F9F9;
+    --card: #FFFFFF;
+    --border: #E8E8E8;
+    --text: #191919;
+    --text-2: #303030;
+    --text-3: #474747;
+    --muted: #707070;
+    --success: #028901;
+    --warning: #F97C00;
+    --error: #D00D00;
+    --shadow: 0 1px 10px rgba(0,0,0,0.1);
+    --radius-sm: 4px;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --sidebar-w: 240px;
+    --topbar-h: 56px;
+  }
+
+  html, body {
+    height: 100%;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== LAYOUT ===== */
+  .app { display: flex; height: 100vh; overflow: hidden; }
+
+  /* ===== SIDEBAR ===== */
+  .sidebar {
+    width: var(--sidebar-w);
+    min-width: var(--sidebar-w);
+    background: var(--card);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    z-index: 20;
+  }
+
+  .sidebar-logo {
+    padding: 24px 24px 16px;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--blue);
+    letter-spacing: -0.5px;
+  }
+
+  .nav-group { margin-bottom: 8px; }
+
+  .nav-group-label {
+    padding: 16px 24px 6px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 24px;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-3);
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: all 0.15s ease;
+    text-decoration: none;
+  }
+
+  .nav-item:hover {
+    background: var(--bg);
+    color: var(--text-2);
+  }
+
+  .nav-item.active {
+    background: var(--blue-bg);
+    color: var(--blue);
+    font-weight: 600;
+    border-left-color: var(--blue);
+  }
+
+  .nav-icon {
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .nav-icon svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .sidebar-spacer { flex: 1; }
+
+  .sidebar-user {
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    font-feature-settings: 'tnum';
+  }
+
+  .avatar--sm { width: 28px; height: 28px; font-size: 10px; }
+
+  .sidebar-user-info { line-height: 1.3; }
+  .sidebar-user-name { font-size: 13px; font-weight: 600; color: var(--text); }
+  .sidebar-user-role { font-size: 11px; color: var(--muted); }
+
+  /* ===== MAIN ===== */
+  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+  /* ===== TOP BAR ===== */
+  .topbar {
+    height: var(--topbar-h);
+    min-height: var(--topbar-h);
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    gap: 24px;
+  }
+
+  .topbar-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  .topbar-search {
+    flex: 1;
+    max-width: 420px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .topbar-search input {
+    width: 100%;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0 12px 0 36px;
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--text);
+    background: var(--card);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .topbar-search input::placeholder { color: #B0B0B0; }
+  .topbar-search input:focus { border-color: var(--blue); }
+
+  .topbar-search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    color: #B0B0B0;
+  }
+
+  .topbar-search-icon svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  .topbar-right { display: flex; align-items: center; gap: 16px; margin-left: auto; }
+
+  .topbar-bell {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: background 0.15s;
+  }
+
+  .topbar-bell:hover { background: var(--bg); }
+
+  .topbar-bell svg { width: 20px; height: 20px; stroke: var(--text-3); fill: none; stroke-width: 1.8; }
+
+  .bell-badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 16px;
+    height: 16px;
+    background: var(--blue);
+    border-radius: 50%;
+    font-size: 9px;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--card);
+  }
+
+  /* ===== CONTENT ===== */
+  .content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 32px 48px;
+  }
+
+  /* ===== KPI ROW ===== */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  }
+
+  .kpi-card {
+    padding: 20px 24px;
+    border-top: 3px solid transparent;
+    transition: border-color 0.2s, transform 0.15s, box-shadow 0.15s;
+  }
+
+  .kpi-card:hover {
+    border-top-color: var(--blue);
+  }
+
+  .kpi-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+
+  .kpi-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    font-feature-settings: 'tnum';
+    line-height: 1.2;
+  }
+
+  .kpi-value--blue { color: var(--blue); }
+  .kpi-value--red { color: var(--error); }
+  .kpi-value--green { color: var(--success); }
+
+  .kpi-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .kpi-sub--green { color: var(--success); }
+
+  .arrow-up {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 6px solid var(--success);
+    margin-right: 2px;
+  }
+
+  /* ===== MIDDLE / BOTTOM ROWS ===== */
+  .row { display: grid; gap: 16px; margin-bottom: 24px; }
+  .row--60-40 { grid-template-columns: 3fr 2fr; }
+
+  .card-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-body { padding: 24px; }
+
+  /* ===== TASK PIPELINE ===== */
+  .pipeline-bar-container { margin-bottom: 20px; }
+
+  .pipeline-stacked {
+    display: flex;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+
+  .pipeline-seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: #fff;
+    transition: opacity 0.15s;
+    cursor: default;
+    position: relative;
+  }
+
+  .pipeline-seg:hover { opacity: 0.85; }
+
+  .pipeline-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-3);
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .pipeline-total {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-feature-settings: 'tnum';
+  }
+
+  .pipeline-total strong { color: var(--text); font-weight: 700; font-size: 18px; }
+
+  /* ===== FRESH BUSINESS PROGRESS ===== */
+  .progress-section { margin-bottom: 24px; }
+  .progress-section:last-child { margin-bottom: 0; }
+
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+
+  .progress-label { font-size: 13px; font-weight: 600; color: var(--text-2); }
+
+  .progress-values {
+    font-size: 13px;
+    color: var(--muted);
+    font-feature-settings: 'tnum';
+  }
+
+  .progress-values strong { color: var(--text); }
+
+  .progress-track {
+    height: 10px;
+    background: #EAEAEA;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--blue);
+    border-radius: 5px;
+    transition: width 0.6s ease;
+  }
+
+  .progress-pct {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+    text-align: right;
+    font-feature-settings: 'tnum';
+  }
+
+  .fb-summary {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--text-3);
+  }
+
+  .fb-summary strong { color: var(--text); font-weight: 700; }
+
+  /* ===== RECENT TASKS TABLE ===== */
+  .table-wrap { overflow-x: auto; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  thead th {
+    background: var(--bg);
+    padding: 10px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-2);
+    white-space: nowrap;
+    font-feature-settings: 'tnum';
+  }
+
+  tbody tr { transition: background 0.1s; }
+  tbody tr:hover { background: var(--bg); }
+  tbody tr:last-child td { border-bottom: none; }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .badge--green { background: #E6F4E6; color: var(--success); }
+  .badge--blue { background: var(--blue-bg); color: var(--blue); }
+  .badge--orange { background: #FFF3E0; color: var(--warning); }
+  .badge--gray { background: #F0F0F0; color: var(--text-3); }
+
+  .platform-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 600;
+    background: #F0F0F0;
+    color: var(--muted);
+    letter-spacing: 0.3px;
+  }
+
+  .priority-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .priority-dot--high { background: var(--error); }
+  .priority-dot--medium { background: var(--warning); }
+  .priority-dot--low { background: var(--success); }
+
+  /* ===== RM LEADERBOARD ===== */
+  .lb-row {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+    transition: background 0.1s;
+    border-left: 3px solid transparent;
+    margin-left: -24px;
+    padding-left: 24px;
+    margin-right: -24px;
+    padding-right: 24px;
+  }
+
+  .lb-row:last-child { border-bottom: none; }
+
+  .lb-row--top {
+    border-left-color: var(--blue);
+    background: var(--blue-bg);
+  }
+
+  .lb-rank {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--muted);
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+    font-feature-settings: 'tnum';
+  }
+
+  .lb-row--top .lb-rank { color: var(--blue); }
+
+  .lb-info { flex: 1; min-width: 0; }
+  .lb-name { font-size: 13px; font-weight: 600; color: var(--text); }
+  .lb-meta { font-size: 11px; color: var(--muted); font-feature-settings: 'tnum'; }
+
+  .lb-stats { text-align: right; }
+  .lb-tasks { font-size: 13px; font-weight: 600; color: var(--text); font-feature-settings: 'tnum'; }
+  .lb-aum { font-size: 11px; color: var(--muted); font-feature-settings: 'tnum'; }
+
+  .lb-coins {
+    font-size: 14px;
+    font-weight: 700;
+    color: #C08800;
+    min-width: 32px;
+    text-align: right;
+    font-feature-settings: 'tnum';
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    justify-content: flex-end;
+  }
+
+  .coin-icon {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #F5C842, #D4A017);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .coin-icon::after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.6);
+  }
+
+  /* ===== BUTTONS ===== */
+  .btn {
+    height: 32px;
+    padding: 0 16px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: var(--blue);
+    color: #fff;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .btn:hover { background: var(--blue-hover); }
+  .btn:active { background: var(--blue-active); }
+
+  .btn--ghost {
+    background: transparent;
+    color: var(--blue);
+  }
+
+  .btn--ghost:hover { background: var(--blue-bg); }
+
+  /* ===== PRINT ===== */
+  @media print {
+    .sidebar { display: none; }
+    .app { display: block; }
+    .main { width: 100%; }
+    .card { break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
+    .topbar { box-shadow: none; }
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1024px) {
+    .sidebar {
+      position: fixed;
+      left: -260px;
+      top: 0;
+      bottom: 0;
+      transition: left 0.25s ease;
+      z-index: 100;
+      box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+    }
+
+    .sidebar.open { left: 0; }
+
+    .menu-toggle { display: flex; }
+
+    .kpi-row { grid-template-columns: repeat(3, 1fr); }
+    .row--60-40 { grid-template-columns: 1fr; }
+    .content { padding: 16px; }
+  }
+
+  @media (max-width: 640px) {
+    .kpi-row { grid-template-columns: 1fr 1fr; }
+    .topbar-search { display: none; }
+  }
+
+  /* ===== MENU TOGGLE ===== */
+  .menu-toggle {
+    display: none;
+    width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    border: none;
+    background: none;
+    flex-shrink: 0;
+  }
+
+  .menu-toggle span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: var(--text-3);
+    position: relative;
+  }
+
+  .menu-toggle span::before,
+  .menu-toggle span::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 18px;
+    height: 2px;
+    background: var(--text-3);
+  }
+
+  .menu-toggle span::before { top: -6px; }
+  .menu-toggle span::after { top: 6px; }
+
+  @media (max-width: 1024px) {
+    .menu-toggle { display: flex; }
+  }
+
+  /* Overlay for mobile sidebar */
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 99;
+  }
+
+  .sidebar-overlay.open { display: block; }
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">Acornia</div>
+
+    <nav>
+      <div class="nav-group">
+        <div class="nav-group-label">Overview</div>
+        <a class="nav-item active" href="#">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
+          Dashboard
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-label">CRM</div>
+        <a class="nav-item" href="#">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg></span>
+          Investors
+        </a>
+        <a class="nav-item" href="#">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg></span>
+          Tasks
+        </a>
+        <a class="nav-item" href="#">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
+          Prospects
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-label">Operations</div>
+        <a class="nav-item" href="#">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="8" width="5" height="13" rx="1"/><rect x="17" y="5" width="5" height="16" rx="1"/></svg></span>
+          Kanban
+        </a>
+        <a class="nav-item" href="#">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="4" x2="8" y2="10"/><line x1="16" y1="4" x2="16" y2="10"/></svg></span>
+          Calendar
+        </a>
+        <a class="nav-item" href="#">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 20l-1.45-1.32C5.4 14.36 2 11.28 2 7.5 2 4.42 4.42 2 7.5 2c1.74 0 3.41.81 4.5 2.09C13.09 2.81 14.76 2 16.5 2 19.58 2 22 4.42 22 7.5c0 3.78-3.4 6.86-8.55 11.18L12 20z"/></svg></span>
+          Reviews
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-label">Analytics</div>
+        <a class="nav-item" href="#">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
+          Reports
+        </a>
+        <a class="nav-item" href="#">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+          Scorecard
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-label">System</div>
+        <a class="nav-item" href="#">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1.08-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09a1.65 1.65 0 001.51-1.08 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9c.26.6.77 1.02 1.51 1.08H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></span>
+          Settings
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-spacer"></div>
+
+    <div class="sidebar-user">
+      <div class="avatar">PS</div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name">Prasad Sangam</div>
+        <div class="sidebar-user-role">Super Admin</div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <button class="menu-toggle" onclick="toggleSidebar()"><span></span></button>
+      <h1 class="topbar-title">Sales Dashboard</h1>
+      <div class="topbar-search">
+        <span class="topbar-search-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </span>
+        <input type="text" placeholder="Search investors, tasks...">
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-bell">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+          <span class="bell-badge">3</span>
+        </div>
+        <div class="avatar avatar--sm">PS</div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="content">
+      <!-- KPI ROW -->
+      <div class="kpi-row">
+        <div class="card kpi-card">
+          <div class="kpi-label">Total Investors</div>
+          <div class="kpi-value">1,247</div>
+          <div class="kpi-sub">+24 this month</div>
+        </div>
+        <div class="card kpi-card">
+          <div class="kpi-label">Total AUM</div>
+          <div class="kpi-value kpi-value--blue">Rs 847.3 Cr</div>
+          <div class="kpi-sub">+3.2% from last month</div>
+        </div>
+        <div class="card kpi-card">
+          <div class="kpi-label">Open Tasks</div>
+          <div class="kpi-value">38</div>
+          <div class="kpi-sub">12 due today</div>
+        </div>
+        <div class="card kpi-card">
+          <div class="kpi-label">SLA Breaches</div>
+          <div class="kpi-value kpi-value--red">2</div>
+          <div class="kpi-sub">Requires immediate attention</div>
+        </div>
+        <div class="card kpi-card">
+          <div class="kpi-label">Fresh Business</div>
+          <div class="kpi-value kpi-value--green">Rs 12.4 Cr</div>
+          <div class="kpi-sub kpi-sub--green"><span class="arrow-up"></span> 78% of target</div>
+        </div>
+      </div>
+
+      <!-- MIDDLE ROW -->
+      <div class="row row--60-40">
+        <!-- Task Pipeline -->
+        <div class="card">
+          <div class="card-header">
+            Task Pipeline
+            <button class="btn btn--ghost">View All</button>
+          </div>
+          <div class="card-body">
+            <div class="pipeline-bar-container">
+              <div class="pipeline-stacked">
+                <div class="pipeline-seg" style="width:9.41%;background:#90CAF9" title="Created: 8">8</div>
+                <div class="pipeline-seg" style="width:14.12%;background:#42A5F5" title="Assigned: 12">12</div>
+                <div class="pipeline-seg" style="width:17.65%;background:#0057FF" title="In Progress: 15">15</div>
+                <div class="pipeline-seg" style="width:5.88%;background:#F97C00" title="OTP Pending: 5">5</div>
+                <div class="pipeline-seg" style="width:3.53%;background:#F5C842" title="Verification: 3">3</div>
+                <div class="pipeline-seg" style="width:49.41%;background:#028901" title="Completed: 42">42</div>
+              </div>
+              <div class="pipeline-legend">
+                <div class="legend-item"><div class="legend-dot" style="background:#90CAF9"></div>Created (8)</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#42A5F5"></div>Assigned (12)</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#0057FF"></div>In Progress (15)</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#F97C00"></div>OTP Pending (5)</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#F5C842"></div>Verification (3)</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#028901"></div>Completed (42)</div>
+              </div>
+            </div>
+            <div class="pipeline-total">Total Tasks: <strong>85</strong></div>
+          </div>
+        </div>
+
+        <!-- Fresh Business -->
+        <div class="card">
+          <div class="card-header">Fresh Business</div>
+          <div class="card-body">
+            <div class="progress-section">
+              <div class="progress-header">
+                <span class="progress-label">Lumpsum</span>
+                <span class="progress-values"><strong>Rs 8.2 Cr</strong> / Rs 10 Cr</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width:82%"></div>
+              </div>
+              <div class="progress-pct">82%</div>
+            </div>
+
+            <div class="progress-section">
+              <div class="progress-header">
+                <span class="progress-label">New SIPs</span>
+                <span class="progress-values"><strong>Rs 4.2 Cr</strong> / Rs 6 Cr</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width:70%"></div>
+              </div>
+              <div class="progress-pct">70%</div>
+            </div>
+
+            <div class="fb-summary">
+              <span>Total: <strong>Rs 12.4 Cr</strong></span>
+              <span>Target: <strong>Rs 16 Cr</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTTOM ROW -->
+      <div class="row row--60-40">
+        <!-- Recent Tasks -->
+        <div class="card">
+          <div class="card-header">
+            Recent Tasks
+            <button class="btn btn--ghost">View All</button>
+          </div>
+          <div class="card-body" style="padding:0">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Task #</th>
+                    <th>Investor</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Platform</th>
+                    <th>Priority</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>T-1042</td>
+                    <td>Rajesh Sharma</td>
+                    <td>Purchase</td>
+                    <td><span class="badge badge--green">Completed</span></td>
+                    <td><span class="platform-badge">NSE</span></td>
+                    <td><span class="priority-dot priority-dot--high"></span></td>
+                  </tr>
+                  <tr>
+                    <td>T-1041</td>
+                    <td>Priya Patel</td>
+                    <td>SIP Registration</td>
+                    <td><span class="badge badge--blue">In Progress</span></td>
+                    <td><span class="platform-badge">BSE</span></td>
+                    <td><span class="priority-dot priority-dot--medium"></span></td>
+                  </tr>
+                  <tr>
+                    <td>T-1040</td>
+                    <td>Amit Deshmukh</td>
+                    <td>Redemption</td>
+                    <td><span class="badge badge--orange">OTP Pending</span></td>
+                    <td><span class="platform-badge">MFU</span></td>
+                    <td><span class="priority-dot priority-dot--high"></span></td>
+                  </tr>
+                  <tr>
+                    <td>T-1039</td>
+                    <td>Sunita Rao</td>
+                    <td>Switch</td>
+                    <td><span class="badge badge--green">Completed</span></td>
+                    <td><span class="platform-badge">NSE</span></td>
+                    <td><span class="priority-dot priority-dot--low"></span></td>
+                  </tr>
+                  <tr>
+                    <td>T-1038</td>
+                    <td>Vikram Joshi</td>
+                    <td>SWP</td>
+                    <td><span class="badge badge--gray">Assigned</span></td>
+                    <td><span class="platform-badge">BSE</span></td>
+                    <td><span class="priority-dot priority-dot--medium"></span></td>
+                  </tr>
+                  <tr>
+                    <td>T-1037</td>
+                    <td>Nandini Kulkarni</td>
+                    <td>New Onboarding</td>
+                    <td><span class="badge badge--blue">In Progress</span></td>
+                    <td><span class="platform-badge">MFU</span></td>
+                    <td><span class="priority-dot priority-dot--low"></span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- RM Leaderboard -->
+        <div class="card">
+          <div class="card-header">RM Leaderboard</div>
+          <div class="card-body">
+            <div class="lb-row lb-row--top">
+              <div class="lb-rank">1</div>
+              <div class="avatar avatar--sm">RM</div>
+              <div class="lb-info">
+                <div class="lb-name">Rahul Mehta</div>
+                <div class="lb-meta">Senior RM</div>
+              </div>
+              <div class="lb-stats">
+                <div class="lb-tasks">48 tasks</div>
+                <div class="lb-aum">Rs 215 Cr</div>
+              </div>
+              <div class="lb-coins"><span class="coin-icon"></span> 126</div>
+            </div>
+            <div class="lb-row">
+              <div class="lb-rank">2</div>
+              <div class="avatar avatar--sm">PS</div>
+              <div class="lb-info">
+                <div class="lb-name">Priya Shah</div>
+                <div class="lb-meta">RM</div>
+              </div>
+              <div class="lb-stats">
+                <div class="lb-tasks">42 tasks</div>
+                <div class="lb-aum">Rs 189 Cr</div>
+              </div>
+              <div class="lb-coins"><span class="coin-icon"></span> 108</div>
+            </div>
+            <div class="lb-row">
+              <div class="lb-rank">3</div>
+              <div class="avatar avatar--sm">AV</div>
+              <div class="lb-info">
+                <div class="lb-name">Amit Verma</div>
+                <div class="lb-meta">RM</div>
+              </div>
+              <div class="lb-stats">
+                <div class="lb-tasks">35 tasks</div>
+                <div class="lb-aum">Rs 156 Cr</div>
+              </div>
+              <div class="lb-coins"><span class="coin-icon"></span> 91</div>
+            </div>
+            <div class="lb-row">
+              <div class="lb-rank">4</div>
+              <div class="avatar avatar--sm">DN</div>
+              <div class="lb-info">
+                <div class="lb-name">Deepa Nair</div>
+                <div class="lb-meta">Associate RM</div>
+              </div>
+              <div class="lb-stats">
+                <div class="lb-tasks">28 tasks</div>
+                <div class="lb-aum">Rs 98 Cr</div>
+              </div>
+              <div class="lb-coins"><span class="coin-icon"></span> 74</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+}
+</script>
+</body>
+</html>

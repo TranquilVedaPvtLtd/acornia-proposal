@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acornia - Sales Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --primary: #6366F1;
+    --primary-hover: #4F46E5;
+    --primary-active: #4338CA;
+    --primary-light: #EEF2FF;
+    --primary-lighter: #F5F3FF;
+    --primary-soft: #C7D2FE;
+    --primary-tint: #FAFAFE;
+
+    --bg: #F9FAFB;
+    --card: #FFFFFF;
+    --border: #E5E7EB;
+    --border-strong: #D1D5DB;
+
+    --text: #111827;
+    --text-2: #374151;
+    --text-3: #4B5563;
+    --muted: #6B7280;
+    --muted-2: #9CA3AF;
+
+    --success: #10B981;
+    --success-light: #D1FAE5;
+    --warning: #F59E0B;
+    --warning-light: #FEF3C7;
+    --error: #EF4444;
+    --error-light: #FEE2E2;
+    --purple: #8B5CF6;
+    --purple-light: #EDE9FE;
+
+    --shadow-sm: 0 1px 2px rgba(17, 24, 39, 0.04);
+    --shadow-md: 0 4px 12px rgba(99, 102, 241, 0.08);
+    --shadow-lg: 0 10px 25px rgba(99, 102, 241, 0.10);
+
+    --radius-sm: 6px;
+    --radius: 8px;
+    --radius-md: 10px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-full: 999px;
+
+    --sidebar-w: 240px;
+    --topbar-h: 60px;
+    --space: 8px;
+    --t: 200ms ease;
+  }
+
+  html, body {
+    height: 100%;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'tnum', 'cv11';
+  }
+
+  button, input { font-family: inherit; }
+
+  /* ===== LAYOUT ===== */
+  .app { display: flex; height: 100vh; overflow: hidden; }
+
+  /* ===== SIDEBAR ===== */
+  .sidebar {
+    width: var(--sidebar-w);
+    min-width: var(--sidebar-w);
+    background: var(--card);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    z-index: 20;
+  }
+
+  .sidebar-logo {
+    padding: 22px 24px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.3px;
+  }
+
+  .sidebar-logo .logo-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--primary);
+    box-shadow: 0 0 0 4px var(--primary-light);
+  }
+
+  .nav-group { margin-bottom: 4px; }
+
+  .nav-group-label {
+    padding: 16px 24px 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--muted-2);
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 24px;
+    margin: 1px 12px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-3);
+    cursor: pointer;
+    transition: background var(--t), color var(--t);
+    text-decoration: none;
+  }
+
+  .nav-item:hover {
+    background: var(--bg);
+    color: var(--text-2);
+  }
+
+  .nav-item.active {
+    background: var(--primary-light);
+    color: var(--primary-hover);
+    font-weight: 600;
+  }
+
+  .nav-item.active .nav-icon svg { stroke: var(--primary-hover); }
+
+  .nav-icon {
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .nav-icon svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .sidebar-spacer { flex: 1; min-height: 16px; }
+
+  .sidebar-user {
+    padding: 14px 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--primary-light);
+    color: var(--primary-hover);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    letter-spacing: 0.2px;
+  }
+
+  .avatar--filled {
+    background: var(--primary);
+    color: #fff;
+  }
+
+  .avatar--sm { width: 32px; height: 32px; font-size: 11px; }
+
+  .sidebar-user-info { line-height: 1.3; min-width: 0; }
+  .sidebar-user-name { font-size: 13px; font-weight: 600; color: var(--text); }
+  .sidebar-user-role { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+  /* ===== MAIN ===== */
+  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+
+  /* ===== TOP BAR ===== */
+  .topbar {
+    height: var(--topbar-h);
+    min-height: var(--topbar-h);
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    gap: 20px;
+  }
+
+  .topbar-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    letter-spacing: -0.2px;
+  }
+
+  .topbar-search {
+    flex: 1;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+  }
+
+  .topbar-search input {
+    width: 100%;
+    height: 36px;
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+    padding: 0 70px 0 36px;
+    font-size: 13px;
+    color: var(--text);
+    background: var(--bg);
+    outline: none;
+    transition: border-color var(--t), background var(--t);
+  }
+
+  .topbar-search input::placeholder { color: var(--muted-2); }
+  .topbar-search input:focus { border-color: var(--primary-soft); background: var(--card); }
+
+  .topbar-search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    color: var(--muted);
+    pointer-events: none;
+  }
+
+  .topbar-search-icon svg {
+    width: 16px; height: 16px;
+    stroke: currentColor; fill: none;
+    stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  .kbd-hint {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--muted);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    letter-spacing: 0.3px;
+  }
+
+  .topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .icon-btn {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    border-radius: var(--radius);
+    color: var(--text-3);
+    cursor: pointer;
+    transition: background var(--t), color var(--t);
+  }
+
+  .icon-btn:hover { background: var(--bg); color: var(--text); }
+
+  .icon-btn svg {
+    width: 20px; height: 20px;
+    stroke: currentColor; fill: none;
+    stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  .icon-btn .dot {
+    position: absolute;
+    top: 8px;
+    right: 9px;
+    width: 7px;
+    height: 7px;
+    background: var(--primary);
+    border: 2px solid var(--card);
+    border-radius: 50%;
+  }
+
+  .topbar-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    margin-left: 4px;
+    cursor: pointer;
+  }
+
+  /* ===== CONTENT ===== */
+  .content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+  }
+
+  .grid { display: grid; gap: 16px; }
+
+  /* ===== KPI ROW ===== */
+  .kpi-row {
+    grid-template-columns: repeat(5, 1fr);
+    margin-bottom: 16px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    transition: transform var(--t), box-shadow var(--t), border-color var(--t);
+  }
+
+  .kpi-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+  }
+
+  .kpi-card:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-soft);
+  }
+
+  .kpi-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .kpi-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius);
+    background: var(--primary-light);
+    color: var(--primary-hover);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .kpi-icon svg {
+    width: 18px; height: 18px;
+    stroke: currentColor; fill: none;
+    stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  .kpi-icon--danger { background: var(--error-light); color: var(--error); }
+  .kpi-icon--success { background: var(--success-light); color: var(--success); }
+
+  .kpi-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1;
+  }
+
+  .kpi-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+    letter-spacing: -0.5px;
+    font-feature-settings: 'tnum';
+  }
+
+  .kpi-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .kpi-trend {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--success);
+  }
+
+  .kpi-trend--down { color: var(--error); }
+  .kpi-trend--neutral { color: var(--muted); }
+
+  .kpi-trend svg {
+    width: 12px; height: 12px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  .kpi-trend-label {
+    color: var(--muted);
+    font-weight: 500;
+    margin-left: 2px;
+  }
+
+  /* ===== SPARKLINES ===== */
+  .sparkline {
+    width: 64px;
+    height: 22px;
+    position: relative;
+    flex-shrink: 0;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .sparkline::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, transparent 0%, transparent 100%),
+      linear-gradient(90deg,
+        var(--primary-light) 0%,
+        var(--primary-light) 100%);
+    opacity: 0.4;
+  }
+
+  .sparkline svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .sparkline svg path.area { fill: var(--primary); opacity: 0.12; }
+  .sparkline svg path.line { fill: none; stroke: var(--primary); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .sparkline--down svg path.area { fill: var(--error); opacity: 0.12; }
+  .sparkline--down svg path.line { stroke: var(--error); }
+
+  /* mini progress bar inside KPI */
+  .kpi-progress {
+    width: 100%;
+    height: 4px;
+    background: var(--primary-light);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    margin-top: 4px;
+  }
+
+  .kpi-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--primary-hover));
+    border-radius: var(--radius-full);
+  }
+
+  .kpi-progress-meta {
+    margin-top: 4px;
+    font-size: 10px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  /* ===== MIDDLE ROW ===== */
+  .middle-row {
+    grid-template-columns: 3fr 2fr;
+    margin-bottom: 16px;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    gap: 16px;
+  }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.2;
+    letter-spacing: -0.1px;
+  }
+
+  .card-subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 500;
+    margin-top: 3px;
+  }
+
+  .card-action {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--primary-hover);
+    cursor: pointer;
+    text-decoration: none;
+    transition: color var(--t);
+  }
+
+  .card-action:hover { color: var(--primary-active); }
+
+  /* Pipeline */
+  .pipeline-bar {
+    display: flex;
+    height: 12px;
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    background: var(--bg);
+    margin-bottom: 18px;
+  }
+
+  .pipeline-bar-seg {
+    height: 100%;
+    transition: opacity var(--t);
+  }
+  .pipeline-bar-seg:hover { opacity: 0.8; }
+
+  .pipeline-stats {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+  }
+
+  .pipeline-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px;
+    border-radius: var(--radius);
+    background: var(--bg);
+    transition: background var(--t);
+  }
+
+  .pipeline-stat:hover { background: var(--primary-light); }
+
+  .pipeline-stat-head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .pipeline-stat-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .pipeline-stat-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--muted);
+    line-height: 1;
+  }
+
+  .pipeline-stat-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+    font-feature-settings: 'tnum';
+  }
+
+  /* Target progress */
+  .target-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .target-item-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .target-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .target-amounts {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 500;
+    font-feature-settings: 'tnum';
+  }
+
+  .target-amounts strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .target-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--bg);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .target-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--primary-hover));
+    border-radius: var(--radius-full);
+    transition: width 600ms ease;
+  }
+
+  .target-bar-fill--success {
+    background: linear-gradient(90deg, var(--success), #059669);
+  }
+
+  .target-pct {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--primary-hover);
+    font-feature-settings: 'tnum';
+  }
+
+  .target-pct--success { color: var(--success); }
+
+  /* ===== BOTTOM ROW ===== */
+  .bottom-row {
+    grid-template-columns: 3fr 2fr;
+  }
+
+  /* Tasks table */
+  .table-wrap { overflow-x: auto; margin: 0 -20px -20px; }
+
+  table.tasks {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  table.tasks thead th {
+    background: var(--bg);
+    padding: 11px 14px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  table.tasks thead th:first-child { padding-left: 20px; }
+  table.tasks thead th:last-child { padding-right: 20px; text-align: right; }
+
+  table.tasks tbody td {
+    padding: 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-2);
+    vertical-align: middle;
+  }
+
+  table.tasks tbody td:first-child { padding-left: 20px; }
+  table.tasks tbody td:last-child { padding-right: 20px; text-align: right; }
+
+  table.tasks tbody tr:last-child td { border-bottom: none; }
+
+  table.tasks tbody tr {
+    transition: background var(--t);
+  }
+
+  table.tasks tbody tr:hover { background: var(--bg); }
+
+  .task-id {
+    font-family: 'Inter', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-3);
+    font-feature-settings: 'tnum';
+  }
+
+  .investor-cell {
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .status-cell {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    color: var(--text-2);
+    white-space: nowrap;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .status-dot--success { background: var(--success); box-shadow: 0 0 0 3px var(--success-light); }
+  .status-dot--progress { background: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
+  .status-dot--warning { background: var(--warning); box-shadow: 0 0 0 3px var(--warning-light); }
+  .status-dot--neutral { background: var(--muted-2); box-shadow: 0 0 0 3px var(--bg); }
+  .status-dot--purple { background: var(--purple); box-shadow: 0 0 0 3px var(--purple-light); }
+
+  .platform-badge {
+    display: inline-block;
+    padding: 3px 9px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-3);
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-full);
+    letter-spacing: 0.3px;
+  }
+
+  .priority-cell {
+    display: flex;
+    justify-content: center;
+  }
+
+  .priority-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+  }
+
+  .priority-dot--high { background: var(--error); box-shadow: 0 0 0 3px var(--error-light); }
+  .priority-dot--medium { background: var(--warning); box-shadow: 0 0 0 3px var(--warning-light); }
+  .priority-dot--low { background: var(--muted-2); box-shadow: 0 0 0 3px var(--bg); }
+
+  .row-link {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--primary-hover);
+    text-decoration: none;
+    transition: color var(--t);
+  }
+
+  .row-link:hover { color: var(--primary-active); }
+
+  /* Leaderboard */
+  .leaderboard {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .lb-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--card);
+    transition: background var(--t), border-color var(--t), transform var(--t);
+  }
+
+  .lb-row:hover {
+    border-color: var(--primary-soft);
+    transform: translateY(-1px);
+  }
+
+  .lb-row--top {
+    background: var(--primary-tint);
+    border-left: 3px solid var(--primary);
+    padding-left: 12px;
+  }
+
+  .lb-rank {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--muted-2);
+    width: 22px;
+    text-align: center;
+    font-feature-settings: 'tnum';
+    flex-shrink: 0;
+  }
+
+  .lb-row--top .lb-rank { color: var(--primary-hover); }
+
+  .lb-info {
+    flex: 1;
+    min-width: 0;
+    line-height: 1.3;
+  }
+
+  .lb-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .lb-meta {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 500;
+    font-feature-settings: 'tnum';
+  }
+
+  .lb-coins {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    background: var(--warning-light);
+    color: #B45309;
+    border-radius: var(--radius-full);
+    font-size: 12px;
+    font-weight: 700;
+    font-feature-settings: 'tnum';
+    flex-shrink: 0;
+  }
+
+  .lb-coins svg {
+    width: 12px; height: 12px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1280px) {
+    .kpi-row { grid-template-columns: repeat(3, 1fr); }
+    .middle-row, .bottom-row { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 1024px) {
+    :root { --sidebar-w: 64px; }
+    .sidebar-logo { padding: 22px 18px 16px; justify-content: center; font-size: 0; }
+    .sidebar-logo .logo-dot { margin: 0; }
+    .nav-group-label { display: none; }
+    .nav-item { justify-content: center; padding: 11px 0; margin: 1px 8px; gap: 0; font-size: 0; }
+    .sidebar-user { padding: 14px 12px; justify-content: center; }
+    .sidebar-user-info { display: none; }
+    .topbar-search { max-width: 220px; }
+    .pipeline-stats { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (max-width: 768px) {
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    .topbar-title { font-size: 16px; }
+    .topbar-search { display: none; }
+  }
+
+  @media (max-width: 640px) {
+    .app { flex-direction: column; }
+    .sidebar { display: none; }
+    .content { padding: 16px; }
+    .kpi-row { grid-template-columns: 1fr; }
+    .pipeline-stats { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ===== PRINT ===== */
+  @media print {
+    .sidebar, .topbar { display: none !important; }
+    .app, .main, .content { height: auto; overflow: visible; display: block; }
+    .content { padding: 0; }
+    .card { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    .kpi-row, .middle-row, .bottom-row { grid-template-columns: repeat(2, 1fr); page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-dot"></span>
+      <span>Acornia</span>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-label">Overview</div>
+      <a class="nav-item active" href="#">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        </span>
+        Sales Dashboard
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-label">CRM</div>
+      <a class="nav-item" href="#">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.6-5.5 6.5-5.5s5.7 2 6.5 5.5"/><circle cx="17" cy="7" r="2.5"/><path d="M21.5 18c-.5-2.5-2.2-4-4.5-4"/></svg>
+        </span>
+        Investors
+      </a>
+      <a class="nav-item" href="#">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/><circle cx="12" cy="12" r="8"/><path d="M12 2v3M12 19v3M22 12h-3M5 12H2"/></svg>
+        </span>
+        Prospects
+      </a>
+      <a class="nav-item" href="#">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 6.5h18M3 12h18M3 17.5h18"/><circle cx="7" cy="6.5" r="1.2"/><circle cx="11" cy="12" r="1.2"/><circle cx="9" cy="17.5" r="1.2"/></svg>
+        </span>
+        Reviews
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-label">Operations</div>
+      <a class="nav-item" href="#">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
+        </span>
+        Tasks
+      </a>
+      <a class="nav-item" href="#">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="5" height="16" rx="1"/><rect x="10" y="4" width="5" height="11" rx="1"/><rect x="17" y="4" width="4" height="14" rx="1"/></svg>
+        </span>
+        Kanban
+      </a>
+      <a class="nav-item" href="#">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+        </span>
+        Calendar
+      </a>
+      <a class="nav-item" href="#">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 12c1.5 0 2.5-4 4-4s2.5 8 4 8 2.5-6 4-6 2 2 3 2h3"/></svg>
+        </span>
+        Activities
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-label">Intelligence</div>
+      <a class="nav-item" href="#">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 20h18"/><path d="M5 20V11M10 20V6M15 20V13M20 20V8"/></svg>
+        </span>
+        Analytics
+      </a>
+      <a class="nav-item" href="#">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24"><path d="M8 4h8v4a4 4 0 1 1-8 0V4z"/><path d="M5 4h3v2a3 3 0 0 1-3 3V4zM19 4h-3v2a3 3 0 0 0 3 3V4z"/><path d="M9 14h6M10 20h4M12 14v6"/></svg>
+        </span>
+        Scorecard
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-label">System</div>
+      <a class="nav-item" href="#">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3h0a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9v0a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+        </span>
+        Settings
+      </a>
+    </div>
+
+    <div class="sidebar-spacer"></div>
+
+    <div class="sidebar-user">
+      <div class="avatar">PS</div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name">Prasad Sangam</div>
+        <div class="sidebar-user-role">Super Admin</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main">
+
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="topbar-title">Sales Dashboard</div>
+
+      <div class="topbar-search">
+        <span class="topbar-search-icon">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        </span>
+        <input type="text" placeholder="Search investors, tasks...">
+        <span class="kbd-hint">Cmd K</span>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="icon-btn" aria-label="Notifications">
+          <svg viewBox="0 0 24 24"><path d="M18 16v-5a6 6 0 0 0-12 0v5l-2 2h16l-2-2z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+          <span class="dot"></span>
+        </button>
+        <button class="icon-btn" aria-label="Settings">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3h0a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9v0a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+        </button>
+        <div class="topbar-avatar">PS</div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <section class="content">
+
+      <!-- ===== KPI ROW ===== -->
+      <div class="grid kpi-row">
+
+        <!-- Total Investors -->
+        <div class="card kpi-card">
+          <div class="kpi-head">
+            <div class="kpi-icon">
+              <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.6-5.5 6.5-5.5s5.7 2 6.5 5.5"/><circle cx="17" cy="7" r="2.5"/><path d="M21.5 18c-.5-2.5-2.2-4-4.5-4"/></svg>
+            </div>
+            <div class="kpi-label">Total Investors</div>
+          </div>
+          <div class="kpi-value">1,247</div>
+          <div class="kpi-foot">
+            <div class="kpi-trend">
+              <svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg>
+              +5.2%
+              <span class="kpi-trend-label">vs last month</span>
+            </div>
+            <div class="sparkline">
+              <svg viewBox="0 0 64 22" preserveAspectRatio="none">
+                <path class="area" d="M0,16 L8,14 L16,15 L24,11 L32,12 L40,8 L48,9 L56,5 L64,4 L64,22 L0,22 Z"/>
+                <path class="line" d="M0,16 L8,14 L16,15 L24,11 L32,12 L40,8 L48,9 L56,5 L64,4"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Total AUM -->
+        <div class="card kpi-card">
+          <div class="kpi-head">
+            <div class="kpi-icon">
+              <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><path d="M7 15h3"/></svg>
+            </div>
+            <div class="kpi-label">Total AUM</div>
+          </div>
+          <div class="kpi-value">Rs 847.3 Cr</div>
+          <div class="kpi-foot">
+            <div class="kpi-trend">
+              <svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg>
+              +4.8%
+              <span class="kpi-trend-label">vs last month</span>
+            </div>
+            <div class="sparkline">
+              <svg viewBox="0 0 64 22" preserveAspectRatio="none">
+                <path class="area" d="M0,18 L8,16 L16,17 L24,12 L32,13 L40,9 L48,7 L56,6 L64,3 L64,22 L0,22 Z"/>
+                <path class="line" d="M0,18 L8,16 L16,17 L24,12 L32,13 L40,9 L48,7 L56,6 L64,3"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Open Tasks -->
+        <div class="card kpi-card">
+          <div class="kpi-head">
+            <div class="kpi-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
+            </div>
+            <div class="kpi-label">Open Tasks</div>
+          </div>
+          <div class="kpi-value">38</div>
+          <div class="kpi-foot">
+            <div class="kpi-trend kpi-trend--down">
+              <svg viewBox="0 0 24 24"><path d="M7 7l10 10M9 17h8V9"/></svg>
+              -8
+              <span class="kpi-trend-label">from yesterday</span>
+            </div>
+            <div class="sparkline sparkline--down">
+              <svg viewBox="0 0 64 22" preserveAspectRatio="none">
+                <path class="area" d="M0,4 L8,7 L16,6 L24,10 L32,9 L40,13 L48,12 L56,16 L64,18 L64,22 L0,22 Z"/>
+                <path class="line" d="M0,4 L8,7 L16,6 L24,10 L32,9 L40,13 L48,12 L56,16 L64,18"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLA Breaches -->
+        <div class="card kpi-card">
+          <div class="kpi-head">
+            <div class="kpi-icon kpi-icon--danger">
+              <svg viewBox="0 0 24 24"><path d="M12 3l10 18H2L12 3z"/><path d="M12 10v5M12 18v.5"/></svg>
+            </div>
+            <div class="kpi-label">SLA Breaches</div>
+          </div>
+          <div class="kpi-value" style="color: var(--error);">2</div>
+          <div class="kpi-foot">
+            <div class="kpi-trend">
+              <svg viewBox="0 0 24 24"><path d="M7 7l10 10M9 17h8V9"/></svg>
+              -3
+              <span class="kpi-trend-label">from yesterday</span>
+            </div>
+            <div class="sparkline sparkline--down">
+              <svg viewBox="0 0 64 22" preserveAspectRatio="none">
+                <path class="area" d="M0,5 L8,8 L16,6 L24,11 L32,9 L40,14 L48,13 L56,17 L64,18 L64,22 L0,22 Z"/>
+                <path class="line" d="M0,5 L8,8 L16,6 L24,11 L32,9 L40,14 L48,13 L56,17 L64,18"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fresh Business -->
+        <div class="card kpi-card">
+          <div class="kpi-head">
+            <div class="kpi-icon kpi-icon--success">
+              <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+            </div>
+            <div class="kpi-label">Fresh Business</div>
+          </div>
+          <div class="kpi-value">Rs 12.4 Cr</div>
+          <div>
+            <div class="kpi-trend">
+              <svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg>
+              +18.2%
+              <span class="kpi-trend-label">vs last month</span>
+            </div>
+            <div class="kpi-progress">
+              <div class="kpi-progress-fill" style="width: 78%"></div>
+            </div>
+            <div class="kpi-progress-meta">78% of monthly target</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== MIDDLE ROW ===== -->
+      <div class="grid middle-row">
+
+        <!-- Task Pipeline -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Task Pipeline</div>
+              <div class="card-subtitle">Last 30 days</div>
+            </div>
+            <a class="card-action" href="#">View all</a>
+          </div>
+
+          <div class="pipeline-bar">
+            <div class="pipeline-bar-seg" style="width: 9.5%; background: #C7D2FE;"></div>
+            <div class="pipeline-bar-seg" style="width: 14.3%; background: #A5B4FC;"></div>
+            <div class="pipeline-bar-seg" style="width: 17.9%; background: #818CF8;"></div>
+            <div class="pipeline-bar-seg" style="width: 6.0%; background: #6366F1;"></div>
+            <div class="pipeline-bar-seg" style="width: 3.6%; background: #4F46E5;"></div>
+            <div class="pipeline-bar-seg" style="width: 48.7%; background: #4338CA;"></div>
+          </div>
+
+          <div class="pipeline-stats">
+            <div class="pipeline-stat">
+              <div class="pipeline-stat-head">
+                <span class="pipeline-stat-dot" style="background: #C7D2FE;"></span>
+                <span class="pipeline-stat-label">Created</span>
+              </div>
+              <div class="pipeline-stat-value">8</div>
+            </div>
+            <div class="pipeline-stat">
+              <div class="pipeline-stat-head">
+                <span class="pipeline-stat-dot" style="background: #A5B4FC;"></span>
+                <span class="pipeline-stat-label">Assigned</span>
+              </div>
+              <div class="pipeline-stat-value">12</div>
+            </div>
+            <div class="pipeline-stat">
+              <div class="pipeline-stat-head">
+                <span class="pipeline-stat-dot" style="background: #818CF8;"></span>
+                <span class="pipeline-stat-label">In Progress</span>
+              </div>
+              <div class="pipeline-stat-value">15</div>
+            </div>
+            <div class="pipeline-stat">
+              <div class="pipeline-stat-head">
+                <span class="pipeline-stat-dot" style="background: #6366F1;"></span>
+                <span class="pipeline-stat-label">OTP Pending</span>
+              </div>
+              <div class="pipeline-stat-value">5</div>
+            </div>
+            <div class="pipeline-stat">
+              <div class="pipeline-stat-head">
+                <span class="pipeline-stat-dot" style="background: #4F46E5;"></span>
+                <span class="pipeline-stat-label">Verification</span>
+              </div>
+              <div class="pipeline-stat-value">3</div>
+            </div>
+            <div class="pipeline-stat">
+              <div class="pipeline-stat-head">
+                <span class="pipeline-stat-dot" style="background: #4338CA;"></span>
+                <span class="pipeline-stat-label">Completed</span>
+              </div>
+              <div class="pipeline-stat-value">42</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Monthly Target -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">March Target Progress</div>
+              <div class="card-subtitle">FY 2025-26</div>
+            </div>
+            <a class="card-action" href="#">Details</a>
+          </div>
+
+          <div class="target-list">
+            <div>
+              <div class="target-item-head">
+                <div class="target-name">Lumpsum</div>
+                <div class="target-amounts"><strong>Rs 8.2 Cr</strong> / Rs 10 Cr</div>
+              </div>
+              <div class="target-bar">
+                <div class="target-bar-fill" style="width: 82%"></div>
+              </div>
+              <div class="target-pct">82%</div>
+            </div>
+
+            <div>
+              <div class="target-item-head">
+                <div class="target-name">New SIPs</div>
+                <div class="target-amounts"><strong>Rs 4.2 Cr</strong> / Rs 6 Cr</div>
+              </div>
+              <div class="target-bar">
+                <div class="target-bar-fill" style="width: 70%"></div>
+              </div>
+              <div class="target-pct">70%</div>
+            </div>
+
+            <div>
+              <div class="target-item-head">
+                <div class="target-name">New Investors</div>
+                <div class="target-amounts"><strong>28</strong> / 25</div>
+              </div>
+              <div class="target-bar">
+                <div class="target-bar-fill target-bar-fill--success" style="width: 100%"></div>
+              </div>
+              <div class="target-pct target-pct--success">112%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== BOTTOM ROW ===== -->
+      <div class="grid bottom-row">
+
+        <!-- Recent Tasks -->
+        <div class="card" style="padding-bottom: 0;">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Recent Tasks</div>
+              <div class="card-subtitle">Latest 6 task updates</div>
+            </div>
+            <a class="card-action" href="#">View all tasks</a>
+          </div>
+
+          <div class="table-wrap">
+            <table class="tasks">
+              <thead>
+                <tr>
+                  <th>Task #</th>
+                  <th>Investor</th>
+                  <th>Type</th>
+                  <th>Status</th>
+                  <th>Platform</th>
+                  <th style="text-align:center;">Priority</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="task-id">TASK-2847</span></td>
+                  <td class="investor-cell">Rajesh Sharma</td>
+                  <td>Purchase</td>
+                  <td><span class="status-cell"><span class="status-dot status-dot--success"></span>Completed</span></td>
+                  <td><span class="platform-badge">NSE</span></td>
+                  <td class="priority-cell"><span class="priority-dot priority-dot--high"></span></td>
+                  <td><a class="row-link" href="#">View</a></td>
+                </tr>
+                <tr>
+                  <td><span class="task-id">TASK-2846</span></td>
+                  <td class="investor-cell">Priya Patel</td>
+                  <td>SIP Registration</td>
+                  <td><span class="status-cell"><span class="status-dot status-dot--progress"></span>In Progress</span></td>
+                  <td><span class="platform-badge">BSE</span></td>
+                  <td class="priority-cell"><span class="priority-dot priority-dot--medium"></span></td>
+                  <td><a class="row-link" href="#">View</a></td>
+                </tr>
+                <tr>
+                  <td><span class="task-id">TASK-2845</span></td>
+                  <td class="investor-cell">Amit Deshmukh</td>
+                  <td>Redemption</td>
+                  <td><span class="status-cell"><span class="status-dot status-dot--warning"></span>OTP Pending</span></td>
+                  <td><span class="platform-badge">NSE</span></td>
+                  <td class="priority-cell"><span class="priority-dot priority-dot--high"></span></td>
+                  <td><a class="row-link" href="#">View</a></td>
+                </tr>
+                <tr>
+                  <td><span class="task-id">TASK-2844</span></td>
+                  <td class="investor-cell">Sunita Rao</td>
+                  <td>Switch</td>
+                  <td><span class="status-cell"><span class="status-dot status-dot--purple"></span>Pending Verification</span></td>
+                  <td><span class="platform-badge">MFU</span></td>
+                  <td class="priority-cell"><span class="priority-dot priority-dot--low"></span></td>
+                  <td><a class="row-link" href="#">View</a></td>
+                </tr>
+                <tr>
+                  <td><span class="task-id">TASK-2843</span></td>
+                  <td class="investor-cell">Vikram Joshi</td>
+                  <td>SWP</td>
+                  <td><span class="status-cell"><span class="status-dot status-dot--success"></span>Completed</span></td>
+                  <td><span class="platform-badge">NSE</span></td>
+                  <td class="priority-cell"><span class="priority-dot priority-dot--medium"></span></td>
+                  <td><a class="row-link" href="#">View</a></td>
+                </tr>
+                <tr>
+                  <td><span class="task-id">TASK-2842</span></td>
+                  <td class="investor-cell">Nandini Kulkarni</td>
+                  <td>New Onboarding</td>
+                  <td><span class="status-cell"><span class="status-dot status-dot--neutral"></span>Assigned</span></td>
+                  <td><span class="platform-badge">BSE</span></td>
+                  <td class="priority-cell"><span class="priority-dot priority-dot--high"></span></td>
+                  <td><a class="row-link" href="#">View</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- RM Leaderboard -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Top RMs This Month</div>
+              <div class="card-subtitle">Ranked by gold coins</div>
+            </div>
+            <a class="card-action" href="#">Full board</a>
+          </div>
+
+          <div class="leaderboard">
+
+            <div class="lb-row lb-row--top">
+              <div class="lb-rank">1</div>
+              <div class="avatar avatar--sm avatar--filled">RM</div>
+              <div class="lb-info">
+                <div class="lb-name">Rahul Mehta</div>
+                <div class="lb-meta">52 tasks &middot; Rs 18.4 Cr AUM</div>
+              </div>
+              <div class="lb-coins">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9h4.5a2 2 0 0 1 0 4H9M9 9v8M9 13h5"/></svg>
+                4,820
+              </div>
+            </div>
+
+            <div class="lb-row">
+              <div class="lb-rank">2</div>
+              <div class="avatar avatar--sm avatar--filled">PS</div>
+              <div class="lb-info">
+                <div class="lb-name">Priya Shah</div>
+                <div class="lb-meta">47 tasks &middot; Rs 15.2 Cr AUM</div>
+              </div>
+              <div class="lb-coins">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9h4.5a2 2 0 0 1 0 4H9M9 9v8M9 13h5"/></svg>
+                4,310
+              </div>
+            </div>
+
+            <div class="lb-row">
+              <div class="lb-rank">3</div>
+              <div class="avatar avatar--sm avatar--filled">AV</div>
+              <div class="lb-info">
+                <div class="lb-name">Amit Verma</div>
+                <div class="lb-meta">41 tasks &middot; Rs 12.8 Cr AUM</div>
+              </div>
+              <div class="lb-coins">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9h4.5a2 2 0 0 1 0 4H9M9 9v8M9 13h5"/></svg>
+                3,675
+              </div>
+            </div>
+
+            <div class="lb-row">
+              <div class="lb-rank">4</div>
+              <div class="avatar avatar--sm avatar--filled">DN</div>
+              <div class="lb-info">
+                <div class="lb-name">Deepa Nair</div>
+                <div class="lb-meta">38 tasks &middot; Rs 11.1 Cr AUM</div>
+              </div>
+              <div class="lb-coins">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9h4.5a2 2 0 0 1 0 4H9M9 9v8M9 13h5"/></svg>
+                3,240
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+  </main>
+</div>
+</body>
+</html>
